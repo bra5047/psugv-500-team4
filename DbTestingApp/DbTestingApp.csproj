@@ -1,20 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D1A0C6E0-D6B9-4E6D-B0B3-392EBDC3C89F}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AlgoTrader</RootNamespace>
-    <AssemblyName>AlgoTrader</AssemblyName>
+    <RootNamespace>DbTestingApp</RootNamespace>
+    <AssemblyName>DbTestingApp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,16 +21,15 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -48,22 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="datamodel\Position.cs" />
-    <Compile Include="datamodel\Quote.cs" />
-    <Compile Include="datamodel\Symbol.cs" />
-    <Compile Include="datamodel\Trade.cs" />
-    <Compile Include="datamodel\TraderContext.cs" />
-    <Compile Include="interfaces\IUserAgent.cs" />
-    <Compile Include="interfaces\IStrategySummary.cs" />
-    <Compile Include="interfaces\IStrategyDetail.cs" />
-    <Compile Include="interfaces\IStrategy.cs" />
-    <Compile Include="interfaces\IQuoteManager.cs" />
-    <Compile Include="interfaces\IPortfolioManager.cs" />
-    <Compile Include="interfaces\IWatchList.cs" />
-    <Compile Include="interfaces\IPosition.cs" />
-    <Compile Include="interfaces\ITrade.cs" />
-    <Compile Include="interfaces\IQuote.cs" />
-    <Compile Include="interfaces\ISymbol.cs" />
+    <Compile Include="DbTesting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,11 +54,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="datamodel\db_scripts\AlgoTraderDb.sql" />
-    <Content Include="datamodel\db_scripts\Positions.sql" />
-    <Content Include="datamodel\db_scripts\Quotes.sql" />
-    <Content Include="datamodel\db_scripts\Symbols.sql" />
-    <Content Include="datamodel\db_scripts\Trades.sql" />
+    <ProjectReference Include="..\AlgoTrader\AlgoTrader.csproj">
+      <Project>{d1a0c6e0-d6b9-4e6d-b0b3-392ebdc3c89f}</Project>
+      <Name>AlgoTrader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

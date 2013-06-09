@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlgoTrader.Interfaces
 {
-    interface ISymbol
+    public interface ISymbol
     {
         string name { get; set; }
     }

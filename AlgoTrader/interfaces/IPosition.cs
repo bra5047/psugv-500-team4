@@ -5,9 +5,9 @@ using System.Text;
 
 namespace AlgoTrader.Interfaces
 {
-    enum positionStatus { Open, Closed };
+    public enum positionStatus { Open, Closed };
 
-    interface IPosition
+    public interface IPosition
     {
         ISymbol symbol { get; set; }
         double price { get; set; }
