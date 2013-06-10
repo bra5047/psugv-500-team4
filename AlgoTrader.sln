@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoTrader", "AlgoTrader\Al
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbTestingApp", "DbTestingApp\DbTestingApp.csproj", "{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoTraderSite", "AlgoTraderSite\AlgoTraderSite.csproj", "{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
