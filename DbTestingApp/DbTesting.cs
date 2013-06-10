@@ -62,6 +62,23 @@ namespace DbTestingApp
             goog_pos.Trades.Add(t1);
 
             db.SaveChanges();
+
+            WatchList w = new WatchList();
+            w.ListName = "Default";
+            db.WatchLists.Add(w);
+            db.SaveChanges();
+
+            WatchListItem wi1 = new WatchListItem();
+            wi1.ListName = "Default";
+            wi1.SymbolName = "GOOG";
+            db.WatchListItems.Add(wi1);
+
+            WatchListItem wi2 = new WatchListItem();
+            wi2.ListName = "Default";
+            wi2.SymbolName = "LNC";
+            db.WatchListItems.Add(wi2);
+
+            db.SaveChanges();
             
             Console.WriteLine("Retrieving records from database...");
             Console.WriteLine("\nSymbols");
@@ -98,6 +115,14 @@ namespace DbTestingApp
                 }
             }
 
+
+            Console.WriteLine("\nWatchlist");
+            var wlist = from l in db.WatchLists.Include("Items") select l;
+            WatchList deflist = wlist.FirstOrDefault();
+            foreach (var i in deflist.Items)
+            {
+                Console.WriteLine("\t" + i.Symbol.name);
+            }
             Console.WriteLine("\nTesting complete.");
             Console.ReadLine();
             db.Dispose();

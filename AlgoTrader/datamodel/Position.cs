@@ -17,6 +17,9 @@ namespace AlgoTrader.datamodel
         public string SymbolName { get; set; }
         [ForeignKey("SymbolName")]
         public virtual Symbol Symbol { get; set; }
+        public int? PortfolioId { get; set; }
+        [ForeignKey("PortfolioId")]
+        public virtual Portfolio Portfolio { get; set; }
         public double price { get; set; }
         public int quantity { get; set; }
         public positionStatus status { get; set; }

@@ -1,0 +1,19 @@
+/****** Object:  Table [dbo].[Portfolios]    Script Date: 6/10/2013 1:14:04 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Portfolios](
+	[PortfolioId] [int] IDENTITY(1,1) NOT NULL,
+	[Cash] [float] NOT NULL,
+ CONSTRAINT [PK_dbo.Portfolios] PRIMARY KEY CLUSTERED 
+(
+	[PortfolioId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+

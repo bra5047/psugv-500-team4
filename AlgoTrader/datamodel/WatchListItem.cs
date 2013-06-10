@@ -10,21 +10,16 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Trade
+    public class WatchListItem
     {
-        [Key]
-        public int TradeId { get; set; }
-        public int quantity { get; set; }
-        public double price { get; set; }
-        public DateTime timestamp { get; set; }
-        public tradeTypes type { get; set; }
-
+        [Column(Order=0), Key]
         public string SymbolName { get; set; }
+        [Column(Order = 1), Key]
+        public string ListName { get; set; }
+
         [ForeignKey("SymbolName")]
         public virtual Symbol Symbol { get; set; }
-
-        public int? PositionId { get; set; }
-        [ForeignKey("PositionId")]
-        public virtual Position Position { get; set; } 
+        [ForeignKey("ListName")]
+        public virtual WatchList WatchList { get; set; }
     }
 }

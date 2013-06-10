@@ -48,11 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="datamodel\Portfolio.cs" />
     <Compile Include="datamodel\Position.cs" />
     <Compile Include="datamodel\Quote.cs" />
     <Compile Include="datamodel\Symbol.cs" />
     <Compile Include="datamodel\Trade.cs" />
     <Compile Include="datamodel\TraderContext.cs" />
+    <Compile Include="datamodel\WatchList.cs" />
+    <Compile Include="datamodel\WatchListItem.cs" />
     <Compile Include="interfaces\IUserAgent.cs" />
     <Compile Include="interfaces\IStrategySummary.cs" />
     <Compile Include="interfaces\IStrategyDetail.cs" />
@@ -72,10 +75,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="datamodel\db_scripts\AlgoTraderDb.sql" />
+    <Content Include="datamodel\db_scripts\Portfolios.sql" />
     <Content Include="datamodel\db_scripts\Positions.sql" />
     <Content Include="datamodel\db_scripts\Quotes.sql" />
     <Content Include="datamodel\db_scripts\Symbols.sql" />
     <Content Include="datamodel\db_scripts\Trades.sql" />
+    <Content Include="datamodel\db_scripts\WatchListItems.sql" />
+    <Content Include="datamodel\db_scripts\WatchLists.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

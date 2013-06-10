@@ -1,4 +1,4 @@
-/****** Object:  Table [dbo].[Trades]    Script Date: 6/9/2013 11:20:53 AM ******/
+/****** Object:  Table [dbo].[Trades]    Script Date: 6/10/2013 1:16:37 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Trades](
 	[timestamp] [datetime] NOT NULL,
 	[type] [int] NOT NULL,
 	[SymbolName] [nvarchar](128) NULL,
-	[PositionId] [int] NOT NULL,
+	[PositionId] [int] NULL,
  CONSTRAINT [PK_dbo.Trades] PRIMARY KEY CLUSTERED 
 (
 	[TradeId] ASC
@@ -23,7 +23,6 @@ GO
 
 ALTER TABLE [dbo].[Trades]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Trades_dbo.Positions_PositionId] FOREIGN KEY([PositionId])
 REFERENCES [dbo].[Positions] ([PositionId])
-ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[Trades] CHECK CONSTRAINT [FK_dbo.Trades_dbo.Positions_PositionId]

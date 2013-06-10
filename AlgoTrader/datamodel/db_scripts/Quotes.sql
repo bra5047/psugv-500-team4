@@ -1,4 +1,4 @@
-/****** Object:  Table [dbo].[Quotes]    Script Date: 6/9/2013 11:20:04 AM ******/
+/****** Object:  Table [dbo].[Quotes]    Script Date: 6/10/2013 1:16:05 AM ******/
 SET ANSI_NULLS ON
 GO
 
