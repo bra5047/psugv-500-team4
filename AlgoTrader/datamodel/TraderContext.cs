@@ -20,5 +20,6 @@ namespace AlgoTrader.datamodel
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<WatchList> WatchLists { get; set; }
         public DbSet<WatchListItem> WatchListItems { get; set; }
+        public DbSet<SystemSetting> SystemSettings { get; set; }
     }
 }

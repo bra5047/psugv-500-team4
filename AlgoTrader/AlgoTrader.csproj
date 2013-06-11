@@ -52,6 +52,7 @@
     <Compile Include="datamodel\Position.cs" />
     <Compile Include="datamodel\Quote.cs" />
     <Compile Include="datamodel\Symbol.cs" />
+    <Compile Include="datamodel\SystemSetting.cs" />
     <Compile Include="datamodel\Trade.cs" />
     <Compile Include="datamodel\TraderContext.cs" />
     <Compile Include="datamodel\WatchList.cs" />
@@ -79,6 +80,7 @@
     <Content Include="datamodel\db_scripts\Positions.sql" />
     <Content Include="datamodel\db_scripts\Quotes.sql" />
     <Content Include="datamodel\db_scripts\Symbols.sql" />
+    <Content Include="datamodel\db_scripts\SystemSettings.sql" />
     <Content Include="datamodel\db_scripts\Trades.sql" />
     <Content Include="datamodel\db_scripts\WatchListItems.sql" />
     <Content Include="datamodel\db_scripts\WatchLists.sql" />
