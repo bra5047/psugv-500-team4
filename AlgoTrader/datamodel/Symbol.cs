@@ -8,7 +8,7 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Symbol
+    public class Symbol : ISymbol
     {
         [Key]
         public string name { get; set; }

@@ -32,7 +32,7 @@ namespace AlgoTrader.strategy
 
         public void Add(IQuote quote)
         {
-            if ((quote.timestamp - _quotes.Peek().timestamp).Seconds >= IntervalSeconds)
+            if (_quotes.Count < 1 || (quote.timestamp - _quotes.Last<IQuote>().timestamp).Seconds >= IntervalSeconds)
             {
                 _quotes.Enqueue(quote);
                 if (_quotes.Count > WindowSize) _quotes.Dequeue();
