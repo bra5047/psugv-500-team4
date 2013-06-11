@@ -10,7 +10,7 @@ namespace AlgoTrader.strategy
 {
     public enum StrategySignal { Buy, Sell, None }
 
-    class SmaMetric
+    public class SmaMetric
     {
         private static int HISTORY_DATAPOINTS = 50;
 
