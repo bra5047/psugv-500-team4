@@ -39,12 +39,52 @@ namespace AlgoTrader.NUnit
             Queue<IQuote> data = new Queue<IQuote>(5);
 
             data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 0)));
+            data.Enqueue(new QuoteMock(goog, 20, new DateTime(2013, 6, 13, 5, 0, 5)));
+            data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 10)));
+            data.Enqueue(new QuoteMock(goog, 20, new DateTime(2013, 6, 13, 5, 0, 15)));
+            data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 20)));
+
+            SmaMetric sma = new SmaMetric(goog, 5, 5);
+            foreach (IQuote q in data)
+            {
+                sma.Add(q);
+            }
+            Assert.AreEqual(14, sma.Avg);
+        }
+
+        [Test]
+        public void TestIntervals()
+        {
+            ISymbol goog = new SymbolMock("GOOG");
+            Queue<IQuote> data = new Queue<IQuote>(5);
+
+            data.Enqueue(new QuoteMock(goog,   10, new DateTime(2013, 6, 13, 5, 0, 0)));
+            data.Enqueue(new QuoteMock(goog, 1000, new DateTime(2013, 6, 13, 5, 0, 2)));
+            data.Enqueue(new QuoteMock(goog,   10, new DateTime(2013, 6, 13, 5, 0, 5)));
+            data.Enqueue(new QuoteMock(goog, 1000, new DateTime(2013, 6, 13, 5, 0, 7)));
+            data.Enqueue(new QuoteMock(goog,   10, new DateTime(2013, 6, 13, 5, 0, 10)));
+
+            SmaMetric sma = new SmaMetric(goog, 5, 5);
+            foreach (IQuote q in data)
+            {
+                sma.Add(q);
+            }
+            Assert.AreEqual(10, sma.Avg);
+        }
+
+        [Test]
+        public void TestWindowSize()
+        {
+            ISymbol goog = new SymbolMock("GOOG");
+            Queue<IQuote> data = new Queue<IQuote>(5);
+
+            data.Enqueue(new QuoteMock(goog, 1000, new DateTime(2013, 6, 13, 5, 0, 0)));
             data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 5)));
             data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 10)));
             data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 15)));
             data.Enqueue(new QuoteMock(goog, 10, new DateTime(2013, 6, 13, 5, 0, 20)));
 
-            SmaMetric sma = new SmaMetric(goog, 5, 5);
+            SmaMetric sma = new SmaMetric(goog, 4, 5);
             foreach (IQuote q in data)
             {
                 sma.Add(q);

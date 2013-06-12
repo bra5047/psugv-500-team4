@@ -52,6 +52,11 @@ namespace AlgoTrader.strategy
     
     public class ThreeDucksStrategy : IStrategy
     {
+        public void NewQuote(QuoteMessage quote)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool startWatching(ISymbol symbol)
         {
             throw new NotImplementedException();
@@ -71,7 +76,5 @@ namespace AlgoTrader.strategy
         {
             throw new NotImplementedException();
         }
-
-        public event EventHandler newAlert;
     }
 }
