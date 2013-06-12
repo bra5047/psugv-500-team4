@@ -74,6 +74,7 @@
     <Compile Include="interfaces\IQuote.cs" />
     <Compile Include="interfaces\ISymbol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="strategy\SmaMetric.cs" />
     <Compile Include="strategy\ThreeDucksStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
