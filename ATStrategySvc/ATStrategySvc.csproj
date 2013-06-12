@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{FD991369-D21A-4A19-BC93-892F7D916AFA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DbTestingApp</RootNamespace>
-    <AssemblyName>DbTestingApp</AssemblyName>
+    <RootNamespace>ATStrategySvc</RootNamespace>
+    <AssemblyName>ATStrategySvc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,24 +32,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbTesting.cs" />
+    <Compile Include="ATStrategySvc.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ATStrategySvc.Designer.cs">
+      <DependentUpon>ATStrategySvc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ATStrategySvcInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ATStrategySvcInstaller.Designer.cs">
+      <DependentUpon>ATStrategySvcInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

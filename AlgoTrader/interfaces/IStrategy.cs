@@ -11,7 +11,7 @@ namespace AlgoTrader.Interfaces
     public interface IStrategy
     {
         [OperationContract(IsOneWay = true)]
-        public void NewQuote(QuoteMessage quote);
+        void NewQuote(QuoteMessage quote);
 
         bool startWatching(ISymbol symbol);
         bool stopWatching(ISymbol symbol);
