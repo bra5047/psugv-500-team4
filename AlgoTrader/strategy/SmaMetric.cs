@@ -8,33 +8,44 @@ using AlgoTrader.datamodel;
 
 namespace AlgoTrader.strategy
 {
+    class DataPoint
+    {
+        public DataPoint(DateTime time, double val)
+        {
+            Timestamp = time;
+            Value = val;
+        }
+        public DateTime Timestamp { get; set; }
+        public double Value { get; set; }
+    }
+
     public class SmaMetric
     {
         private static int HISTORY_DATAPOINTS = 50;
 
-        private Queue<IQuote> _quotes;
+        private Queue<DataPoint> _quotes;
         private SortedList<DateTime, double> _datapoints;
 
-        public SmaMetric(ISymbol symbol, int windowSize, int intervalSeconds)
+        public SmaMetric(string symbol, int windowSize, int intervalSeconds)
         {
-            Symbol = symbol;
+            SymbolName = symbol;
             WindowSize = windowSize;
             IntervalSeconds = intervalSeconds;
-            _quotes = new Queue<IQuote>(windowSize);
+            _quotes = new Queue<DataPoint>(windowSize);
             _datapoints = new SortedList<DateTime, double>(HISTORY_DATAPOINTS);
         }
 
-        public ISymbol Symbol { get; set; }
+        public string SymbolName { get; set; }
         public int WindowSize { get; set; }
         public int IntervalSeconds { get; set; }
 
-        public void Add(IQuote quote)
+        public void Add(DateTime time, double price)
         {
-            if (_quotes.Count < 1 || (quote.timestamp - _quotes.Last<IQuote>().timestamp).Seconds >= IntervalSeconds)
+            if (_quotes.Count < 1 || (time - _quotes.Last<DataPoint>().Timestamp).Seconds >= IntervalSeconds)
             {
-                _quotes.Enqueue(quote);
+                _quotes.Enqueue(new DataPoint(time, price)); 
                 if (_quotes.Count > WindowSize) _quotes.Dequeue();
-                _datapoints.Add(quote.timestamp, Avg);
+                _datapoints.Add(time, Avg);
                 if (_datapoints.Count > HISTORY_DATAPOINTS) _datapoints.Remove(_datapoints.First().Key);
             }
         }
@@ -43,7 +54,14 @@ namespace AlgoTrader.strategy
         {
             get
             {
-                return _quotes.Average<IQuote>(q => q.price);
+                if (_quotes.Count > 0)
+                {
+                    return _quotes.Average<DataPoint>(q => q.Value);
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
     }

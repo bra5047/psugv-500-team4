@@ -13,10 +13,15 @@ namespace AlgoTrader.Interfaces
         [OperationContract(IsOneWay = true)]
         void NewQuote(QuoteMessage quote);
 
-        bool startWatching(ISymbol symbol);
-        bool stopWatching(ISymbol symbol);
+        [OperationContract]
+        bool startWatching(string symbolName);
+        [OperationContract]
+        bool stopWatching(string symbolName);
+
+        [OperationContract]
+        StrategySummary getSummary(string symbolName);
+
         IStrategyDetail getDetailedAnalysis(ISymbol symbol);
-        IStrategySummary getSummary(ISymbol symbol);
     }
 
     [DataContract]
@@ -30,5 +35,27 @@ namespace AlgoTrader.Interfaces
         public DateTime timestamp { get; set; }
         [DataMember]
         public string SymbolName { get; set; }
+    }
+
+    [DataContract]
+    public class StrategySummary
+    {
+        [DataMember]
+        public string SymbolName;
+        [DataMember]
+        public DateTime AsOf;
+        [DataMember]
+        public StrategySignal CurrentSignal;
+    }
+
+    [DataContract]
+    public enum StrategySignal
+    {
+        [EnumMember]
+        Buy,
+        [EnumMember]
+        Sell,
+        [EnumMember]
+        None
     }
 }
