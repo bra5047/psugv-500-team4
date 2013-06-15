@@ -32,6 +32,34 @@ namespace AlgoTrader.strategy
             AVERAGE_WINDOW = 60;
         }
 
+        public ThreeDucksStrategy(Dictionary<string,string> settings)
+            : this()
+        {
+            foreach (string s in settings.Keys)
+            {
+                switch (s)
+                {
+                    case "FIRST_DUCK_SECONDS":
+                        Int32.TryParse(settings[s], out FIRST_DUCK_SECONDS);
+                        break;
+                    case "SECOND_DUCK_SECONDS":
+                        Int32.TryParse(settings[s], out SECOND_DUCK_SECONDS);
+                        break;
+                    case "THIRD_DUCK_SECONDS":
+                        Int32.TryParse(settings[s], out THIRD_DUCK_SECONDS);
+                        break;
+                    case "MOVING_AVERAGE_WINDOW":
+                        Int32.TryParse(settings[s], out AVERAGE_WINDOW);
+                        break;
+                }
+            }
+        }
+
+        public int First_Duck_Seconds { get { return FIRST_DUCK_SECONDS; } }
+        public int Second_Duck_Seconds { get { return SECOND_DUCK_SECONDS; } }
+        public int Third_Duck_Seconds { get { return THIRD_DUCK_SECONDS; } }
+        public int Moving_Average_Window { get { return AVERAGE_WINDOW; } }
+
         public void NewQuote(QuoteMessage quote)
         {
             int buy_ducks = 0;

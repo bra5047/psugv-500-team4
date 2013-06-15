@@ -63,7 +63,6 @@
     <Compile Include="datamodel\WatchList.cs" />
     <Compile Include="datamodel\WatchListItem.cs" />
     <Compile Include="interfaces\IUserAgent.cs" />
-    <Compile Include="interfaces\IStrategySummary.cs" />
     <Compile Include="interfaces\IStrategyDetail.cs" />
     <Compile Include="interfaces\IStrategy.cs" />
     <Compile Include="interfaces\IQuoteManager.cs" />

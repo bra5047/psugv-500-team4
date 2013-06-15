@@ -45,5 +45,20 @@ namespace AlgoTrader.NUnit
             Assert.AreEqual(StrategySignal.None, s.CurrentSignal);            
         }
 
+        [Test]
+        public void CreateWithSettings()
+        {
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            settings.Add("FIRST_DUCK_SECONDS", "1");
+            settings.Add("SECOND_DUCK_SECONDS", "1");
+            settings.Add("THIRD_DUCK_SECONDS", "1");
+            settings.Add("MOVING_AVERAGE_WINDOW", "1");
+
+            ThreeDucksStrategy tds = new ThreeDucksStrategy(settings);
+            Assert.AreEqual(1, tds.First_Duck_Seconds);
+            Assert.AreEqual(1, tds.Second_Duck_Seconds);
+            Assert.AreEqual(1, tds.Third_Duck_Seconds);
+            Assert.AreEqual(1, tds.Moving_Average_Window);
+        }
     }
 }
