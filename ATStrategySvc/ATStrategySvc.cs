@@ -61,13 +61,23 @@ namespace ATStrategySvc
         private Dictionary<string, string> GetConfiguration()
         {
             Dictionary<string, string> config = new Dictionary<string, string>();
-            TraderContext db = new TraderContext();
-            var settings = from s in db.SystemSettings where s.Module == "ThreeDuckStrategy" select s;
-            foreach (var i in settings)
+
+            try
             {
-                config.Add(i.Name, i.Value);
-                log.DebugFormat("Loaded configuration value: {0}={1}", i.Name, i.Value);
+                TraderContext db = new TraderContext();
+                var settings = from s in db.SystemSettings where s.Module == "ThreeDuckStrategy" select s;
+                foreach (var i in settings)
+                {
+                    config.Add(i.Name, i.Value);
+                    log.DebugFormat("Loaded configuration value: {0}={1}", i.Name, i.Value);
+                }
             }
+            catch (Exception ex)
+            {
+                log.WarnFormat("Failed to load configuration: {0}", ex.Message);
+                log.Warn(ex.StackTrace);
+            }
+
             return config;
         }
     }

@@ -36,7 +36,7 @@ namespace AlgoTrader.NUnit
             QuoteMessage q = new QuoteMessage();
             q.SymbolName = "GOOG";
             q.timestamp = DateTime.Now;
-            q.price = 10;
+            q.Price = 10;
             tds.NewQuote(q);
 
             StrategySummary s = tds.getSummary("GOOG");
@@ -59,6 +59,50 @@ namespace AlgoTrader.NUnit
             Assert.AreEqual(1, tds.Second_Duck_Seconds);
             Assert.AreEqual(1, tds.Third_Duck_Seconds);
             Assert.AreEqual(1, tds.Moving_Average_Window);
+        }
+
+        [Test]
+        public void TestForBuySignal()
+        {
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            settings.Add("FIRST_DUCK_SECONDS", "1");
+            settings.Add("SECOND_DUCK_SECONDS", "1");
+            settings.Add("THIRD_DUCK_SECONDS", "1");
+            settings.Add("MOVING_AVERAGE_WINDOW", "2");
+
+            ThreeDucksStrategy tds = new ThreeDucksStrategy(settings);
+            tds.startWatching("GOOG");
+
+            QuoteMessage q1 = new QuoteMessage(10, new DateTime(2013, 06, 13, 0, 0, 1), "GOOG");
+            QuoteMessage q2 = new QuoteMessage(20, new DateTime(2013, 06, 13, 0, 0, 2), "GOOG");
+
+            tds.NewQuote(q1);
+            tds.NewQuote(q2);
+
+            StrategySummary result = tds.getSummary("GOOG");
+            Assert.AreEqual(StrategySignal.Buy, result.CurrentSignal);
+        }
+
+        [Test]
+        public void TestForSellSignal()
+        {
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            settings.Add("FIRST_DUCK_SECONDS", "1");
+            settings.Add("SECOND_DUCK_SECONDS", "1");
+            settings.Add("THIRD_DUCK_SECONDS", "1");
+            settings.Add("MOVING_AVERAGE_WINDOW", "2");
+
+            ThreeDucksStrategy tds = new ThreeDucksStrategy(settings);
+            tds.startWatching("GOOG");
+
+            QuoteMessage q1 = new QuoteMessage(10, new DateTime(2013, 06, 13, 0, 0, 1), "GOOG");
+            QuoteMessage q2 = new QuoteMessage(5, new DateTime(2013, 06, 13, 0, 0, 2), "GOOG");
+
+            tds.NewQuote(q1);
+            tds.NewQuote(q2);
+
+            StrategySummary result = tds.getSummary("GOOG");
+            Assert.AreEqual(StrategySignal.Sell, result.CurrentSignal);
         }
     }
 }

@@ -30,11 +30,23 @@ namespace AlgoTrader.Interfaces
         [DataMember]
         public int QuoteId { get; set; }
         [DataMember]
-        public double price { get; set; }
+        public double Price { get; set; }
         [DataMember]
         public DateTime timestamp { get; set; }
         [DataMember]
         public string SymbolName { get; set; }
+
+        public QuoteMessage()
+        {
+            //whatever
+        }
+
+        public QuoteMessage(double price, DateTime tstamp, string symbolName)
+        {
+            Price = price;
+            timestamp = tstamp;
+            SymbolName = symbolName;
+        }
     }
 
     [DataContract]

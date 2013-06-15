@@ -67,9 +67,9 @@ namespace AlgoTrader.strategy
 
             foreach (SmaMetric m in _metrics[quote.SymbolName])
             {
-                m.Add(quote.timestamp, quote.price);
-                if (quote.price > m.Avg) buy_ducks++;
-                if (quote.price < m.Avg) sell_ducks++;
+                m.Add(quote.timestamp, quote.Price);
+                if (quote.Price > m.Avg) buy_ducks++;
+                if (quote.Price < m.Avg) sell_ducks++;
             }
             if (buy_ducks == 3)
             {
