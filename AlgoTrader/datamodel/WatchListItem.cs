@@ -21,5 +21,11 @@ namespace AlgoTrader.datamodel
         public virtual Symbol Symbol { get; set; }
         [ForeignKey("ListName")]
         public virtual WatchList WatchList { get; set; }
+
+		public WatchListItem(ISymbol symbol, string listName)
+		{
+			SymbolName = symbol.ToString();
+			ListName = listName;
+		}
     }
 }

@@ -9,7 +9,7 @@ namespace AlgoTrader.Interfaces
     {
         List<ISymbol> symbols { get; }
 
-        bool addToList(ISymbol symbol);
-        bool removeFromList(ISymbol symbol);
+        bool addToList(ISymbol symbol, string listName);
+        bool removeFromList(ISymbol symbol, string listName);
     }
 }
