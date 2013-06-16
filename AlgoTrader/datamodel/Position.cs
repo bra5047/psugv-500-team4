@@ -10,7 +10,7 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Position
+    public class Position : IPosition
     {
         [Key]
         public int PositionId { get; set; }
@@ -24,5 +24,27 @@ namespace AlgoTrader.datamodel
         public int quantity { get; set; }
         public positionStatus status { get; set; }
         public virtual List<Trade> Trades { get; set; }
+
+        // IPosition stuff
+        public ISymbol symbol
+        {
+            get { return Symbol; }
+            set { throw new NotImplementedException(); }
+        }
+
+        public List<ITrade> trades
+        {
+            get { return Trades.ToList<ITrade>(); }
+        }
+
+        public void updatePosition(ITrade trade)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void closePosition()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

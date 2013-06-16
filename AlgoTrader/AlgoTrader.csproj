@@ -72,6 +72,9 @@
     <Compile Include="interfaces\ITrade.cs" />
     <Compile Include="interfaces\IQuote.cs" />
     <Compile Include="interfaces\ISymbol.cs" />
+    <Compile Include="portfolio\PortfolioManager.cs" />
+    <Compile Include="portfolio\PositionMessage.cs" />
+    <Compile Include="portfolio\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="strategy\SmaMetric.cs" />
     <Compile Include="strategy\ThreeDucksStrategy.cs" />

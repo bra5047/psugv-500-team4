@@ -10,7 +10,7 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Trade
+    public class Trade : ITrade
     {
         [Key]
         public int TradeId { get; set; }
@@ -26,5 +26,12 @@ namespace AlgoTrader.datamodel
         public int? PositionId { get; set; }
         [ForeignKey("PositionId")]
         public virtual Position Position { get; set; } 
+
+        // ITrade stuff
+        public ISymbol symbol
+        {
+            get { return Symbol; }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace AlgoTrader.Interfaces
 {
-    public enum tradeTypes { Buy, Sell };
+    [DataContract]
+    public enum tradeTypes
+    {
+        [EnumMember]
+        Buy,
+        [EnumMember]
+        Sell
+    };
 
     public interface ITrade
     {

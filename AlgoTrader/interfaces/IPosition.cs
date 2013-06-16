@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace AlgoTrader.Interfaces
 {
-    public enum positionStatus { Open, Closed };
+    [DataContract]
+    public enum positionStatus 
+    {
+        [EnumMember]
+        Open,
+        [EnumMember]
+        Closed
+    };
 
     public interface IPosition
     {

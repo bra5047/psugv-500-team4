@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ServiceModel;
+using AlgoTrader.portfolio;
 
 namespace AlgoTrader.Interfaces
 {
-    interface IPortfolioManager
+    [ServiceContract]
+    public interface IPortfolioManager
     {
-        List<IPosition> positions { get; }
+        [OperationContract]
+        List<PositionMessage> GetOpenPositions();
 
-        void sell(ISymbol symbol, int quantity);
-        void buy(ISymbol symbol, int quantity);
-        void getAvailableCash();
+        [OperationContract]
+        PositionMessage GetPosition(string SymbolName);
+
+        [OperationContract]
+        void sell(string symbolName, int quantity);
+
+        [OperationContract]
+        void buy(string symbolName, int quantity);
+
+        [OperationContract]
+        double getAvailableCash();
     }
 }
