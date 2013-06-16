@@ -35,5 +35,18 @@ namespace AlgoTrader.datamodel
 			}
             return false;
         }
+
+        public List<ISymbol> symbols
+        {
+            get
+            {
+                List<ISymbol> result = new List<ISymbol>();
+                foreach (WatchListItem i in Items)
+                {
+                    result.Add(i.Symbol);
+                }
+                return result;
+            }
+        }
     }
 }

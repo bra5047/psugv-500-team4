@@ -27,5 +27,10 @@ namespace AlgoTrader.datamodel
 			SymbolName = symbol.ToString();
 			ListName = listName;
 		}
+
+        public WatchListItem()
+        {
+            // needs to have a zero-argument constructor
+        }
     }
 }
