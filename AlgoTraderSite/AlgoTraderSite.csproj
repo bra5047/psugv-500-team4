@@ -137,6 +137,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\site-orig.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -192,6 +193,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Portfolio.aspx" />
+    <Content Include="Watchlist.aspx" />
     <Content Include="debug.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -305,6 +308,20 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Portfolio.aspx.cs">
+      <DependentUpon>Portfolio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Portfolio.aspx.designer.cs">
+      <DependentUpon>Portfolio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Watchlist.aspx.cs">
+      <DependentUpon>Watchlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Watchlist.aspx.designer.cs">
+      <DependentUpon>Watchlist.aspx</DependentUpon>
+    </Compile>
     <Compile Include="debug.aspx.cs">
       <DependentUpon>debug.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -379,16 +396,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlgoTrader\AlgoTrader.csproj">
-      <Project>{d1a0c6e0-d6b9-4e6d-b0b3-392ebdc3c89f}</Project>
-      <Name>AlgoTrader</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Portfolio.Client\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AlgoTrader\AlgoTrader.csproj">
+      <Project>{d1a0c6e0-d6b9-4e6d-b0b3-392ebdc3c89f}</Project>
+      <Name>AlgoTrader</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

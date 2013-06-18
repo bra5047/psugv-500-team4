@@ -1,20 +1,15 @@
-﻿@charset "utf-8";
-@import url(http://fonts.googleapis.com/css?family=Fauna+One); /* serif */
-@import url(http://fonts.googleapis.com/css?family=Lily+Script+One); /* cursive */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300); /* sans-serif */
-
-html {
+﻿html {
     background-color: #e2e2e2;
     margin: 0;
     padding: 0;
 }
 
 body {
-	font-family: 'Open Sans', sans-serif;
     background-color: #fff;
     border-top: solid 10px #000;
     color: #333;
     font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
 }
@@ -71,8 +66,7 @@ h4, h5, h6 {
 }
 
 h1 {
-    font-size: 4em;
-	font-weight: 300;
+    font-size: 2em;
 }
 
 h2 {
@@ -134,18 +128,15 @@ footer {
 /* site title
 ----------------------------------------------------------*/
 .site-title {
-    color: #333;
-    /*font-family: 'Fauna One', serif, monospace;*/
-	font-family: 'Lily Script One', cursive;
-    font-size: 3em;
-	font-weight: bold;
+    color: #c8c8c8;
+    font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
+    font-size: 2.3em;
     margin: 0;
-	/*text-transform: uppercase;*/
 }
 
 .site-title a, .site-title a:hover, .site-title a:active {
     background: none;
-    color: #333;
+    color: #c8c8c8;
     outline: none;
     text-decoration: none;
 }
@@ -187,8 +178,8 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-    font-size: 1.2em;
-    font-weight: 400;
+    font-size: 1.3em;
+    font-weight: 600;
     margin: 0 0 5px;
     padding: 0;
     text-align: right;

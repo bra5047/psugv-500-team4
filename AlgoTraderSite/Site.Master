@@ -4,7 +4,7 @@
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - AlgoTrader</title>
     <asp:PlaceHolder runat="server">     
           <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>  
@@ -40,7 +40,7 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a runat="server" href="~/">your logo here</a>
+                    <a runat="server" href="~/">AlgoTrader</a>
                 </p>
             </div>
             <div class="float-right">
@@ -64,6 +64,8 @@
                 <nav>
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
+						<li><a runat="server" href="~/WatchList">Watchlist</a></li>
+						<li><a runat="server" href="~/Portfolio">My Porfolio</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
@@ -80,7 +82,7 @@
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Pennsylvania State University</p>
             </div>
         </div>
     </footer>
