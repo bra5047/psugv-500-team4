@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.Common;
 using System.Data.Entity;
 
 namespace AlgoTrader.datamodel
@@ -10,6 +11,11 @@ namespace AlgoTrader.datamodel
     {
         public TraderContext()
             : base("name=AlgoTraderDb")
+        {
+        }
+
+        public TraderContext(DbConnection connection)
+            : base(connection, true)
         {
         }
 

@@ -28,7 +28,7 @@ namespace AlgoTrader.datamodel
         public virtual Position Position { get; set; } 
 
         // ITrade stuff
-        public ISymbol symbol
+        ISymbol ITrade.symbol
         {
             get { return Symbol; }
             set { throw new NotImplementedException(); }

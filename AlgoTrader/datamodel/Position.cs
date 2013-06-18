@@ -26,13 +26,13 @@ namespace AlgoTrader.datamodel
         public virtual List<Trade> Trades { get; set; }
 
         // IPosition stuff
-        public ISymbol symbol
+        ISymbol IPosition.symbol
         {
-            get { return Symbol; }
-            set { throw new NotImplementedException(); }
+           get { return Symbol; }
+           set { throw new NotImplementedException(); }
         }
 
-        public List<ITrade> trades
+        List<ITrade> IPosition.trades
         {
             get { return Trades.ToList<ITrade>(); }
         }

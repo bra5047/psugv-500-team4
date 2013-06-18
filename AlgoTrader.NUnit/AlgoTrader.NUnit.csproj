@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Effort">
+      <HintPath>..\..\..\..\..\lib.net\effort\.NET 4.5\Entity Framework 4-5\Effort.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -52,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PortfolioManagerTest.cs" />
     <Compile Include="SmaMetricTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreeDucksStrategyTest.cs" />
