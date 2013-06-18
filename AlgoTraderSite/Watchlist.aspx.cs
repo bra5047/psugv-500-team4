@@ -14,36 +14,29 @@ namespace AlgoTraderSite
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			createTestWatchList();
-			showWatchList();
+			showTestWatchList();
 		}
 
-		public void createTestWatchList()
+		public WatchList createTestWatchList()
 		{
-			WatchList wl = new WatchList();
-			wl.ListName = "Default";
+			WatchList wl = new WatchList("Default");
 			wl.addToList(new Symbol("GOOG"), "Default");
-			wl.addToList(new Symbol("GOOG"), "Default");
-			wl.addToList(new Symbol("GOOG"), "Default");
+			wl.addToList(new Symbol("AAPL"), "Default");
+			wl.addToList(new Symbol("VZ"), "Default");
+			wl.addToList(new Symbol("INTC"), "Default");
+			wl.addToList(new Symbol("MSFT"), "Default");
+			wl.addToList(new Symbol("HP"), "Default");
 
-			watchlist.InnerText = wl.Items.Count.ToString();
-			//WatchListItem wli = new WatchListItem();
-			//wli.SymbolName = "TEST";
-			//wli.ListName = "Default";
-		
-			//watchlist.Controls.Clear();
-			//watchlist.InnerText = "HELLO WORLD";
-
-			//List<Symbol> symbols = new List<Symbol>();
-
-			//symbols.Add(new Symbol("GOOG"));
-			//symbols.Add(new Symbol("AAPL"));
-			//symbols.Add(new Symbol("VZ"));
-			//symbols.Add(new Symbol("INTC"));
-			//symbols.Add(new Symbol("MSFT"));
+			return wl;
 		}
 
-		public void showWatchList()
+		public void showTestWatchList()
+		{
+			WatchList wl = createTestWatchList();
+			showWatchList(wl);
+		}
+
+		public void showWatchList(WatchList watchlist)
 		{
 			tblWatchList.Controls.Clear();
 
@@ -54,15 +47,15 @@ namespace AlgoTraderSite
 			TableCell changeHeaderCell = new TableCell();
 			TableCell changePercentHeaderCell = new TableCell();
 
-			headerCells.Add(companyHeaderCell);
-			headerCells.Add(priceHeaderCell);
-			headerCells.Add(changeHeaderCell);
-			headerCells.Add(changePercentHeaderCell);
-
 			companyHeaderCell.Text = "COMPANY";
 			priceHeaderCell.Text = "PRICE";
 			changeHeaderCell.Text = "CHANGE";
 			changePercentHeaderCell.Text = "CHANGE %";
+
+			headerCells.Add(companyHeaderCell);
+			headerCells.Add(priceHeaderCell);
+			headerCells.Add(changeHeaderCell);
+			headerCells.Add(changePercentHeaderCell);
 
 			foreach (TableCell header in headerCells)
 			{
@@ -71,7 +64,7 @@ namespace AlgoTraderSite
 
 			tblWatchList.Rows.Add(headers);
 
-			for (int row = 0; row < 10; row++) // replace with watchlist.length
+			for (int row = 0; row < watchlist.Items.Count; row++)
 			{
 				TableRow tblrow = new TableRow();
 				List<TableCell> cells = new List<TableCell>();
@@ -86,11 +79,10 @@ namespace AlgoTraderSite
 				cells.Add(changeCell);
 				cells.Add(changePercentCell);
 
-				//replace with variables
-				companyCell.Text = "GOOG";
-				priceCell.Text = "890.22";
-				changeCell.Text = "+ 10.49";
-				changePercentCell.Text = "+ 1.19%";
+				companyCell.Text = watchlist.Items[row].SymbolName;
+				priceCell.Text = "890.22"; //replace with quote price
+				changeCell.Text = "+ 10.49"; // replace with quote change
+				changePercentCell.Text = "+ 1.19%"; // replace with quote percent change
 
 				foreach (TableCell cell in cells)
 				{
