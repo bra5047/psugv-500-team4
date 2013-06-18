@@ -24,7 +24,7 @@ namespace AlgoTrader.datamodel
 
 		public WatchListItem(ISymbol symbol, string listName)
 		{
-			SymbolName = symbol.ToString();
+			SymbolName = symbol.name.ToString();
 			ListName = listName;
 		}
 

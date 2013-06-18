@@ -10,11 +10,37 @@ using System.IO;
 
 namespace AlgoTraderSite
 {
-	public partial class WatchList : Page
+	public partial class WatchListPage : Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			createTestWatchList();
 			showWatchList();
+		}
+
+		public void createTestWatchList()
+		{
+			WatchList wl = new WatchList();
+			wl.ListName = "Default";
+			wl.addToList(new Symbol("GOOG"), "Default");
+			wl.addToList(new Symbol("GOOG"), "Default");
+			wl.addToList(new Symbol("GOOG"), "Default");
+
+			watchlist.InnerText = wl.Items.Count.ToString();
+			//WatchListItem wli = new WatchListItem();
+			//wli.SymbolName = "TEST";
+			//wli.ListName = "Default";
+		
+			//watchlist.Controls.Clear();
+			//watchlist.InnerText = "HELLO WORLD";
+
+			//List<Symbol> symbols = new List<Symbol>();
+
+			//symbols.Add(new Symbol("GOOG"));
+			//symbols.Add(new Symbol("AAPL"));
+			//symbols.Add(new Symbol("VZ"));
+			//symbols.Add(new Symbol("INTC"));
+			//symbols.Add(new Symbol("MSFT"));
 		}
 
 		public void showWatchList()

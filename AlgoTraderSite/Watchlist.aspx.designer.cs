@@ -10,7 +10,7 @@
 namespace AlgoTraderSite {
     
     
-    public partial class WatchList {
+    public partial class WatchListPage {
         
         /// <summary>
         /// watchlist control.

@@ -10,21 +10,35 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class WatchList : IWatchList
+    public class WatchList
     {
         [Key]
         public string ListName { get; set; }
         public virtual List<WatchListItem> Items { get; set; }
 
+		public WatchList(string listName)
+		{
+			ListName = listName;
+			Items = new List<WatchListItem>();
+		}
+
+		public WatchList()
+		{
+			Items = new List<WatchListItem>();
+		}
+
         public bool addToList(ISymbol symbol, string listName)
         {
-			WatchListItem item = new WatchListItem(symbol, listName);
-			if (!Items.Contains(item)) {
-				Items.Add(item);
-				return true;
+			foreach (WatchListItem item in Items)
+			{
+				if (item.SymbolName == symbol.name && item.ListName == listName)
+					return false;
 			}
-            return false;
-        }
+
+			WatchListItem newItem = new WatchListItem(symbol, listName);
+			Items.Add(newItem);
+			return true;
+		}
 
         public bool removeFromList(ISymbol symbol, string listName)
         {
