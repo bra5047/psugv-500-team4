@@ -15,8 +15,22 @@ namespace AlgoTrader.datamodel
         public string ListName { get; set; }
         public virtual List<WatchListItem> Items { get; set; }
 
-        public bool addToList(ISymbol symbol, string listName)
-        {
+		public List<ISymbol> symbols
+		{
+			get
+			{
+				List<ISymbol> result = new List<ISymbol>();
+
+				foreach (WatchListItem i in Items)
+				{
+					result.Add(i.Symbol);
+				}
+				return result;
+			}
+		}
+
+		public bool addToList(ISymbol symbol, string listName)
+		{
 			foreach (WatchListItem item in Items)
 			{
 				if (item.SymbolName == symbol.name && item.ListName == listName)
@@ -27,8 +41,8 @@ namespace AlgoTrader.datamodel
 			return true;
 		}
 
-        public bool removeFromList(ISymbol symbol, string listName)
-        {
+		public bool removeFromList(ISymbol symbol, string listName)
+		{
 			if (Items.FindAll(x => (x.SymbolName == symbol.name && x.ListName == listName)).Count >= 1)
 			{
 				Items.RemoveAll(x => (x.SymbolName == symbol.name && x.ListName == listName));
@@ -38,30 +52,18 @@ namespace AlgoTrader.datamodel
 			{
 				return false;
 			}
-        }
-
-        public List<ISymbol> symbols
-        {
-            get
-            {
-                List<ISymbol> result = new List<ISymbol>();
-                foreach (WatchListItem i in Items)
-                {
-                    result.Add(i.Symbol);
-                }
-                return result;
-            }
-        }
+		}
 
 		public WatchList(string listName)
 		{
-			ListName = "Default";
 			Items = new List<WatchListItem>();
+			ListName = listName;
 		}
 
 		public WatchList()
 		{
-
+			Items = new List<WatchListItem>();
+			ListName = "Default";
 		}
     }
 }
