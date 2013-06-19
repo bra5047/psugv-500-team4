@@ -7,13 +7,14 @@ using System.Web.UI.WebControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using System.IO;
+using System.Data.Entity;
 
 namespace AlgoTraderSite
 {
 	public partial class WatchListPage : Page
 	{
-		private static WatchList wl = new WatchList();
-		private List<QuoteMessage> quotes = new List<QuoteMessage>();
+		private static WatchList wl = new WatchList("Default");
+		private static List<QuoteMessage> quotes = new List<QuoteMessage>();
 		private static bool showing = false;
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -27,7 +28,6 @@ namespace AlgoTraderSite
 		{
 			if (!showing)
 			{
-				wl.ListName = "Default";
 				wl.addToList(new Symbol("GOOG"), "Default");
 				wl.addToList(new Symbol("AAPL"), "Default");
 				wl.addToList(new Symbol("VZ"), "Default");
@@ -36,7 +36,7 @@ namespace AlgoTraderSite
 				wl.addToList(new Symbol("HP"), "Default");
 
 				quotes.Add(new QuoteMessage(890.22, new DateTime(2013, 06, 18), "GOOG"));
-				quotes.Add(new QuoteMessage(870.47, new DateTime(2013, 06, 17), "GOOG"));
+				quotes.Add(new QuoteMessage(760.47, new DateTime(2013, 06, 17), "GOOG"));
 				quotes.Add(new QuoteMessage(840.47, new DateTime(2013, 06, 16), "GOOG"));
 				quotes.Add(new QuoteMessage(830.47, new DateTime(2013, 06, 15), "GOOG"));
 				quotes.Add(new QuoteMessage(438.89, new DateTime(2013, 06, 18), "AAPL"));
@@ -48,7 +48,9 @@ namespace AlgoTraderSite
 				quotes.Add(new QuoteMessage(35.47, new DateTime(2013, 06, 18), "MSFT"));
 				quotes.Add(new QuoteMessage(35.67, new DateTime(2013, 06, 17), "MSFT"));
 				quotes.Add(new QuoteMessage(25.44, new DateTime(2013, 06, 18), "MSFT"));
-
+				quotes.Add(new QuoteMessage(20.12, new DateTime(2013, 06, 18), "HP"));
+				quotes.Add(new QuoteMessage(22.43, new DateTime(2013, 06, 17), "HP"));
+				wl.Items = wl.Items.OrderBy(x => x.SymbolName).ToList();
 				showing = true;
 			}
 		}
@@ -84,6 +86,7 @@ namespace AlgoTraderSite
 				string listName = watchlist.Items[row].ListName;
 				double priceNow = 0;
 				double priceBefore = 0;
+				double change = 0;
 				DateTime date = new DateTime(1, 1, 1);
 
 				TableRow tblrow = new TableRow();
@@ -107,27 +110,40 @@ namespace AlgoTraderSite
 				actionCell.Controls.Add(removeBtn);
 				cells.Add(actionCell);
 
-				companyCell.Text = watchlist.Items[row].SymbolName;
+				companyCell.Text = symbolName;
+
 				foreach (QuoteMessage q in quotes)
 				{
-					List<QuoteMessage> _quotes = new List<QuoteMessage>();
-					_quotes = _quotes.Where(x => x.SymbolName == symbolName).OrderByDescending(x => x.timestamp).ToList();
+					date = (from quote in quotes
+							where quote.SymbolName.Equals(symbolName)
+							orderby quote.timestamp descending
+							select quote.timestamp).First();
+					
+					priceNow = (from quote in quotes
+								where quote.SymbolName.Equals(symbolName)
+								orderby quote.timestamp descending
+								select quote.Price).First();
 
-					watchlistdiv.InnerText = _quotes.Count.ToString();
-				
-					//date = (from quote in quotes
-					//		where (quote.SymbolName == symbolName)
-					//		orderby quote.timestamp descending
-					//		select quote.timestamp).Skip(1).First();
-					//priceNow = (from _q in _quotes
-					//			select _q.Price).First();
-					//priceBefore = (from _q in _quotes
-					//			   select _q.Price).Skip(1).First();
+					priceBefore = (from quote in quotes
+								   where quote.SymbolName.Equals(symbolName)
+								   orderby quote.timestamp descending
+								   select quote.Price).Skip(1).First();
 				}
 				
-				priceCell.Text = "890.22"; //replace with quote price
-				changeCell.Text = (priceNow - priceBefore).ToString() + " since " + date.ToShortDateString(); // replace with quote change
-				changePercentCell.Text = "+ 1.19%"; // replace with quote percent change
+				priceCell.Text = priceNow.ToString("N2") + " as of " + date.ToShortDateString();
+				change = priceNow - priceBefore;
+
+				if (change > 0 && change != 0)
+				{
+					changeCell.Text = "+ ";
+				}
+				if (change < 0 && change != 0)
+				{
+					changeCell.Text = "- ";
+				}
+
+				changeCell.Text += Math.Abs(change).ToString("N2");
+				changePercentCell.Text = ((change / priceBefore) * 100).ToString("N2") + "%";
 
 				foreach (TableCell cell in cells)
 				{
@@ -154,6 +170,7 @@ namespace AlgoTraderSite
 		{
 			watchlist.addToList(symbol, listName);
 			showWatchList(watchlist);
+			tbAddToWatchList.Text = string.Empty;
 		}
 
 		protected void btnRemove_Click(object sender, EventArgs e)

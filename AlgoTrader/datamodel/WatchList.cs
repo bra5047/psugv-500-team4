@@ -3,29 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class WatchList
+    public class WatchList : IWatchList
     {
         [Key]
         public string ListName { get; set; }
         public virtual List<WatchListItem> Items { get; set; }
-
-		public WatchList(string listName)
-		{
-			ListName = listName;
-			Items = new List<WatchListItem>();
-		}
-
-		public WatchList()
-		{
-			Items = new List<WatchListItem>();
-		}
 
         public bool addToList(ISymbol symbol, string listName)
         {
@@ -64,5 +52,16 @@ namespace AlgoTrader.datamodel
                 return result;
             }
         }
+
+		public WatchList(string listName)
+		{
+			ListName = "Default";
+			Items = new List<WatchListItem>();
+		}
+
+		public WatchList()
+		{
+
+		}
     }
 }

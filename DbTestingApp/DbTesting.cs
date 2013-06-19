@@ -12,6 +12,8 @@ namespace DbTestingApp
     {
         static void Main(string[] args)
         {
+			string source = "Data Source=D:\\Projects\\Programming\\CSharp\\TraderApp\\DB\\AlgoTraderDB.sdf";
+
             Console.WriteLine("Testing the entity framework...");
             TraderContext db = new TraderContext();
 
