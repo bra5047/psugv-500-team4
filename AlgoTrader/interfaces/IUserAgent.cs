@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ServiceModel;
 
 namespace AlgoTrader.Interfaces
 {
-    interface IUserAgent
+    [ServiceContract]
+    public interface IUserAgent
     {
-        void generateAlert(ISymbol symbol, tradeTypes type, int quantity);
+        [OperationContract(IsOneWay = true)]
+        void generateAlert(string symbolName, tradeTypes type, int quantity, double price);
+        [OperationContract(IsOneWay = true)]
         void processAlertResponse(string alertID, string alertResponse);
     }
 }
