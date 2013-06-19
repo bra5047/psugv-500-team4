@@ -1,4 +1,4 @@
-﻿<%@ Page Title="My Portfolio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Portfolio.aspx.cs" Inherits="AlgoTraderSite._Default" %>
+﻿<%@ Page Title="My Portfolio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Portfolio.aspx.cs" Inherits="AlgoTraderSite.MyPortfolio" %>
 
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
@@ -10,5 +10,6 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-	<p>Here a table of the currently owned stocks will be displayed.</p>
+    <asp:TreeView ID="PortfolioTree" runat="server">
+    </asp:TreeView>
 </asp:Content>
