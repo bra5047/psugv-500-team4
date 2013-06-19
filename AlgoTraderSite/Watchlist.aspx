@@ -11,6 +11,8 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-	<div id="watchlist" runat="server"></div>
+	<div id="watchlistdiv" runat="server"></div>
+	<asp:TextBox runat="server" ID="tbAddToWatchList" ></asp:TextBox>
+	<asp:Button runat="server" ID="btnAddToWatchList" Text="Add to Watch List" OnClick="btnAddToWatchList_Click"/>
 	<asp:Table runat="server" ID="tblWatchList"></asp:Table>
 </asp:Content>
