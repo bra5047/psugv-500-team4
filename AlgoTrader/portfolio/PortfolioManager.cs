@@ -57,19 +57,44 @@ namespace AlgoTrader.portfolio
         public void buy(string symbolName, int quantity)
         {
             TraderContext db = DbContext;
+            Quote lastQuote = db.Quotes.Where(x => x.SymbolName == symbolName).OrderByDescending(y => y.timestamp).FirstOrDefault();
+            if (lastQuote == null)
+            {
+                // just bail for now; maybe it should wait until a quote comes in? Synchronous call into QuoteManager?
+                return;
+            }
             Portfolio p = db.Portfolios.FirstOrDefault(); // assumes only one portfolio for now
+
+            if (!HasEnoughCash(p, quantity, lastQuote.price))
+            {
+                // again, just bail if we have a problem. might need to throw an exception
+                return;
+            }
             Position pos = db.Positions.Where(x => x.PortfolioId == p.PortfolioId && x.SymbolName == symbolName).FirstOrDefault();
             Trade t = db.Trades.Create();
+            ProcessBuyTrade(t, symbolName, quantity, lastQuote.price, pos, p);
+            db.Trades.Add(t);
+            db.SaveChanges();
+            db.Dispose();
+        }
+
+        public void ProcessBuyTrade(Trade t, string symbolName, int quantity, double price, Position pos, Portfolio port)
+        {
             t.type = tradeTypes.Buy;
             t.SymbolName = symbolName;
             t.quantity = quantity;
             t.timestamp = DateTime.Now;
-            t.price = 5;
+            t.price = price;
+            // this record keeping stuff could be implemented in the data model, but it's easier to implement here right now
             t.PositionId = pos.PositionId;
-            db.Trades.Add(t);
-            p.Cash -= t.price * t.quantity;
-            db.SaveChanges();
-            db.Dispose();
+            pos.quantity += t.quantity;
+            pos.price += t.price * t.quantity;
+            port.Cash -= t.price * t.quantity;
+        }
+
+        public bool HasEnoughCash(Portfolio port, int quantity, double price)
+        {
+            return (port.Cash > quantity * price);
         }
 
         public double getAvailableCash()
