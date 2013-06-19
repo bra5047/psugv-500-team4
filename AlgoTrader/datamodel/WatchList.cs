@@ -35,19 +35,21 @@ namespace AlgoTrader.datamodel
 					return false;
 			}
 
-			WatchListItem newItem = new WatchListItem(symbol, listName);
-			Items.Add(newItem);
+			Items.Add(new WatchListItem(symbol, listName));
 			return true;
 		}
 
         public bool removeFromList(ISymbol symbol, string listName)
         {
-			if (Items.Contains(new WatchListItem(symbol, listName)))
+			if (Items.FindAll(x => (x.SymbolName == symbol.name && x.ListName == listName)).Count >= 1)
 			{
-				Items.RemoveAll(item => (item.SymbolName == symbol.ToString() && item.ListName == listName));
+				Items.RemoveAll(x => (x.SymbolName == symbol.name && x.ListName == listName));
 				return true;
 			}
-            return false;
+			else
+			{
+				return false;
+			}
         }
 
         public List<ISymbol> symbols
