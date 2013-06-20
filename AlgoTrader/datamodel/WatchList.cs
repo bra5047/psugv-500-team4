@@ -32,6 +32,7 @@ namespace AlgoTrader.datamodel
 		List<WatchListItem> IWatchList.items
 		{
 			get { return Items; }
+			set { Items = value; }
 		}
 
 		bool IWatchList.AddToList(ISymbol symbol, string listName)

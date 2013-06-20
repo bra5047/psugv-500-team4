@@ -9,7 +9,7 @@ namespace AlgoTrader.Interfaces
     public interface IWatchList
     {
         List<ISymbol> symbols { get; }
-		List<WatchListItem> items { get; }
+		List<WatchListItem> items { get; set; }
 		
         bool AddToList(ISymbol symbol, string listName);
         bool RemoveFromList(ISymbol symbol, string listName);

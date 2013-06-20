@@ -34,12 +34,13 @@ namespace AlgoTraderSite
 
 		public void showWatchList(IWatchList watchlist)
 		{
-			tblWatchList.Controls.Clear();
+			tblWatchList.Controls.Clear(); // clear the page
+			watchlist.items = watchlist.items.OrderBy(a => a.SymbolName).ToList();
 
-			TableRow headers = new TableRow();
+			TableHeaderRow headers = new TableHeaderRow();
 			for (int i = 0; i < numColumns; i++)
 			{
-				TableCell cell = new TableCell();
+				TableHeaderCell cell = new TableHeaderCell();
 				headers.Cells.Add(cell);
 			}
 
