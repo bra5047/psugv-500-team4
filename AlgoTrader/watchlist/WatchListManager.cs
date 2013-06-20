@@ -8,7 +8,7 @@ using AlgoTrader.datamodel;
 
 namespace AlgoTrader.watchlist
 {
-	public class WatchListManager
+	public class WatchListManager : IWatchListManager
 	{
 		private TraderContext _dbContext;
 
@@ -27,7 +27,8 @@ namespace AlgoTrader.watchlist
 			}
 		}
 
-		public WatchList GetWatchList(string listName){
+		IWatchList IWatchListManager.GetWatchList(string listName)
+		{
 			// pull from db and add to w.Items eventually
 			//TraderContext db = new TraderContext();
 			//WatchList w = db.WatchLists.FirstOrDefault();
@@ -38,28 +39,28 @@ namespace AlgoTrader.watchlist
 			//	result.Add(q);
 			//}
 
-			WatchList result = new WatchList();
-			result.addToList(new Symbol("GOOG"), listName);
-			result.addToList(new Symbol("AAPL"), listName);
-			result.addToList(new Symbol("VZ"), listName);
-			result.addToList(new Symbol("INTC"), listName);
-			result.addToList(new Symbol("MSFT"), listName);
-			result.addToList(new Symbol("HP"), listName);
-			result.addToList(new Symbol("AMD"), listName);
-			result.addToList(new Symbol("NVDA"), listName);
-			result.addToList(new Symbol("QCOM"), listName);
-			result.addToList(new Symbol("PANL"), listName);
+			IWatchList result = new WatchList();
+			result.AddToList(new Symbol("GOOG"), listName);
+			result.AddToList(new Symbol("AAPL"), listName);
+			result.AddToList(new Symbol("VZ"), listName);
+			result.AddToList(new Symbol("INTC"), listName);
+			result.AddToList(new Symbol("MSFT"), listName);
+			result.AddToList(new Symbol("HP"), listName);
+			result.AddToList(new Symbol("AMD"), listName);
+			result.AddToList(new Symbol("NVDA"), listName);
+			result.AddToList(new Symbol("QCOM"), listName);
+			result.AddToList(new Symbol("PANL"), listName);
 
 			return result;
 		}
 
-		public List<Quote> GetQuotes()
+		List<Quote> IWatchListManager.GetQuotes()
 		{
 			//TraderContext db = new TraderContext();
 			//List<Quote> result = db.Quotes.Where(a => a.SymbolName.Equals(symbol.name)).ToList();
 
 			List<Quote> result = new List<Quote>();
-			
+
 			Quote q1 = new Quote();
 			q1.price = 890.22;
 			q1.timestamp = new DateTime(2013, 06, 18);
@@ -182,16 +183,16 @@ namespace AlgoTrader.watchlist
 			result.Add(q20);
 
 			return result;
-		}      
+		}
 
 		public WatchListManager()
-        {
-            //_dbContext = null;
-        }
+		{
+			//_dbContext = null;
+		}
 
-        public WatchListManager(TraderContext db)
-        {
-            _dbContext = db;
-        }
+		public WatchListManager(TraderContext db)
+		{
+			_dbContext = db;
+		}
 	}
 }

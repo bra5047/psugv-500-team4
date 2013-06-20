@@ -13,15 +13,15 @@ namespace AlgoTraderSite
 {
 	public partial class WatchListPage : Page
 	{
-		private static WatchListManager wlm = new WatchListManager();
-		private static WatchList wl = new WatchList("Default");
+		private static IWatchListManager wlm = new WatchListManager();
+		private static IWatchList wl = new WatchList("Default");
 		private static List<Quote> quotes = new List<Quote>();
 		public static bool showing = false;
 		public int numColumns = 5;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			watchlistdiv.InnerText = string.Empty; // status string above the list
+			statusMessage.InnerText = string.Empty; // status string above the list
 			
 			if (!showing)
 			{
@@ -32,7 +32,7 @@ namespace AlgoTraderSite
 			showWatchList(wl);
 		}
 
-		private void showWatchList(WatchList watchlist)
+		public void showWatchList(IWatchList watchlist)
 		{
 			tblWatchList.Controls.Clear();
 
@@ -50,10 +50,10 @@ namespace AlgoTraderSite
 			headers.Cells[4].Text = "ACTIONS";
 			tblWatchList.Rows.Add(headers);
 
-			for (int row = 0; row < watchlist.Items.Count; row++)
+			for (int row = 0; row < watchlist.items.Count; row++)
 			{
-				string symbolName = watchlist.Items[row].SymbolName;
-				string listName = watchlist.Items[row].ListName;
+				string symbolName = watchlist.items[row].SymbolName;
+				string listName = watchlist.items[row].ListName;
 				double currentPrice = 0;
 				double previousPrice = 0;
 				double priceChange = 0;
@@ -69,6 +69,7 @@ namespace AlgoTraderSite
 				}
 
 				// create remove button for each row
+				// need to fix double click required for page update; OnPreRender?
 				Button btnRemove = new Button();
 				btnRemove.Attributes["Symbol"] = symbolName;
 				btnRemove.Attributes["ListName"] = listName;
@@ -124,22 +125,40 @@ namespace AlgoTraderSite
 			bool success = false;
 			string symbol = ((Button)sender).Attributes["Symbol"];
 			string listName = ((Button)sender).Attributes["ListName"];
-			success = wl.removeFromList(new Symbol(symbol), listName);
-			showWatchList(wl);
-
+			success = wl.RemoveFromList(new Symbol(symbol), listName);
+			
 			if (success)
 			{
-				watchlistdiv.InnerText = symbol + " from list " + listName + " removed successfully.";
+				statusMessage.InnerText = symbol + " from list " + listName + " removed successfully.";
 			}
+
+			showWatchList(wl);
 		}
 
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
-			string symbol = this.tbAddToWatchList.Text.ToUpper();
+			string symbol = this.tbAddToWatchList.Text.Trim().ToUpper();
 			if (symbol.Length > 0)
 			{
-				wl.addToList(new Symbol(symbol), "Default");
+				wl.AddToList(new Symbol(symbol), "Default");
+				statusMessage.InnerText = symbol + " added to list " + "Default" + ".";
+
+				//REMOVE
+				//THIS
+				//LATER
+				Quote q1 = new Quote();
+				q1.price = 500.00;
+				q1.SymbolName = symbol;
+				q1.timestamp = DateTime.Now;
+				quotes.Add(q1);
+
+				Quote q2 = new Quote();
+				q2.price = 400.00;
+				q2.SymbolName = symbol;
+				q2.timestamp = DateTime.Now.AddDays(-1);
+				quotes.Add(q2);
 			}
+			showWatchList(wl);
 		}
 	}
 }

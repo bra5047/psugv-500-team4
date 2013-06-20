@@ -13,13 +13,13 @@ namespace AlgoTraderSite {
     public partial class WatchListPage {
         
         /// <summary>
-        /// watchlistdiv control.
+        /// statusMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl watchlistdiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusMessage;
         
         /// <summary>
         /// tbAddToWatchList control.

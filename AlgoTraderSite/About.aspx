@@ -2,21 +2,16 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <hgroup class="title">
-        <h1><%: Title %>.</h1>
-        <h2>Your app description page.</h2>
+        <h1><%: Title %></h1>
     </hgroup>
 
     <article>
-        <p>        
-            Use this area to provide additional information.
-        </p>
+        <h2>        
+            What is AlgoTrader?
+        </h2>
 
         <p>        
-            Use this area to provide additional information.
-        </p>
-
-        <p>        
-            Use this area to provide additional information.
+            AlgoTrader is a stock prediction application that uses a unique algorithm to determine whether certain stocks should be bought or sold.
         </p>
     </article>
 

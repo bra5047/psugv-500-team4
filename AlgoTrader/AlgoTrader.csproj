@@ -64,6 +64,7 @@
     <Compile Include="datamodel\TraderContext.cs" />
     <Compile Include="datamodel\WatchList.cs" />
     <Compile Include="datamodel\WatchListItem.cs" />
+    <Compile Include="interfaces\IWatchListManager.cs" />
     <Compile Include="interfaces\IUserAgent.cs" />
     <Compile Include="interfaces\IStrategyDetail.cs" />
     <Compile Include="interfaces\IStrategy.cs" />

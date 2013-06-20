@@ -2,49 +2,45 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <hgroup class="title">
-        <h1><%: Title %>.</h1>
-        <h2>Your contact page.</h2>
+        <h1><%: Title %></h1>
     </hgroup>
-
-    <section class="contact">
-        <header>
-            <h3>Phone:</h3>
-        </header>
-        <p>
-            <span class="label">Main:</span>
-            <span>425.555.0100</span>
-        </p>
-        <p>
-            <span class="label">After Hours:</span>
-            <span>425.555.0199</span>
-        </p>
-    </section>
 
     <section class="contact">
         <header>
             <h3>Email:</h3>
         </header>
         <p>
-            <span class="label">Support:</span>
-            <span><a href="mailto:Support@example.com">Support@example.com</a></span>
+            <span class="label">Adam Trinh:</span>
+            <span><a href="mailto:aht5021@psu.edu">aht5021@psu.edu</a></span>
         </p>
         <p>
-            <span class="label">Marketing:</span>
-            <span><a href="mailto:Marketing@example.com">Marketing@example.com</a></span>
+            <span class="label">Brian Armstrong:</span>
+            <span>email@server.com</span>
         </p>
+		<p>
+			<span class="label">Bill Jones:</span>
+			<span>email@server.com</span>
+		</p>
+    </section>
+
+	<section class="contact">
+        <header>
+            <h3>Address:</h3>
+        </header>
         <p>
-            <span class="label">General:</span>
-            <span><a href="mailto:General@example.com">General@example.com</a></span>
+            Penn State Great Valley<br />
+			30 East Swedesford Road<br />
+            Malvern, PA 19355
         </p>
     </section>
 
     <section class="contact">
         <header>
-            <h3>Address:</h3>
+            <h3>Source:</h3>
         </header>
         <p>
-            One Microsoft Way<br />
-            Redmond, WA 98052-6399
+            <span class="label">Github</span>
+            <span><a href="https://github.com/bra5047/psugv-500-team4" target="_blank">https://github.com/bra5047/psugv-500-team4</a></span>
         </p>
     </section>
 </asp:Content>

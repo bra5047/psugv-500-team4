@@ -6,11 +6,12 @@ using AlgoTrader.datamodel;
 
 namespace AlgoTrader.Interfaces
 {
-    interface IWatchList
+    public interface IWatchList
     {
         List<ISymbol> symbols { get; }
+		List<WatchListItem> items { get; }
 		
-        bool addToList(ISymbol symbol, string listName);
-        bool removeFromList(ISymbol symbol, string listName);
+        bool AddToList(ISymbol symbol, string listName);
+        bool RemoveFromList(ISymbol symbol, string listName);
     }
 }

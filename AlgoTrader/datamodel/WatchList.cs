@@ -15,7 +15,7 @@ namespace AlgoTrader.datamodel
         public string ListName { get; set; }
         public virtual List<WatchListItem> Items { get; set; }
 
-		public List<ISymbol> symbols
+		List<ISymbol> IWatchList.symbols
 		{
 			get
 			{
@@ -29,7 +29,12 @@ namespace AlgoTrader.datamodel
 			}
 		}
 
-		public bool addToList(ISymbol symbol, string listName)
+		List<WatchListItem> IWatchList.items
+		{
+			get { return Items; }
+		}
+
+		bool IWatchList.AddToList(ISymbol symbol, string listName)
 		{
 			foreach (WatchListItem item in Items)
 			{
@@ -41,7 +46,7 @@ namespace AlgoTrader.datamodel
 			return true;
 		}
 
-		public bool removeFromList(ISymbol symbol, string listName)
+		bool IWatchList.RemoveFromList(ISymbol symbol, string listName)
 		{
 			if (Items.FindAll(x => (x.SymbolName == symbol.name && x.ListName == listName)).Count >= 1)
 			{
