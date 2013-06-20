@@ -140,6 +140,7 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="BuySell.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\site-orig.css" />
     <Content Include="Content\Site.css" />
@@ -306,6 +307,13 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BuySell.aspx.cs">
+      <DependentUpon>BuySell.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BuySell.aspx.designer.cs">
+      <DependentUpon>BuySell.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

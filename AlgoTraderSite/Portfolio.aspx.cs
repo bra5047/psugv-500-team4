@@ -26,11 +26,15 @@ namespace AlgoTraderSite
                 string s = String.Format("{0}     {1}     ${2}     {3}", p.SymbolName, p.Quantity, p.Price, p.Status);
                 TreeNode n = new TreeNode(s);
 
+                double lastPrice = 0;
+
                 foreach (TradeMessage t in p.Trades)
                 {
                     string tstr = String.Format("{0}     {1}     ${2}     {3}", t.Timestamp.ToString(), t.Quantity.ToString(), t.Price.ToString(), t.Type.ToString());
                     n.ChildNodes.Add(new TreeNode(tstr));
+                    lastPrice = t.Price;
                 }
+                n.NavigateUrl = "BuySell.aspx?s=" + p.SymbolName + "&p=" + lastPrice.ToString();
                 root.ChildNodes.Add(n);
             }
             PortfolioTree.Nodes.Clear();
