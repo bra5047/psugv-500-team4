@@ -17,10 +17,10 @@ namespace AlgoTrader.NUnit
 		public void AddToList()
 		{
 			IWatchList w = new WatchList();
-			w.addToList(new Symbol("GOOG"), "Default");
-			w.addToList(new Symbol("GOOG"), "Other");
-			w.addToList(new Symbol("MSFT"), "Default");
-			w.addToList(new Symbol("MSFT"), "Default");
+			w.AddToList(new Symbol("GOOG"), "Default");
+			w.AddToList(new Symbol("GOOG"), "Other");
+			w.AddToList(new Symbol("MSFT"), "Default");
+			w.AddToList(new Symbol("MSFT"), "Default");
 			Assert.AreEqual(w.items[0].SymbolName, "GOOG");
 			Assert.AreEqual(w.items[1].SymbolName, "GOOG");
 			Assert.AreEqual(w.items[2].SymbolName, "MSFT");
