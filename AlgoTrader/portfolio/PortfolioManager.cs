@@ -68,7 +68,8 @@ namespace AlgoTrader.portfolio
             if (!HasEnoughCash(p, quantity, lastQuote.price))
             {
                 // again, just bail if we have a problem. might need to throw an exception
-                return;
+                // return;
+                throw new System.ServiceModel.FaultException<InsufficientFundsFault>(new InsufficientFundsFault(quantity*lastQuote.price, p.Cash));
             }
             Position pos = db.Positions.Where(x => x.PortfolioId == p.PortfolioId && x.SymbolName == symbolName).FirstOrDefault();
             Trade t = db.Trades.Create();

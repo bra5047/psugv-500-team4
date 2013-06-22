@@ -9,23 +9,358 @@
 //------------------------------------------------------------------------------
 
 namespace AlgoTraderSite.Portfolio.Client {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PositionMessage", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.portfolio")]
+    [System.SerializableAttribute()]
+    public partial class PositionMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AlgoTraderSite.Portfolio.Client.positionStatus StatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SymbolNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AlgoTraderSite.Portfolio.Client.TradeMessage[] TradesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AlgoTraderSite.Portfolio.Client.positionStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SymbolName {
+            get {
+                return this.SymbolNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SymbolNameField, value) != true)) {
+                    this.SymbolNameField = value;
+                    this.RaisePropertyChanged("SymbolName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AlgoTraderSite.Portfolio.Client.TradeMessage[] Trades {
+            get {
+                return this.TradesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TradesField, value) != true)) {
+                    this.TradesField = value;
+                    this.RaisePropertyChanged("Trades");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="positionStatus", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
+    public enum positionStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Open = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Closed = 1,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="TradeMessage", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.portfolio")]
+    [System.SerializableAttribute()]
+    public partial class TradeMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double PriceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SymbolNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime TimestampField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TradeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AlgoTraderSite.Portfolio.Client.tradeTypes TypeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SymbolName {
+            get {
+                return this.SymbolNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SymbolNameField, value) != true)) {
+                    this.SymbolNameField = value;
+                    this.RaisePropertyChanged("SymbolName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Timestamp {
+            get {
+                return this.TimestampField;
+            }
+            set {
+                if ((this.TimestampField.Equals(value) != true)) {
+                    this.TimestampField = value;
+                    this.RaisePropertyChanged("Timestamp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TradeId {
+            get {
+                return this.TradeIdField;
+            }
+            set {
+                if ((this.TradeIdField.Equals(value) != true)) {
+                    this.TradeIdField = value;
+                    this.RaisePropertyChanged("TradeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AlgoTraderSite.Portfolio.Client.tradeTypes Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((this.TypeField.Equals(value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="tradeTypes", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
+    public enum tradeTypes : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Buy = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Sell = 1,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InsufficientFundsFault", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
+    [System.SerializableAttribute()]
+    public partial class InsufficientFundsFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double AvailableAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FaultMessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double TransactionAmountField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double AvailableAmount {
+            get {
+                return this.AvailableAmountField;
+            }
+            set {
+                if ((this.AvailableAmountField.Equals(value) != true)) {
+                    this.AvailableAmountField = value;
+                    this.RaisePropertyChanged("AvailableAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FaultMessage {
+            get {
+                return this.FaultMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FaultMessageField, value) != true)) {
+                    this.FaultMessageField = value;
+                    this.RaisePropertyChanged("FaultMessage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double TransactionAmount {
+            get {
+                return this.TransactionAmountField;
+            }
+            set {
+                if ((this.TransactionAmountField.Equals(value) != true)) {
+                    this.TransactionAmountField = value;
+                    this.RaisePropertyChanged("TransactionAmount");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Portfolio.Client.IPortfolioManager")]
     public interface IPortfolioManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/GetOpenPositions", ReplyAction="http://tempuri.org/IPortfolioManager/GetOpenPositionsResponse")]
-        AlgoTrader.portfolio.PositionMessage[] GetOpenPositions();
+        AlgoTraderSite.Portfolio.Client.PositionMessage[] GetOpenPositions();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/GetOpenPositions", ReplyAction="http://tempuri.org/IPortfolioManager/GetOpenPositionsResponse")]
-        System.Threading.Tasks.Task<AlgoTrader.portfolio.PositionMessage[]> GetOpenPositionsAsync();
+        System.Threading.Tasks.Task<AlgoTraderSite.Portfolio.Client.PositionMessage[]> GetOpenPositionsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/GetPosition", ReplyAction="http://tempuri.org/IPortfolioManager/GetPositionResponse")]
-        AlgoTrader.portfolio.PositionMessage GetPosition(string SymbolName);
+        AlgoTraderSite.Portfolio.Client.PositionMessage GetPosition(string SymbolName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/GetPosition", ReplyAction="http://tempuri.org/IPortfolioManager/GetPositionResponse")]
-        System.Threading.Tasks.Task<AlgoTrader.portfolio.PositionMessage> GetPositionAsync(string SymbolName);
+        System.Threading.Tasks.Task<AlgoTraderSite.Portfolio.Client.PositionMessage> GetPositionAsync(string SymbolName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/sell", ReplyAction="http://tempuri.org/IPortfolioManager/sellResponse")]
         void sell(string symbolName, int quantity);
@@ -34,6 +369,7 @@ namespace AlgoTraderSite.Portfolio.Client {
         System.Threading.Tasks.Task sellAsync(string symbolName, int quantity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/buy", ReplyAction="http://tempuri.org/IPortfolioManager/buyResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(AlgoTraderSite.Portfolio.Client.InsufficientFundsFault), Action="http://tempuri.org/IPortfolioManager/buyInsufficientFundsFaultFault", Name="InsufficientFundsFault", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
         void buy(string symbolName, int quantity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/buy", ReplyAction="http://tempuri.org/IPortfolioManager/buyResponse")]
@@ -73,19 +409,19 @@ namespace AlgoTraderSite.Portfolio.Client {
                 base(binding, remoteAddress) {
         }
         
-        public AlgoTrader.portfolio.PositionMessage[] GetOpenPositions() {
+        public AlgoTraderSite.Portfolio.Client.PositionMessage[] GetOpenPositions() {
             return base.Channel.GetOpenPositions();
         }
         
-        public System.Threading.Tasks.Task<AlgoTrader.portfolio.PositionMessage[]> GetOpenPositionsAsync() {
+        public System.Threading.Tasks.Task<AlgoTraderSite.Portfolio.Client.PositionMessage[]> GetOpenPositionsAsync() {
             return base.Channel.GetOpenPositionsAsync();
         }
         
-        public AlgoTrader.portfolio.PositionMessage GetPosition(string SymbolName) {
+        public AlgoTraderSite.Portfolio.Client.PositionMessage GetPosition(string SymbolName) {
             return base.Channel.GetPosition(SymbolName);
         }
         
-        public System.Threading.Tasks.Task<AlgoTrader.portfolio.PositionMessage> GetPositionAsync(string SymbolName) {
+        public System.Threading.Tasks.Task<AlgoTraderSite.Portfolio.Client.PositionMessage> GetPositionAsync(string SymbolName) {
             return base.Channel.GetPositionAsync(SymbolName);
         }
         

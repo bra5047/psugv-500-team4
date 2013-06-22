@@ -14,4 +14,12 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="tradeTypes" nillable="true" type="tns:tradeTypes" />
+  <xs:complexType name="InsufficientFundsFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvailableAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransactionAmount" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InsufficientFundsFault" nillable="true" type="tns:InsufficientFundsFault" />
 </xs:schema>

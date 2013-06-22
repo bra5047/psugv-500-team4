@@ -21,4 +21,5 @@
     <asp:Literal ID="FillerLabel" runat="server" Text=" @ "></asp:Literal>
     <asp:Literal ID="PriceLabel" runat="server" Text="$0.00"></asp:Literal>
     <asp:Button ID="ExecuteTrade" runat="server" Text="Execute" OnClick="ExecuteTrade_Click" />
+    <div><asp:Label ID="ErrorMsg" runat="server" BackColor="#FF3300" ForeColor="White" Visible="False" Width="100%"></asp:Label></div>
 </asp:Content>

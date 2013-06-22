@@ -249,13 +249,16 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Service References\Portfolio.Client\PortfolioManager.disco" />
-    <Content Include="Service References\Portfolio.Client\configuration91.svcinfo" />
-    <Content Include="Service References\Portfolio.Client\configuration.svcinfo" />
-    <Content Include="Service References\Portfolio.Client\Reference.svcmap">
+    <Content Include="Service References\Portfolio.Client\AlgoTraderSite.Portfolio.Client.PositionMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\Portfolio.Client\PortfolioManager.disco" />
+    <None Include="Service References\Portfolio.Client\configuration91.svcinfo" />
+    <None Include="Service References\Portfolio.Client\configuration.svcinfo" />
+    <None Include="Service References\Portfolio.Client\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="services\portfolio\PortfolioManager.svc" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -392,7 +395,7 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service References\Portfolio.Client\PortfolioManager.wsdl" />
+    <None Include="Service References\Portfolio.Client\PortfolioManager.wsdl" />
     <None Include="Service References\Portfolio.Client\PortfolioManager.xsd">
       <SubType>Designer</SubType>
     </None>
