@@ -10,11 +10,27 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Portfolio
+    public class Portfolio : IPortfolio
     {
         [Key]
         public int PortfolioId { get; set; }
         public double Cash { get; set; }
         public virtual List<Position> Positions { get; set; }
+
+        List<IPosition> IPortfolio.Positions
+        {
+            get
+            {
+                return Positions.ToList<IPosition>();
+            }
+        }
+
+        double IPortfolio.Value
+        {
+            get
+            {
+                return Positions.Sum(p => p.price);
+            }
+        }
     }
 }

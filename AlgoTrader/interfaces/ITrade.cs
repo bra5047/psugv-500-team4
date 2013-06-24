@@ -22,5 +22,6 @@ namespace AlgoTrader.Interfaces
         double price { get; set; }
         DateTime timestamp { get; set; }
         tradeTypes type { get; set; }
+        double value { get; }
     }
 }

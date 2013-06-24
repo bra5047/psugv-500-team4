@@ -64,6 +64,7 @@
     <Compile Include="datamodel\TraderContext.cs" />
     <Compile Include="datamodel\WatchList.cs" />
     <Compile Include="datamodel\WatchListItem.cs" />
+    <Compile Include="interfaces\IPortfolio.cs" />
     <Compile Include="interfaces\IWatchListManager.cs" />
     <Compile Include="interfaces\IUserAgent.cs" />
     <Compile Include="interfaces\IStrategyDetail.cs" />
@@ -75,7 +76,10 @@
     <Compile Include="interfaces\ITrade.cs" />
     <Compile Include="interfaces\IQuote.cs" />
     <Compile Include="interfaces\ISymbol.cs" />
+    <Compile Include="portfolio\AllocationRule.cs" />
+    <Compile Include="portfolio\EnoughFundsRule.cs" />
     <Compile Include="portfolio\PortfolioManager.cs" />
+    <Compile Include="portfolio\PortfolioRule.cs" />
     <Compile Include="portfolio\PositionMessage.cs" />
     <Compile Include="portfolio\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

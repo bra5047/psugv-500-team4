@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
-//using AlgoTrader.portfolio;
 using AlgoTraderSite.Portfolio.Client;
 using System.IO;
 

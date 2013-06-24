@@ -33,5 +33,13 @@ namespace AlgoTrader.datamodel
             get { return Symbol; }
             set { throw new NotImplementedException(); }
         }
+
+        double ITrade.value
+        {
+            get
+            {
+                return price * quantity;
+            }
+        }
     }
 }

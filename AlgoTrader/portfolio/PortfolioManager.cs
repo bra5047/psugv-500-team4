@@ -11,22 +11,7 @@ namespace AlgoTrader.portfolio
 {
     public class PortfolioManager : IPortfolioManager
     {
-        private TraderContext _dbContext;
-
-        protected TraderContext DbContext
-        {
-            get
-            {
-                if (_dbContext != null)
-                {
-                    return _dbContext;
-                }
-                else
-                {
-                    return new TraderContext();
-                }
-            }
-        }
+        public List<PortfolioRule> Rules { get; set; }
 
         public List<PositionMessage> GetOpenPositions()
         {
@@ -65,15 +50,25 @@ namespace AlgoTrader.portfolio
             }
             Portfolio p = db.Portfolios.FirstOrDefault(); // assumes only one portfolio for now
 
-            if (!HasEnoughCash(p, quantity, lastQuote.price))
+            /*if (!HasEnoughCash(p, quantity, lastQuote.price))
             {
                 // again, just bail if we have a problem. might need to throw an exception
                 // return;
                 throw new System.ServiceModel.FaultException<InsufficientFundsFault>(new InsufficientFundsFault(quantity*lastQuote.price, p.Cash));
-            }
+            } */
+
             Position pos = db.Positions.Where(x => x.PortfolioId == p.PortfolioId && x.SymbolName == symbolName).FirstOrDefault();
             Trade t = db.Trades.Create();
-            ProcessBuyTrade(t, symbolName, quantity, lastQuote.price, pos, p);
+
+            try
+            {
+                ProcessBuyTrade(t, symbolName, quantity, lastQuote.price, pos, p);
+            }
+            catch (InsufficientFunds insuf)
+            {
+                throw new System.ServiceModel.FaultException<InsufficientFundsFault>(new InsufficientFundsFault(double.Parse(insuf.Data["TransactionAmount"].ToString()), double.Parse(insuf.Data["AvailableFunds"].ToString())));
+            }
+
             db.Trades.Add(t);
             db.SaveChanges();
             db.Dispose();
@@ -86,7 +81,7 @@ namespace AlgoTrader.portfolio
             t.quantity = quantity;
             t.timestamp = DateTime.Now;
             t.price = price;
-            // this record keeping stuff could be implemented in the data model, but it's easier to implement here right now
+            ApplyRules(port, t);
             t.PositionId = pos.PositionId;
             pos.quantity += t.quantity;
             pos.price += t.price * t.quantity;
@@ -105,13 +100,41 @@ namespace AlgoTrader.portfolio
             return pf.Cash;
         }
 
+        public void ApplyRules(Portfolio p, Trade t)
+        {
+            foreach (PortfolioRule r in Rules)
+            {
+                r.Apply(p, t);
+            }
+        }
+
+        private TraderContext _dbContext;
+
+        protected TraderContext DbContext
+        {
+            get
+            {
+                if (_dbContext != null)
+                {
+                    return _dbContext;
+                }
+                else
+                {
+                    return new TraderContext();
+                }
+            }
+        }
 
         public PortfolioManager()
         {
             _dbContext = null;
+
+            Rules = new List<PortfolioRule>();
+            Rules.Add(new EnoughFundsRule());
+            Rules.Add(new AllocationRule(0.9));
         }
 
-        public PortfolioManager(TraderContext db)
+        public PortfolioManager(TraderContext db) : this()
         {
             _dbContext = db;
         }
