@@ -44,6 +44,14 @@ namespace AlgoTrader.NUnit
         }
 
         [Test]
+        public void AllocationRuleOutOfRange()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AllocationRule(1.2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AllocationRule(0));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AllocationRule(-2));
+        }
+
+        [Test]
         public void AllocationRuleYes()
         {
             Portfolio p = new Portfolio();

@@ -9,7 +9,20 @@ namespace AlgoTrader.portfolio
 {
     public class AllocationRule : PortfolioRule
     {
-        public double MaxAllocation { get; set; }
+        private double _maxAllocation;
+
+        public double MaxAllocation
+        {
+            get { return _maxAllocation; }
+            set
+            {
+                if (value <= 0 || value > 1)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                _maxAllocation = value;
+            }
+        }
 
         public bool Apply(IPortfolio p, ITrade t)
         {

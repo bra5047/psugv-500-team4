@@ -48,7 +48,7 @@ namespace AlgoTrader.NUnit
             pos.quantity = 0;
             pos.price = 0;
             Trade t = new Trade();
-            PortfolioManager pm = new PortfolioManager();
+            PortfolioManager pm = new PortfolioManager();  // this test might need to initialize the rules
             pm.ProcessBuyTrade(t, "GOOG", 10, 2.5, pos, port);
             Assert.AreEqual("GOOG", t.SymbolName);
             Assert.AreEqual(10, t.quantity);
