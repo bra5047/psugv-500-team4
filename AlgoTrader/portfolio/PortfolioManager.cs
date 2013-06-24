@@ -138,5 +138,21 @@ namespace AlgoTrader.portfolio
         {
             _dbContext = db;
         }
+
+        public PortfolioManager(Dictionary<string, string> settings)
+        {
+            Rules = new List<PortfolioRule>();
+
+            foreach (string s in settings.Keys)
+            {
+                switch (s)
+                {
+                    case "MAX_POSITION_RATIO":
+                        double max = double.Parse(settings[s]);
+                        Rules.Add(new AllocationRule(max));
+                        break;
+                }
+            }
+        }
     }
 }

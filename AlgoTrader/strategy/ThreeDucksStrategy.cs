@@ -25,7 +25,6 @@ namespace AlgoTrader.strategy
             _metrics = new Dictionary<string, List<SmaMetric>>();
             _signals = new Dictionary<string, StrategySignal>();
 
-            // these could eventually be constructor params retrieved from the database settings table
             FIRST_DUCK_SECONDS = 300;
             SECOND_DUCK_SECONDS = 3600;
             THIRD_DUCK_SECONDS = 14400;

@@ -15,22 +15,18 @@ namespace AlgoTrader.NUnit
     public class PortfolioManagerTest
     {
         [Test]
-        public void HasEnoughCash()
+        public void CreateWithSettings()
         {
-            Portfolio p = new Portfolio();
-            p.Cash = 1000;
-            PortfolioManager pm = new PortfolioManager();
-            Assert.IsTrue(pm.HasEnoughCash(p, 5, 10));
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            settings.Add("MAX_POSITION_RATIO", "0.9");
+
+            PortfolioManager pm = new PortfolioManager(settings);
+            PortfolioRule r = pm.Rules.FirstOrDefault<PortfolioRule>(x => typeof(AllocationRule).IsInstanceOfType(x));
+            Assert.IsNotNull(r);
+            AllocationRule a = (AllocationRule)r;
+            Assert.AreEqual(0.9, a.MaxAllocation);
         }
 
-        [Test]
-        public void NotEnoughCash()
-        {
-            Portfolio p = new Portfolio();
-            p.Cash = 1000;
-            PortfolioManager pm = new PortfolioManager();
-            Assert.IsFalse(pm.HasEnoughCash(p, 500, 10));
-        }
 
         [Test]
         public void PlaceABuyTrade()
