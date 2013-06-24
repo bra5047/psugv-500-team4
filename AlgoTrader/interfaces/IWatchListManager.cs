@@ -9,13 +9,10 @@ using AlgoTrader.watchlist;
 
 namespace AlgoTrader.Interfaces
 {
-	[ServiceContract]
 	public interface IWatchListManager
 	{
-		[OperationContract]
 		List<Quote> GetQuotes();
 
-		[OperationContract]
 		IWatchList GetWatchList(string listName);
 	}
 }
