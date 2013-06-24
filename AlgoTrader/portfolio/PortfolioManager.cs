@@ -11,8 +11,6 @@ namespace AlgoTrader.portfolio
 {
     public class PortfolioManager : IPortfolioManager
     {
-        public List<PortfolioRule> Rules { get; set; }
-
         public List<PositionMessage> GetOpenPositions()
         {
             TraderContext db = DbContext;
@@ -50,13 +48,6 @@ namespace AlgoTrader.portfolio
             }
             Portfolio p = db.Portfolios.FirstOrDefault(); // assumes only one portfolio for now
 
-            /*if (!HasEnoughCash(p, quantity, lastQuote.price))
-            {
-                // again, just bail if we have a problem. might need to throw an exception
-                // return;
-                throw new System.ServiceModel.FaultException<InsufficientFundsFault>(new InsufficientFundsFault(quantity*lastQuote.price, p.Cash));
-            } */
-
             Position pos = db.Positions.Where(x => x.PortfolioId == p.PortfolioId && x.SymbolName == symbolName).FirstOrDefault();
             Trade t = db.Trades.Create();
 
@@ -67,6 +58,10 @@ namespace AlgoTrader.portfolio
             catch (InsufficientFunds insuf)
             {
                 throw new System.ServiceModel.FaultException<InsufficientFundsFault>(new InsufficientFundsFault(double.Parse(insuf.Data["TransactionAmount"].ToString()), double.Parse(insuf.Data["AvailableFunds"].ToString())));
+            }
+            catch (AllocationViolation alloc)
+            {
+                throw new System.ServiceModel.FaultException<AllocationViolationFault>(new AllocationViolationFault());
             }
 
             db.Trades.Add(t);
@@ -108,6 +103,37 @@ namespace AlgoTrader.portfolio
             }
         }
 
+        public List<PortfolioRule> Rules { get; set; }
+
+        public void LoadSettings(Dictionary<string, string> settings)
+        {
+            Rules.Clear();
+            Rules.Add(new EnoughFundsRule());
+            foreach (string s in settings.Keys)
+            {
+                switch (s)
+                {
+                    case "MAX_POSITION_RATIO":
+                        double max = double.Parse(settings[s]);
+                        Rules.Add(new AllocationRule(max));
+                        break;
+                }
+            }
+        }
+
+        public void LoadSettings()
+        {
+            Dictionary<string, string> config = new Dictionary<string, string>();
+            TraderContext db = DbContext;
+            var settings = from s in db.SystemSettings where s.Module == "Portfolio" select s;
+            foreach (var i in settings)
+            {
+                config.Add(i.Name, i.Value);
+            }
+            LoadSettings(config);
+            db.Dispose();
+        }
+
         private TraderContext _dbContext;
 
         protected TraderContext DbContext
@@ -128,10 +154,8 @@ namespace AlgoTrader.portfolio
         public PortfolioManager()
         {
             _dbContext = null;
-
             Rules = new List<PortfolioRule>();
-            Rules.Add(new EnoughFundsRule());
-            Rules.Add(new AllocationRule(0.9));
+            LoadSettings();
         }
 
         public PortfolioManager(TraderContext db) : this()
@@ -142,17 +166,7 @@ namespace AlgoTrader.portfolio
         public PortfolioManager(Dictionary<string, string> settings)
         {
             Rules = new List<PortfolioRule>();
-
-            foreach (string s in settings.Keys)
-            {
-                switch (s)
-                {
-                    case "MAX_POSITION_RATIO":
-                        double max = double.Parse(settings[s]);
-                        Rules.Add(new AllocationRule(max));
-                        break;
-                }
-            }
+            LoadSettings(settings);
         }
     }
 }

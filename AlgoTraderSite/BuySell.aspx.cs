@@ -50,6 +50,12 @@ namespace AlgoTraderSite
                 ErrorMsg.Visible = true;
                 return;
             }
+            catch (FaultException<AlgoTraderSite.Portfolio.Client.AllocationViolationFault> ex)
+            {
+                ErrorMsg.Text = ex.Detail.FaultMessage;
+                ErrorMsg.Visible = true;
+                return;
+            }
             Response.Redirect("Portfolio.aspx");
         }
     }

@@ -271,6 +271,51 @@ namespace AlgoTraderSite.Portfolio.Client {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AllocationViolationFault", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
+    [System.SerializableAttribute()]
+    public partial class AllocationViolationFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FaultMessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FaultMessage {
+            get {
+                return this.FaultMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FaultMessageField, value) != true)) {
+                    this.FaultMessageField = value;
+                    this.RaisePropertyChanged("FaultMessage");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InsufficientFundsFault", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
     [System.SerializableAttribute()]
     public partial class InsufficientFundsFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -369,6 +414,7 @@ namespace AlgoTraderSite.Portfolio.Client {
         System.Threading.Tasks.Task sellAsync(string symbolName, int quantity);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPortfolioManager/buy", ReplyAction="http://tempuri.org/IPortfolioManager/buyResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(AlgoTraderSite.Portfolio.Client.AllocationViolationFault), Action="http://tempuri.org/IPortfolioManager/buyAllocationViolationFaultFault", Name="AllocationViolationFault", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
         [System.ServiceModel.FaultContractAttribute(typeof(AlgoTraderSite.Portfolio.Client.InsufficientFundsFault), Action="http://tempuri.org/IPortfolioManager/buyInsufficientFundsFaultFault", Name="InsufficientFundsFault", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
         void buy(string symbolName, int quantity);
         

@@ -30,7 +30,17 @@ namespace AlgoTrader.datamodel
         // ITrade stuff
         ISymbol ITrade.symbol
         {
-            get { return Symbol; }
+            get
+            {
+                if (Symbol == null)
+                {
+                    return new Symbol(SymbolName);
+                }
+                else
+                {
+                    return Symbol;
+                }
+            }
             set { throw new NotImplementedException(); }
         }
 

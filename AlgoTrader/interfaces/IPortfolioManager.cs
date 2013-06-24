@@ -21,6 +21,7 @@ namespace AlgoTrader.Interfaces
         void sell(string symbolName, int quantity);
 
         [FaultContract(typeof(InsufficientFundsFault))]
+        [FaultContract(typeof(AllocationViolationFault))]
         [OperationContract]
         void buy(string symbolName, int quantity);
 
@@ -48,6 +49,18 @@ namespace AlgoTrader.Interfaces
         {
             TransactionAmount = transaction;
             AvailableAmount = available;
+        }
+    }
+
+    [DataContract]
+    public class AllocationViolationFault
+    {
+        [DataMember]
+        public string FaultMessage;
+
+        public AllocationViolationFault()
+        {
+            FaultMessage = "Requested transaction would violate a portfolio allocation rule.";
         }
     }
 }

@@ -27,6 +27,16 @@ namespace AlgoTrader.NUnit
             Assert.AreEqual(0.9, a.MaxAllocation);
         }
 
+        [Test]
+        public void LoadSettingsFromDb()
+        {
+            PortfolioManager pm = new PortfolioManager();
+            pm.LoadSettings();
+            PortfolioRule r = pm.Rules.FirstOrDefault<PortfolioRule>(x => typeof(AllocationRule).IsInstanceOfType(x));
+            Assert.IsNotNull(r);
+            AllocationRule a = (AllocationRule)r;
+            Assert.AreEqual(0.9, a.MaxAllocation);
+        }
 
         [Test]
         public void PlaceABuyTrade()
