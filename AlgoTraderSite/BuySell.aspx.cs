@@ -40,21 +40,28 @@ namespace AlgoTraderSite
         protected void ExecuteTrade_Click(object sender, EventArgs e)
         {
             portfolio = new PortfolioManagerClient();
-            try
+            if (BuySellPicker.SelectedValue == "Buy")
             {
-                portfolio.buy(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
+                try
+                {
+                    portfolio.buy(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
+                }
+                catch (FaultException<AlgoTraderSite.Portfolio.Client.InsufficientFundsFault> ex)
+                {
+                    ErrorMsg.Text = String.Format("Insufficient funds error. Available: ${0}  Requested: ${1}", ex.Detail.AvailableAmount, ex.Detail.TransactionAmount);
+                    ErrorMsg.Visible = true;
+                    return;
+                }
+                catch (FaultException<AlgoTraderSite.Portfolio.Client.AllocationViolationFault> ex)
+                {
+                    ErrorMsg.Text = ex.Detail.FaultMessage;
+                    ErrorMsg.Visible = true;
+                    return;
+                }
             }
-            catch (FaultException<AlgoTraderSite.Portfolio.Client.InsufficientFundsFault> ex)
+            else
             {
-                ErrorMsg.Text = String.Format("Insufficient funds error. Available: ${0}  Requested: ${1}", ex.Detail.AvailableAmount, ex.Detail.TransactionAmount);
-                ErrorMsg.Visible = true;
-                return;
-            }
-            catch (FaultException<AlgoTraderSite.Portfolio.Client.AllocationViolationFault> ex)
-            {
-                ErrorMsg.Text = ex.Detail.FaultMessage;
-                ErrorMsg.Visible = true;
-                return;
+                portfolio.sell(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
             }
             Response.Redirect("Portfolio.aspx");
         }

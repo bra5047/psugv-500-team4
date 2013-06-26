@@ -40,6 +40,13 @@ namespace AlgoTrader.datamodel
             t1.timestamp = DateTime.Now;
             context.Trades.Add(t1);
             context.SaveChanges();
+
+            Quote q1 = new Quote();
+            q1.Symbol = s;
+            q1.timestamp = DateTime.Now;
+            q1.price = 20.15;
+            context.Quotes.Add(q1);
+            context.SaveChanges();
         }
     }
 }

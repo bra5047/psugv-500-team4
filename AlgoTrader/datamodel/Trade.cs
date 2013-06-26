@@ -18,6 +18,8 @@ namespace AlgoTrader.datamodel
         public double price { get; set; }
         public DateTime timestamp { get; set; }
         public tradeTypes type { get; set; }
+        public string TransactionId { get; set; }
+        public tradeStatus Status { get; set; }
 
         public string SymbolName { get; set; }
         [ForeignKey("SymbolName")]
@@ -25,7 +27,11 @@ namespace AlgoTrader.datamodel
 
         public int? PositionId { get; set; }
         [ForeignKey("PositionId")]
-        public virtual Position Position { get; set; } 
+        public virtual Position Position { get; set; }
+
+        public int? RelatedTradeId { get; set; }
+        [ForeignKey("RelatedTradeId")]
+        public virtual Trade RelatedTrade { get; set; }
 
         // ITrade stuff
         ISymbol ITrade.symbol

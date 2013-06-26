@@ -15,6 +15,15 @@ namespace AlgoTrader.Interfaces
         Sell
     };
 
+    [DataContract]
+    public enum tradeStatus
+    {
+        [EnumMember]
+        Active,
+        [EnumMember]
+        Closed
+    };
+
     public interface ITrade
     {
         ISymbol symbol { get; set; }
