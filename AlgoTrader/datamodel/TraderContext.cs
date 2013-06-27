@@ -27,6 +27,7 @@ namespace AlgoTrader.datamodel
         public DbSet<WatchList> WatchLists { get; set; }
         public DbSet<WatchListItem> WatchListItems { get; set; }
         public DbSet<SystemSetting> SystemSettings { get; set; }
+        public DbSet<Alert> Alerts { get; set; }
 
         public Quote FindLastQuoteFor(Symbol symbol)
         {

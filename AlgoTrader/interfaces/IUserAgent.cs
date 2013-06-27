@@ -6,6 +6,13 @@ using System.ServiceModel;
 
 namespace AlgoTrader.Interfaces
 {
+    public enum responseCodes
+    {
+        Accept,
+        Reject,
+        Pending
+    };
+
     [ServiceContract]
     public interface IUserAgent
     {

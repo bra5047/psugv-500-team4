@@ -15,6 +15,18 @@ namespace AlgoTrader.useragent
         {
             ILog log = Logger;
             log.DebugFormat("Alert generated: {0} {1} {2} {3}", symbolName, type.ToString(), quantity.ToString(), price.ToString());
+
+            TraderContext db = DbContext;
+            Symbol s = db.Symbols.Where(x => x.name == symbolName).FirstOrDefault();
+            Alert a = new Alert();
+            a.Symbol = s;
+            a.Type = type;
+            a.Quantity = quantity;
+            a.Price = price;
+            a.ResponseCode = responseCodes.Pending;
+            db.Alerts.Add(a);
+            db.SaveChanges();
+            db.Dispose();
         }
 
         public void processAlertResponse(string alertID, string alertResponse)
@@ -40,6 +52,23 @@ namespace AlgoTrader.useragent
             set
             {
                 _logger = value;
+            }
+        }
+
+        private TraderContext _dbContext;
+
+        protected TraderContext DbContext
+        {
+            get
+            {
+                if (_dbContext != null)
+                {
+                    return _dbContext;
+                }
+                else
+                {
+                    return new TraderContext();
+                }
             }
         }
 

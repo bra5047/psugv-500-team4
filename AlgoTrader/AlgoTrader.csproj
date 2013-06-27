@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="datamodel\Alert.cs" />
     <Compile Include="datamodel\Portfolio.cs" />
     <Compile Include="datamodel\Position.cs" />
     <Compile Include="datamodel\Quote.cs" />
