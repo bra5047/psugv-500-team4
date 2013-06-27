@@ -18,7 +18,7 @@ namespace AlgoTrader.Interfaces
         PositionMessage GetPosition(string SymbolName);
 
         [FaultContract(typeof(InsufficientQuantityFault))]
-        [FaultContract(typeof(ArgumentException))]
+        [FaultContract(typeof(ArgumentExceptionFault))]
         [OperationContract]
         void sell(string symbolName, int quantity);
 

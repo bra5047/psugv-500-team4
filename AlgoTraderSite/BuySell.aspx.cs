@@ -61,7 +61,16 @@ namespace AlgoTraderSite
             }
             else
             {
-                portfolio.sell(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
+                try
+                {
+                    portfolio.sell(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
+                }
+                catch (FaultException<AlgoTraderSite.Portfolio.Client.InsufficientQuantityFault> ex)
+                {
+                    ErrorMsg.Text = String.Format("Not enough shares to sell. Available {0} Requested: {1}", ex.Detail.AvailableQuantity, ex.Detail.RequestedQuantity);
+                    ErrorMsg.Visible = true;
+                    return;
+                }
             }
             Response.Redirect("Portfolio.aspx");
         }
