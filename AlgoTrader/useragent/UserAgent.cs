@@ -35,6 +35,18 @@ namespace AlgoTrader.useragent
             log.DebugFormat("Alert generated: {0} {1}", alertID, alertResponse);
         }
 
+        public List<AlertMessage> getPendingAlerts()
+        {
+            List<AlertMessage> pending = new List<AlertMessage>();
+            TraderContext db = DbContext;
+            foreach (IAlert a in db.Alerts.Where(x => x.ResponseCode == responseCodes.Pending))
+            {
+                pending.Add(new AlertMessage(a));
+            }
+            return pending;
+        }
+
+
         private ILog _logger;
         public ILog Logger
         {

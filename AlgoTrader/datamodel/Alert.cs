@@ -10,7 +10,7 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Alert
+    public class Alert : IAlert
     {
         [Key]
         public Guid AlertId { get; set; }
@@ -24,5 +24,11 @@ namespace AlgoTrader.datamodel
         public string SentTo { get; set; }
         public responseCodes? ResponseCode { get; set; }
         public string Response { get; set; }
+
+        ISymbol IAlert.Symbol
+        {
+            get { return Symbol; }
+            set { throw new NotImplementedException(); }
+        }
     }
 }

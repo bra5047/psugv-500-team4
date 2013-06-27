@@ -67,6 +67,7 @@
     <Compile Include="datamodel\WatchList.cs" />
     <Compile Include="datamodel\WatchListItem.cs" />
     <Compile Include="interfaces\ArgumentExceptionFault.cs" />
+    <Compile Include="interfaces\IAlert.cs" />
     <Compile Include="interfaces\IPortfolio.cs" />
     <Compile Include="interfaces\IWatchListManager.cs" />
     <Compile Include="interfaces\IUserAgent.cs" />
