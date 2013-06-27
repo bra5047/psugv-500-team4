@@ -25,12 +25,16 @@
   <xs:element name="ArrayOfTradeMessage" nillable="true" type="tns:ArrayOfTradeMessage" />
   <xs:complexType name="TradeMessage">
     <xs:sequence>
+      <xs:element minOccurs="0" name="InitialQuantity" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Price" type="xs:double" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="RelatedTradeId" nillable="true" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" minOccurs="0" name="Status" type="q2:tradeStatus" />
       <xs:element minOccurs="0" name="SymbolName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Timestamp" type="xs:dateTime" />
       <xs:element minOccurs="0" name="TradeId" type="xs:int" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" minOccurs="0" name="Type" type="q2:tradeTypes" />
+      <xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" minOccurs="0" name="Type" type="q3:tradeTypes" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TradeMessage" nillable="true" type="tns:TradeMessage" />

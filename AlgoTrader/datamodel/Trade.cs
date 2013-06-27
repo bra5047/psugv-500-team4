@@ -12,9 +12,23 @@ namespace AlgoTrader.datamodel
 {
     public class Trade : ITrade
     {
+        [NotMapped]
+        private int _quantity;
+
         [Key]
         public int TradeId { get; set; }
-        public int quantity { get; set; }
+        public int? InitialQuantity { get; set; }
+
+        public int quantity
+        {
+            get { return _quantity; }
+            set
+            {
+                if (InitialQuantity == null) InitialQuantity = value;
+                _quantity = value;
+            }
+        }
+
         public double price { get; set; }
         public DateTime timestamp { get; set; }
         public tradeTypes type { get; set; }

@@ -18,11 +18,19 @@ namespace AlgoTrader.portfolio
         [DataMember]
         public double Price;
         [DataMember]
+        public int? InitialQuantity;
+        [DataMember]
         public int Quantity;
         [DataMember]
         public DateTime Timestamp;
         [DataMember]
         public tradeTypes Type;
+        [DataMember]
+        public tradeStatus Status;
+        [DataMember]
+        public string TransactionId;
+        [DataMember]
+        public int? RelatedTradeId;
 
         public TradeMessage()
         {
@@ -32,11 +40,16 @@ namespace AlgoTrader.portfolio
         public TradeMessage(ITrade trade)
             : this()
         {
+            TradeId = trade.TradeId;
             SymbolName = trade.symbol.name;
             Price = trade.price;
             Quantity = trade.quantity;
+            InitialQuantity = trade.InitialQuantity;
             Timestamp = trade.timestamp;
             Type = trade.type;
+            Status = trade.Status;
+            TransactionId = trade.TransactionId;
+            RelatedTradeId = trade.RelatedTradeId;
         }
     }
 }

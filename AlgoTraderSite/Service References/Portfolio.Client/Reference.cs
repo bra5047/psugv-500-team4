@@ -143,10 +143,19 @@ namespace AlgoTraderSite.Portfolio.Client {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> InitialQuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private double PriceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> RelatedTradeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private AlgoTraderSite.Portfolio.Client.tradeStatus StatusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SymbolNameField;
@@ -158,6 +167,9 @@ namespace AlgoTraderSite.Portfolio.Client {
         private int TradeIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TransactionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private AlgoTraderSite.Portfolio.Client.tradeTypes TypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -167,6 +179,19 @@ namespace AlgoTraderSite.Portfolio.Client {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> InitialQuantity {
+            get {
+                return this.InitialQuantityField;
+            }
+            set {
+                if ((this.InitialQuantityField.Equals(value) != true)) {
+                    this.InitialQuantityField = value;
+                    this.RaisePropertyChanged("InitialQuantity");
+                }
             }
         }
         
@@ -192,6 +217,32 @@ namespace AlgoTraderSite.Portfolio.Client {
                 if ((this.QuantityField.Equals(value) != true)) {
                     this.QuantityField = value;
                     this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> RelatedTradeId {
+            get {
+                return this.RelatedTradeIdField;
+            }
+            set {
+                if ((this.RelatedTradeIdField.Equals(value) != true)) {
+                    this.RelatedTradeIdField = value;
+                    this.RaisePropertyChanged("RelatedTradeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public AlgoTraderSite.Portfolio.Client.tradeStatus Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((this.StatusField.Equals(value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
                 }
             }
         }
@@ -236,6 +287,19 @@ namespace AlgoTraderSite.Portfolio.Client {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TransactionId {
+            get {
+                return this.TransactionIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TransactionIdField, value) != true)) {
+                    this.TransactionIdField = value;
+                    this.RaisePropertyChanged("TransactionId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public AlgoTraderSite.Portfolio.Client.tradeTypes Type {
             get {
                 return this.TypeField;
@@ -256,6 +320,17 @@ namespace AlgoTraderSite.Portfolio.Client {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="tradeStatus", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
+    public enum tradeStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Active = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Closed = 1,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]

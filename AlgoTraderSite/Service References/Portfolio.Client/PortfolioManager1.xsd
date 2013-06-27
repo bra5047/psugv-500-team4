@@ -7,6 +7,13 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="positionStatus" nillable="true" type="tns:positionStatus" />
+  <xs:simpleType name="tradeStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Active" />
+      <xs:enumeration value="Closed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="tradeStatus" nillable="true" type="tns:tradeStatus" />
   <xs:simpleType name="tradeTypes">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Buy" />
