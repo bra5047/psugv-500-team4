@@ -34,11 +34,11 @@ namespace AlgoTrader.portfolio
 
         public void sell(string symbolName, int quantity)
         {
-            if (quantity < 1) throw new ArgumentException();
+            if (quantity < 1) throw new System.ServiceModel.FaultException<ArgumentException>(new ArgumentException("Quantity must be greater than zero.", "quantity"));
             
             TraderContext db = DbContext;
             Symbol s = db.Symbols.Where(x => x.name == symbolName).FirstOrDefault();
-            if (s == null) throw new ArgumentException();
+            if (s == null) throw new System.ServiceModel.FaultException<ArgumentException>(new ArgumentException("Symbol not found.", "symbol"));
             Quote lastPrice = db.FindLastQuoteFor(s);
             if (lastPrice == null)
             {
@@ -49,28 +49,18 @@ namespace AlgoTrader.portfolio
             Position pos = portfolio.Positions.Where(x => x.Symbol == s && x.status == positionStatus.Open).FirstOrDefault();
             if (pos == null || pos.quantity < quantity)
             {
-                throw new Exception(); // insufficient quantity exception
+                throw new System.ServiceModel.FaultException<InsufficientQuantityFault>(new InsufficientQuantityFault(quantity, pos.quantity));
             }
-            List<Trade> byProfit = pos.Trades.Where(t => t.type == tradeTypes.Buy).OrderByDescending(o => (lastPrice.price - o.price)).ToList<Trade>();
             // figure out which shares to sell to get the best price
+            List<Trade> byProfit = pos.Trades.Where(t => t.type == tradeTypes.Buy).OrderByDescending(o => (lastPrice.price - o.price)).ToList<Trade>();
             List<Trade> toSell = new List<Trade>();
             string transaction_id = Guid.NewGuid().ToString();
             foreach (Trade t in byProfit)
             {
-                // TODO: Trade sell = buyTrade.reduceBy(2);
-                Trade next = db.Trades.Create();
-                next.type = tradeTypes.Sell;
-                next.Status = tradeStatus.Closed;
-                next.timestamp = DateTime.Now;
-                next.TransactionId = transaction_id;
-                next.RelatedTrade = t;
-                next.Symbol = s;
-                next.Position = pos;
-                next.price = lastPrice.price;
                 int remaining = quantity - toSell.Sum(x => x.quantity);
-                next.quantity = Math.Min(t.quantity, remaining);
-                t.quantity -= next.quantity;
-                if (t.quantity == 0) t.Status = tradeStatus.Closed;
+                Trade next = t.sell(Math.Min(t.quantity, remaining));
+                next.price = lastPrice.price;
+                next.TransactionId = transaction_id;
                 toSell.Add(next);
                 if (toSell.Sum(x => x.quantity) == quantity) break;
             }
@@ -78,6 +68,7 @@ namespace AlgoTrader.portfolio
             pos.Recalculate();
             portfolio.Cash += toSell.Sum(x => x.price * x.quantity);
             db.SaveChanges();
+            db.Dispose();
         }
 
         public void buy(string symbolName, int quantity)

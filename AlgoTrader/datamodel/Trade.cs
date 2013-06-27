@@ -33,6 +33,26 @@ namespace AlgoTrader.datamodel
         [ForeignKey("RelatedTradeId")]
         public virtual Trade RelatedTrade { get; set; }
 
+        public Trade sell(int sellQuantity)
+        {
+            if (sellQuantity < 1 || sellQuantity > this.quantity) throw new ArgumentException("sellQuantity");
+            if (this.type == tradeTypes.Sell) throw new NotImplementedException();
+            if (this.Status == tradeStatus.Closed) throw new NotImplementedException();
+
+            Trade t = new Trade();
+            t.Symbol = Symbol;
+            t.RelatedTrade = this;
+            t.Position = Position;
+            t.type = tradeTypes.Sell;
+            t.Status = tradeStatus.Closed;
+            t.timestamp = DateTime.Now;
+            t.quantity = sellQuantity;
+
+            this.quantity -= sellQuantity;
+            if (this.quantity == 0) this.Status = tradeStatus.Closed;
+            return t;
+        }
+
         // ITrade stuff
         ISymbol ITrade.symbol
         {
