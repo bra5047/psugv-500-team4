@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ServiceProcess;
 
-namespace ATStrategySvc
+namespace ATStrategyService
 {
     [RunInstaller(true)]
     public partial class ATStrategySvcInstaller : System.Configuration.Install.Installer

@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoTrader.NUnit", "AlgoTrader.NUnit\AlgoTrader.NUnit.csproj", "{6D0532C8-982F-4033-9BAF-9A567CF251FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATStrategySvc", "ATStrategySvc\ATStrategySvc.csproj", "{FD991369-D21A-4A19-BC93-892F7D916AFA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4} = {D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
