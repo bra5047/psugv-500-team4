@@ -24,7 +24,7 @@ namespace AlgoTrader.Interfaces
         [OperationContract(IsOneWay = true)]
         void generateAlert(string symbolName, tradeTypes type, int quantity, double price);
         [OperationContract(IsOneWay = true)]
-        void processAlertResponse(string alertID, string alertResponse);
+        void processAlertResponse(string alertID, responseCodes alertResponseCode, string alertResponse);
         [OperationContract]
         List<AlertMessage> getPendingAlerts();
     }

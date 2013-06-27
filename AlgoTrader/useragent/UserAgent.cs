@@ -29,10 +29,21 @@ namespace AlgoTrader.useragent
             db.Dispose();
         }
 
-        public void processAlertResponse(string alertID, string alertResponse)
+        public void processAlertResponse(string alertID, responseCodes alertResponseCode, string alertResponse)
         {
             ILog log = Logger;
             log.DebugFormat("Alert generated: {0} {1}", alertID, alertResponse);
+            TraderContext db = DbContext;
+            Alert alert = db.Alerts.Where(x => x.AlertId.ToString() == alertID).FirstOrDefault();
+            if (alert == null)
+            {
+                log.WarnFormat("Alert not found: {0}", alertID);
+                return;
+            }
+            alert.ResponseCode = alertResponseCode;
+            alert.Response = alertResponse;
+            db.SaveChanges();
+            db.Dispose();
         }
 
         public List<AlertMessage> getPendingAlerts()
