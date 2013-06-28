@@ -47,6 +47,13 @@ namespace AlgoTrader.Interfaces
             timestamp = tstamp;
             SymbolName = symbolName;
         }
+
+        public QuoteMessage(IQuote quote)
+        {
+            Price = quote.price;
+            SymbolName = quote.symbol.name;
+            timestamp = quote.timestamp;
+        }
     }
 
     [DataContract]

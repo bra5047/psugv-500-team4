@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using log4net;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
-using AlgoTrader.useragent.Client;
-using AlgoTrader.portfolio.Client;
+using AlgoTrader.useragent;
+using AlgoTrader.portfolio;
 
 namespace AlgoTrader.strategy
 {
@@ -22,6 +23,8 @@ namespace AlgoTrader.strategy
 
         private Dictionary<string, List<SmaMetric>> _metrics;
         private Dictionary<string, StrategySignal> _signals;
+
+        private QuoteProvider _quoteProvider;
 
         public ThreeDucksStrategy()
         {
@@ -56,6 +59,9 @@ namespace AlgoTrader.strategy
                         break;
                 }
             }
+
+            _quoteProvider = new QuoteProvider(this);
+            _quoteProvider.Start();
         }
 
         public int First_Duck_Seconds { get { return FIRST_DUCK_SECONDS; } }
@@ -65,6 +71,9 @@ namespace AlgoTrader.strategy
 
         public void NewQuote(QuoteMessage quote)
         {
+            ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
+            log.DebugFormat("Quote received: {0} {1} {2}", quote.SymbolName, quote.timestamp.ToString(), quote.Price);
+
             int buy_ducks = 0;
             int sell_ducks = 0;
 
@@ -89,20 +98,17 @@ namespace AlgoTrader.strategy
 
             if (_signals[quote.SymbolName] == StrategySignal.Buy)
             {
-                AlgoTrader.useragent.Client.tradeTypes t = useragent.Client.tradeTypes.Buy;
-                UserAgentClient ua = new UserAgentClient();
+                tradeTypes t = tradeTypes.Buy;
+                IUserAgent ua = new UserAgent();
                 ua.generateAlert(quote.SymbolName, t, DEFAULT_BUY_SIZE, quote.Price);
-                ua.Close();
             }
             if (_signals[quote.SymbolName] == StrategySignal.Sell)
             {
-                PortfolioManagerClient pm = new PortfolioManagerClient();
+                IPortfolioManager pm = new PortfolioManager();
                 PositionMessage pos = pm.GetPosition(quote.SymbolName);
-                pm.Close();
-                AlgoTrader.useragent.Client.tradeTypes t = useragent.Client.tradeTypes.Sell;
-                UserAgentClient ua = new UserAgentClient();
+                tradeTypes t = tradeTypes.Sell;
+                UserAgent ua = new UserAgent();
                 ua.generateAlert(quote.SymbolName, t, pos.Quantity, quote.Price);
-                ua.Close();
             }
         }
 

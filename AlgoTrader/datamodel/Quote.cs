@@ -9,7 +9,7 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class Quote
+    public class Quote : IQuote
     {
         [Key]
         public int QuoteId { get; set; }
@@ -20,6 +20,11 @@ namespace AlgoTrader.datamodel
         [ForeignKey("SymbolName")]
         public virtual Symbol Symbol { get; set; }
 
+        ISymbol IQuote.symbol
+        {
+            get { return Symbol; }
+            set { throw new NotImplementedException(); }
+        }
     }
 
 }
