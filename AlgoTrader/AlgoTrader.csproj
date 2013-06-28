@@ -88,6 +88,7 @@
     <Compile Include="portfolio\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="strategy\QuoteProvider.cs" />
+    <Compile Include="strategy\SignalAlerter.cs" />
     <Compile Include="strategy\SmaMetric.cs" />
     <Compile Include="strategy\ThreeDucksStrategy.cs" />
     <Compile Include="useragent\UserAgent.cs" />

@@ -7,8 +7,6 @@ using System.ServiceModel;
 using log4net;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
-using AlgoTrader.useragent;
-using AlgoTrader.portfolio;
 
 namespace AlgoTrader.strategy
 {
@@ -25,11 +23,13 @@ namespace AlgoTrader.strategy
         private Dictionary<string, StrategySignal> _signals;
 
         private QuoteProvider _quoteProvider;
+        private ISignalAlerter _alerter;
 
         public ThreeDucksStrategy()
         {
             _metrics = new Dictionary<string, List<SmaMetric>>();
             _signals = new Dictionary<string, StrategySignal>();
+            _alerter = new SignalAlerter();
 
             FIRST_DUCK_SECONDS = 300;
             SECOND_DUCK_SECONDS = 3600;
@@ -113,29 +113,16 @@ namespace AlgoTrader.strategy
             if (buy_ducks == 3)
             {
                 _signals[quote.SymbolName] = StrategySignal.Buy;
+                _alerter.BuyAlert(quote.SymbolName, DEFAULT_BUY_SIZE, quote.Price);
             }
             else if (sell_ducks == 3)
             {
                 _signals[quote.SymbolName] = StrategySignal.Sell;
+                _alerter.SellAlert(quote.SymbolName, quote.Price);
             }
             else
             {
                 _signals[quote.SymbolName] = StrategySignal.None;
-            }
-
-            if (_signals[quote.SymbolName] == StrategySignal.Buy)
-            {
-                tradeTypes t = tradeTypes.Buy;
-                IUserAgent ua = new UserAgent();
-                ua.generateAlert(quote.SymbolName, t, DEFAULT_BUY_SIZE, quote.Price);
-            }
-            if (_signals[quote.SymbolName] == StrategySignal.Sell)
-            {
-                IPortfolioManager pm = new PortfolioManager();
-                PositionMessage pos = pm.GetPosition(quote.SymbolName);
-                tradeTypes t = tradeTypes.Sell;
-                UserAgent ua = new UserAgent();
-                ua.generateAlert(quote.SymbolName, t, pos.Quantity, quote.Price);
             }
         }
 
