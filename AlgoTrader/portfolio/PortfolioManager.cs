@@ -34,7 +34,41 @@ namespace AlgoTrader.portfolio
 
         public void sell(string symbolName, int quantity)
         {
-            throw new NotImplementedException();
+            if (quantity < 1) throw new System.ServiceModel.FaultException<ArgumentException>(new ArgumentException("Quantity must be greater than zero.", "quantity"));
+            
+            TraderContext db = DbContext;
+            Symbol s = db.Symbols.Where(x => x.name == symbolName).FirstOrDefault();
+            if (s == null) throw new System.ServiceModel.FaultException<ArgumentException>(new ArgumentException("Symbol not found.", "symbol"));
+            Quote lastPrice = db.FindLastQuoteFor(s);
+            if (lastPrice == null)
+            {
+                // not sure what to do here
+                return;
+            }
+            Portfolio portfolio = db.Portfolios.FirstOrDefault();
+            Position pos = portfolio.Positions.Where(x => x.Symbol == s && x.status == positionStatus.Open).FirstOrDefault();
+            if (pos == null || pos.quantity < quantity)
+            {
+                throw new System.ServiceModel.FaultException<InsufficientQuantityFault>(new InsufficientQuantityFault(quantity, pos.quantity));
+            }
+            // figure out which shares to sell to get the best price
+            List<Trade> byProfit = pos.Trades.Where(t => t.type == tradeTypes.Buy).OrderByDescending(o => (lastPrice.price - o.price)).ToList<Trade>();
+            List<Trade> toSell = new List<Trade>();
+            string transaction_id = Guid.NewGuid().ToString();
+            foreach (Trade t in byProfit)
+            {
+                int remaining = quantity - toSell.Sum(x => x.quantity);
+                Trade next = t.sell(Math.Min(t.quantity, remaining));
+                next.price = lastPrice.price;
+                next.TransactionId = transaction_id;
+                toSell.Add(next);
+                if (toSell.Sum(x => x.quantity) == quantity) break;
+            }
+            pos.Trades.AddRange(toSell);
+            pos.Recalculate();
+            portfolio.Cash += toSell.Sum(x => x.price * x.quantity);
+            db.SaveChanges();
+            db.Dispose();
         }
 
         public void buy(string symbolName, int quantity)
@@ -81,11 +115,6 @@ namespace AlgoTrader.portfolio
             pos.quantity += t.quantity;
             pos.price += t.price * t.quantity;
             port.Cash -= t.price * t.quantity;
-        }
-
-        public bool HasEnoughCash(Portfolio port, int quantity, double price)
-        {
-            return (port.Cash > quantity * price);
         }
 
         public double getAvailableCash()

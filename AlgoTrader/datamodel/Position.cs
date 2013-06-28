@@ -25,6 +25,14 @@ namespace AlgoTrader.datamodel
         public positionStatus status { get; set; }
         public virtual List<Trade> Trades { get; set; }
 
+        public void Recalculate()
+        {
+            if (status == positionStatus.Closed) return;
+            quantity = Trades.Where(x => x.Status == tradeStatus.Active).Sum(y => y.quantity);
+            price = Trades.Where(x => x.Status == tradeStatus.Active).Sum(y => y.price * y.quantity);
+            if (quantity == 0) status = positionStatus.Closed;
+        }
+
         // IPosition stuff
         ISymbol IPosition.symbol
         {

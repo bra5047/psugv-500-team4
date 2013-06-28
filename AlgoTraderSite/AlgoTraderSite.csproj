@@ -140,6 +140,7 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="Alerts.aspx" />
     <Content Include="BuySell.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\site-orig.css" />
@@ -199,6 +200,16 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Portfolio.aspx" />
+    <Content Include="Service References\UserAgent.Client\AlgoTraderSite.UserAgent.Client.AlertMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\UserAgent.Client\UserAgent.disco" />
+    <Content Include="Service References\UserAgent.Client\configuration91.svcinfo" />
+    <Content Include="Service References\UserAgent.Client\configuration.svcinfo" />
+    <Content Include="Service References\UserAgent.Client\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <Content Include="services\useragent\UserAgent.svc" />
     <Content Include="Watchlist.aspx" />
     <Content Include="debug.aspx" />
@@ -264,11 +275,28 @@
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="Service References\UserAgent.Client\UserAgent.wsdl" />
+    <None Include="Service References\UserAgent.Client\UserAgent.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserAgent.Client\UserAgent1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserAgent.Client\UserAgent2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alerts.aspx.cs">
+      <DependentUpon>Alerts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alerts.aspx.designer.cs">
+      <DependentUpon>Alerts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -334,6 +362,11 @@
     </Compile>
     <Compile Include="Portfolio.aspx.designer.cs">
       <DependentUpon>Portfolio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\UserAgent.Client\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Watchlist.aspx.cs">
       <DependentUpon>Watchlist.aspx</DependentUpon>
@@ -420,6 +453,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Portfolio.Client\" />
+    <WCFMetadataStorage Include="Service References\UserAgent.Client\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AlgoTrader\AlgoTrader.csproj">

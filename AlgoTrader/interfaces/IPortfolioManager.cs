@@ -17,6 +17,8 @@ namespace AlgoTrader.Interfaces
         [OperationContract]
         PositionMessage GetPosition(string SymbolName);
 
+        [FaultContract(typeof(InsufficientQuantityFault))]
+        [FaultContract(typeof(ArgumentExceptionFault))]
         [OperationContract]
         void sell(string symbolName, int quantity);
 
@@ -62,5 +64,29 @@ namespace AlgoTrader.Interfaces
         {
             FaultMessage = "Requested transaction would violate a portfolio allocation rule.";
         }
+    }
+
+    [DataContract]
+    public class InsufficientQuantityFault
+    {
+        [DataMember]
+        public string FaultMessage;
+        [DataMember]
+        public double RequestedQuantity;
+        [DataMember]
+        public double AvailableQuantity;
+
+        public InsufficientQuantityFault()
+        {
+            FaultMessage = "Not enough shares available to complete the requested transaction.";
+        }
+
+        public InsufficientQuantityFault(double requested, double available)
+            : this()
+        {
+            RequestedQuantity = requested;
+            AvailableQuantity = available;
+        }
+
     }
 }

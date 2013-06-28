@@ -1,4 +1,4 @@
-﻿namespace ATStrategySvc
+﻿namespace ATStrategyService
 {
     partial class ATStrategySvc
     {

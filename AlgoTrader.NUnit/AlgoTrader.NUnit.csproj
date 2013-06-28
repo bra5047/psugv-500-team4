@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PortfolioRuleTests.cs" />
+    <Compile Include="TradeTests.cs" />
     <Compile Include="WatchListTest.cs" />
     <Compile Include="PortfolioManagerTest.cs" />
     <Compile Include="SmaMetricTest.cs" />

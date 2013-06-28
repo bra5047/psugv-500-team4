@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using AlgoTrader.datamodel;
 using log4net;
 
-namespace ATStrategySvc
+namespace ATStrategyService
 {
     public partial class ATStrategySvc : ServiceBase
     {

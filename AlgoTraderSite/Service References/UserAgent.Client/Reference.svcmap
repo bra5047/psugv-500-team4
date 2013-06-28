@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="72713767-e7ca-431f-b5fc-29a41f9f788c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1244/services/useragent/UserAgent.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="UserAgent.xsd" MetadataType="Schema" ID="004b259e-0ef2-4d92-ba54-fb9b0c25a19d" SourceId="1" SourceUrl="http://localhost:1244/services/useragent/UserAgent.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserAgent1.xsd" MetadataType="Schema" ID="3c627739-e0fb-4675-8aba-2a37efa6cd15" SourceId="1" SourceUrl="http://localhost:1244/services/useragent/UserAgent.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserAgent2.xsd" MetadataType="Schema" ID="d7b35b9c-cdc0-4d29-9df8-7be158bf2cb1" SourceId="1" SourceUrl="http://localhost:1244/services/useragent/UserAgent.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserAgent.wsdl" MetadataType="Wsdl" ID="28b8ca7f-be92-4f71-ad71-e380a751a221" SourceId="1" SourceUrl="http://localhost:1244/services/useragent/UserAgent.svc?wsdl" />
+    <MetadataFile FileName="UserAgent.disco" MetadataType="Disco" ID="8f7f3f0d-acfd-4ac2-a6fc-a04e9d3347f8" SourceId="1" SourceUrl="http://localhost:1244/services/useragent/UserAgent.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

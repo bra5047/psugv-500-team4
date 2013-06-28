@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="datamodel\Alert.cs" />
     <Compile Include="datamodel\Portfolio.cs" />
     <Compile Include="datamodel\Position.cs" />
     <Compile Include="datamodel\Quote.cs" />
@@ -62,8 +63,11 @@
     <Compile Include="datamodel\SystemSetting.cs" />
     <Compile Include="datamodel\Trade.cs" />
     <Compile Include="datamodel\TraderContext.cs" />
+    <Compile Include="datamodel\TraderContextInitializer.cs" />
     <Compile Include="datamodel\WatchList.cs" />
     <Compile Include="datamodel\WatchListItem.cs" />
+    <Compile Include="interfaces\ArgumentExceptionFault.cs" />
+    <Compile Include="interfaces\IAlert.cs" />
     <Compile Include="interfaces\IPortfolio.cs" />
     <Compile Include="interfaces\IWatchListManager.cs" />
     <Compile Include="interfaces\IUserAgent.cs" />
