@@ -47,6 +47,18 @@ namespace AlgoTrader.datamodel
             q1.price = 20.15;
             context.Quotes.Add(q1);
             context.SaveChanges();
+
+            Alert a1 = new Alert();
+            a1.AlertId = Guid.NewGuid();
+            a1.Symbol = s;
+            a1.Timestamp = DateTime.Now;
+            a1.Type = tradeTypes.Buy;
+            a1.Quantity = 100;
+            a1.SentTo = "bra5047@psu.edu";
+            a1.Price = 10.45;
+            a1.ResponseCode = responseCodes.Pending;
+            context.Alerts.Add(a1);
+            context.SaveChanges();
         }
     }
 }

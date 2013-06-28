@@ -34,7 +34,8 @@ namespace AlgoTrader.useragent
             ILog log = Logger;
             log.DebugFormat("Alert generated: {0} {1}", alertID, alertResponse);
             TraderContext db = DbContext;
-            Alert alert = db.Alerts.Where(x => x.AlertId.ToString() == alertID).FirstOrDefault();
+            Guid alertGuid = Guid.Parse(alertID);
+            Alert alert = db.Alerts.Where(x => x.AlertId == alertGuid).FirstOrDefault();
             if (alert == null)
             {
                 log.WarnFormat("Alert not found: {0}", alertID);
@@ -50,7 +51,7 @@ namespace AlgoTrader.useragent
         {
             List<AlertMessage> pending = new List<AlertMessage>();
             TraderContext db = DbContext;
-            foreach (IAlert a in db.Alerts.Where(x => x.ResponseCode == responseCodes.Pending))
+            foreach (IAlert a in db.Alerts.Include("Symbol").Where(x => x.ResponseCode == responseCodes.Pending))
             {
                 pending.Add(new AlertMessage(a));
             }
