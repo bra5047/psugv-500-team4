@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
+using AlgoTrader.portfolio;
 using log4net;
 
 namespace AlgoTrader.useragent
@@ -44,6 +45,20 @@ namespace AlgoTrader.useragent
             alert.ResponseCode = alertResponseCode;
             alert.Response = alertResponse;
             db.SaveChanges();
+
+            if (alert.ResponseCode == responseCodes.Accept)
+            {
+                PortfolioManager pm = new PortfolioManager();
+                pm.LoadSettings();
+                if (alert.Type == tradeTypes.Buy)
+                {
+                    pm.buy(alert.Symbol.name, alert.Quantity);
+                }
+                else
+                {
+                    pm.sell(alert.Symbol.name, alert.Quantity);
+                }
+            }
             db.Dispose();
         }
 

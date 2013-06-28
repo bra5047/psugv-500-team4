@@ -22,6 +22,7 @@
                 <%-- Data-bound content. --%>
                   <asp:Label ID="SymbolLabel" runat="server" Text='<%#Eval("SymbolName") %>' />
                   <asp:Label ID="CodeLabel" runat="server" Text='<%#Eval("ResponseCode") %>' />
+                  <asp:HyperLink ID="AcceptLink" runat="server" Text='Accept' NavigateUrl='<%#"Alerts.aspx?id=" + Eval("AlertId") + "&s=accept" %>' />
                   <asp:HyperLink ID="RejectLink" runat="server" Text='Reject' NavigateUrl='<%#"Alerts.aspx?id=" + Eval("AlertId") + "&s=reject" %>' />
                </td>
             </tr>
