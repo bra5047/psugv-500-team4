@@ -69,17 +69,44 @@ namespace AlgoTrader.strategy
         public int Third_Duck_Seconds { get { return THIRD_DUCK_SECONDS; } }
         public int Moving_Average_Window { get { return AVERAGE_WINDOW; } }
 
+        public void NewQuotes(List<QuoteMessage> quotes)
+        {
+            ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
+            log.DebugFormat("Bulk quote list received. Size: {0}", quotes.Count);
+
+            // this could be a big mess, so we attack it one symbol at a time
+            SortedSet<string> symbols = new SortedSet<string>(quotes.Select(x => x.SymbolName));
+
+            foreach (string s in symbols)
+            {
+                // pull out the ones we want and run them in order
+                List<QuoteMessage> qs = quotes.OrderBy(x => x.timestamp).Where(y => y.SymbolName == s).ToList<QuoteMessage>();
+                foreach (QuoteMessage q in qs)
+                {
+                    NewQuote(q);
+                }
+                CheckSignals(qs.Last());
+            }
+        }
+
         public void NewQuote(QuoteMessage quote)
         {
             ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
             log.DebugFormat("Quote received: {0} {1} {2}", quote.SymbolName, quote.timestamp.ToString(), quote.Price);
 
+            foreach (SmaMetric m in _metrics[quote.SymbolName])
+            {
+                m.Add(quote.timestamp, quote.Price);
+            }
+        }
+
+        public void CheckSignals(QuoteMessage quote)
+        {
             int buy_ducks = 0;
             int sell_ducks = 0;
 
             foreach (SmaMetric m in _metrics[quote.SymbolName])
             {
-                m.Add(quote.timestamp, quote.Price);
                 if (quote.Price > m.Avg) buy_ducks++;
                 if (quote.Price < m.Avg) sell_ducks++;
             }

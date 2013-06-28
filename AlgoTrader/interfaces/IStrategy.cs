@@ -13,6 +13,8 @@ namespace AlgoTrader.Interfaces
         [OperationContract(IsOneWay = true)]
         void NewQuote(QuoteMessage quote);
 
+        void NewQuotes(List<QuoteMessage> quotes);
+
         [OperationContract]
         bool startWatching(string symbolName);
         [OperationContract]
