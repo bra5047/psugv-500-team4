@@ -87,6 +87,11 @@
     <Compile Include="portfolio\PositionMessage.cs" />
     <Compile Include="portfolio\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\portfolio.Client\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\useragent.Client\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,6 +105,22 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Service References\portfolio.Client\AlgoTrader.portfolio.Client.PositionMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\portfolio.Client\PortfolioManager.wsdl" />
+    <None Include="Service References\portfolio.Client\PortfolioManager.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\portfolio.Client\PortfolioManager1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\portfolio.Client\PortfolioManager2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\portfolio.Client\PortfolioManager3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\useragent.Client\AlgoTrader.useragent.Client.AlertMessage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -124,6 +145,13 @@
     <Content Include="datamodel\db_scripts\Trades.sql" />
     <Content Include="datamodel\db_scripts\WatchListItems.sql" />
     <Content Include="datamodel\db_scripts\WatchLists.sql" />
+    <None Include="Service References\portfolio.Client\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\portfolio.Client\configuration.svcinfo" />
+    <None Include="Service References\portfolio.Client\configuration91.svcinfo" />
+    <None Include="Service References\portfolio.Client\PortfolioManager.disco" />
     <None Include="Service References\useragent.Client\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -136,6 +164,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\portfolio.Client\" />
     <WCFMetadataStorage Include="Service References\useragent.Client\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

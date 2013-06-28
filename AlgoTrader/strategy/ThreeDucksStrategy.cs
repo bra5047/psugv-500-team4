@@ -7,6 +7,7 @@ using System.ServiceModel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
 using AlgoTrader.useragent.Client;
+using AlgoTrader.portfolio.Client;
 
 namespace AlgoTrader.strategy
 {
@@ -86,13 +87,21 @@ namespace AlgoTrader.strategy
                 _signals[quote.SymbolName] = StrategySignal.None;
             }
 
-            if (_signals[quote.SymbolName] != StrategySignal.None)
+            if (_signals[quote.SymbolName] == StrategySignal.Buy)
             {
                 AlgoTrader.useragent.Client.tradeTypes t = useragent.Client.tradeTypes.Buy;
-                if (_signals[quote.SymbolName] == StrategySignal.Sell) t = useragent.Client.tradeTypes.Sell;
                 UserAgentClient ua = new UserAgentClient();
-                // for a sell, I need to figure out how many we have
                 ua.generateAlert(quote.SymbolName, t, DEFAULT_BUY_SIZE, quote.Price);
+                ua.Close();
+            }
+            if (_signals[quote.SymbolName] == StrategySignal.Sell)
+            {
+                PortfolioManagerClient pm = new PortfolioManagerClient();
+                PositionMessage pos = pm.GetPosition(quote.SymbolName);
+                pm.Close();
+                AlgoTrader.useragent.Client.tradeTypes t = useragent.Client.tradeTypes.Sell;
+                UserAgentClient ua = new UserAgentClient();
+                ua.generateAlert(quote.SymbolName, t, pos.Quantity, quote.Price);
                 ua.Close();
             }
         }

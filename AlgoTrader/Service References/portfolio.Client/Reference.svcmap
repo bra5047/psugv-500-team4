@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="052c23e3-6552-48ac-ade3-0a8fff868edf" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1244/services/portfolio/PortfolioManager.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PortfolioManager.wsdl" MetadataType="Wsdl" ID="82f29fc7-4c68-44d2-a5e1-156991f7fdfa" SourceId="1" SourceUrl="http://localhost:1244/services/portfolio/PortfolioManager.svc?wsdl" />
+    <MetadataFile FileName="PortfolioManager.xsd" MetadataType="Schema" ID="688336ba-343d-45cf-a802-10bfeb7999ef" SourceId="1" SourceUrl="http://localhost:1244/services/portfolio/PortfolioManager.svc?xsd=xsd2" />
+    <MetadataFile FileName="PortfolioManager1.xsd" MetadataType="Schema" ID="ac9b6586-cc97-4aee-a127-0268d0ec9d31" SourceId="1" SourceUrl="http://localhost:1244/services/portfolio/PortfolioManager.svc?xsd=xsd3" />
+    <MetadataFile FileName="PortfolioManager2.xsd" MetadataType="Schema" ID="7c9e79ff-5142-4081-b3b6-86bd12c675e9" SourceId="1" SourceUrl="http://localhost:1244/services/portfolio/PortfolioManager.svc?xsd=xsd0" />
+    <MetadataFile FileName="PortfolioManager3.xsd" MetadataType="Schema" ID="e6c9f85b-ce15-4a70-a0ce-4f7ff55d68ad" SourceId="1" SourceUrl="http://localhost:1244/services/portfolio/PortfolioManager.svc?xsd=xsd1" />
+    <MetadataFile FileName="PortfolioManager.disco" MetadataType="Disco" ID="66ab81c7-1648-470f-862b-7a07c3693c0b" SourceId="1" SourceUrl="http://localhost:1244/services/portfolio/PortfolioManager.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
