@@ -21,4 +21,9 @@ namespace AlgoTrader.datamodel
         public virtual Symbol Symbol { get; set; }
 
     }
+    public class Qoutemanager : IQuoteManager
+    {
+
+
+    }
 }
