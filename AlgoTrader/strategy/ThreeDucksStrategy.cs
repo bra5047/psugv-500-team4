@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
+using AlgoTrader.useragent.Client;
 
 namespace AlgoTrader.strategy
 {
@@ -16,6 +17,7 @@ namespace AlgoTrader.strategy
         private int SECOND_DUCK_SECONDS;
         private int THIRD_DUCK_SECONDS;
         private int AVERAGE_WINDOW;
+        private int DEFAULT_BUY_SIZE;
 
         private Dictionary<string, List<SmaMetric>> _metrics;
         private Dictionary<string, StrategySignal> _signals;
@@ -29,6 +31,7 @@ namespace AlgoTrader.strategy
             SECOND_DUCK_SECONDS = 3600;
             THIRD_DUCK_SECONDS = 14400;
             AVERAGE_WINDOW = 60;
+            DEFAULT_BUY_SIZE = 100;
         }
 
         public ThreeDucksStrategy(Dictionary<string,string> settings)
@@ -81,6 +84,16 @@ namespace AlgoTrader.strategy
             else
             {
                 _signals[quote.SymbolName] = StrategySignal.None;
+            }
+
+            if (_signals[quote.SymbolName] != StrategySignal.None)
+            {
+                AlgoTrader.useragent.Client.tradeTypes t = useragent.Client.tradeTypes.Buy;
+                if (_signals[quote.SymbolName] == StrategySignal.Sell) t = useragent.Client.tradeTypes.Sell;
+                UserAgentClient ua = new UserAgentClient();
+                // for a sell, I need to figure out how many we have
+                ua.generateAlert(quote.SymbolName, t, DEFAULT_BUY_SIZE, quote.Price);
+                ua.Close();
             }
         }
 

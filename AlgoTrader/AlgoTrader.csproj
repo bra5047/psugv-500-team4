@@ -87,6 +87,11 @@
     <Compile Include="portfolio\PositionMessage.cs" />
     <Compile Include="portfolio\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\useragent.Client\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="strategy\SmaMetric.cs" />
     <Compile Include="strategy\ThreeDucksStrategy.cs" />
     <Compile Include="useragent\UserAgent.cs" />
@@ -95,6 +100,19 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Service References\useragent.Client\AlgoTrader.useragent.Client.AlertMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\useragent.Client\UserAgent.wsdl" />
+    <None Include="Service References\useragent.Client\UserAgent.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\useragent.Client\UserAgent1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\useragent.Client\UserAgent2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="datamodel\db_scripts\AlgoTraderDb.sql" />
@@ -106,6 +124,19 @@
     <Content Include="datamodel\db_scripts\Trades.sql" />
     <Content Include="datamodel\db_scripts\WatchListItems.sql" />
     <Content Include="datamodel\db_scripts\WatchLists.sql" />
+    <None Include="Service References\useragent.Client\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\useragent.Client\configuration.svcinfo" />
+    <None Include="Service References\useragent.Client\configuration91.svcinfo" />
+    <None Include="Service References\useragent.Client\UserAgent.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\useragent.Client\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
