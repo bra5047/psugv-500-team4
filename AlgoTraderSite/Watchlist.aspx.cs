@@ -16,30 +16,20 @@ namespace AlgoTraderSite
 		private static IWatchListManager wlm = new WatchListManager();
 		private static IWatchList wl = new WatchList("Default");
         private static List<Quote> quotes = new List<Quote>();
-		//public static bool showing = false;
 		public int numColumns = 5;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			statusMessage.InnerText = string.Empty; // status string above the list
 			listWatchLists();
-			if (!IsPostBack)
-			{
-				
-			}
-			else
-			{
-
-			}
-
-			//statusMessage.InnerText = string.Empty; // status string above the list
-			showWatchList(ddlistWatchLists.SelectedValue);
+			showWatchList();
 		}
 
         public void listWatchLists()
         {
             ddlistWatchLists.Items.Clear();
             List<WatchList> watchlists = new List<WatchList>();
-            watchlists = wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList();
+            watchlists = wlm.GetAllWatchLists();
 
             foreach (WatchList w in watchlists)
             {
@@ -47,99 +37,93 @@ namespace AlgoTraderSite
             }
         }
 
-		public void showWatchList(string lname)
+		public void showWatchList()
 		{
-            wl = wlm.GetWatchList(lname);
-			tblWatchList.Controls.Clear(); // clear the page
-			wl.items = wl.items.OrderBy(a => a.SymbolName).ToList();
+			string lName = ddlistWatchLists.SelectedValue;
+
+			tblWatchList.Controls.Clear();
+            wl = wlm.GetWatchList(lName);
 
 			TableHeaderRow headers = new TableHeaderRow();
+			string[] headerNames = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
 			for (int i = 0; i < numColumns; i++)
 			{
 				TableHeaderCell cell = new TableHeaderCell();
 				headers.Cells.Add(cell);
+				headers.Cells[i].Text = headerNames[i];
 			}
-
-			headers.Cells[0].Text = "COMPANY";
-			headers.Cells[1].Text = "PRICE";
-			headers.Cells[2].Text = "CHANGE";
-			headers.Cells[3].Text = "CHANGE %";
-			headers.Cells[4].Text = "ACTIONS";
 			tblWatchList.Rows.Add(headers);
 
-			for (int row = 0; row < wl.items.Count; row++)
+			foreach (WatchListItem item in wl.items)
 			{
-				string symbolName = wl.items[row].SymbolName;
-				string listName = wl.items[row].ListName;
 				double currentPrice = 0;
 				double previousPrice = 0;
 				double priceChange = 0;
 				DateTime date = new DateTime();
 
-				// create the row and cells
-				TableRow tblRow = new TableRow();
-				for (int j = 0; j < numColumns; j++)
-				{
-					TableCell cell = new TableCell();
-					cell.Width = 300;
-					tblRow.Cells.Add(cell);
-				}
-
-				// create remove button for each row
-				// need to fix double click required for page update; OnPreRender?
-				Button btnRemove = new Button();
-				btnRemove.Attributes["Symbol"] = symbolName;
-				btnRemove.Attributes["ListName"] = listName;
-				btnRemove.Text = "Remove";
-				btnRemove.Click += new EventHandler(btnRemove_Click);
-				tblRow.Cells[numColumns - 1].Controls.Add(btnRemove);
+				// get the quotes
+				quotes = wlm.GetQuotes(item.SymbolName);
+				quotes.OrderBy(x=>x.timestamp);
 
 				foreach (Quote q in quotes)
 				{
-					date = (from quote in quotes
-							where quote.SymbolName.Equals(symbolName)
-							orderby quote.timestamp descending
-							select quote.timestamp).FirstOrDefault();
-					currentPrice = (from quote in quotes
-									where quote.SymbolName.Equals(symbolName)
-									orderby quote.timestamp descending
-									select quote.price).FirstOrDefault();
-					previousPrice = (from quote in quotes
-									 where quote.SymbolName.Equals(symbolName)
-									 orderby quote.timestamp descending
-									 select quote.price).Skip(1).FirstOrDefault();
+					date = quotes.Select(x => x.timestamp).FirstOrDefault();
+					currentPrice = quotes.Select(x => x.price).FirstOrDefault();
+					previousPrice = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
 				}
 
-				tblRow.Cells[0].Text = symbolName;
-				tblRow.Cells[1].Text = currentPrice.ToString("N2") + " as of " + date.ToShortDateString();
+				// create the row and cells
+				TableRow tr = new TableRow();
+				for (int i = 0; i < numColumns; i++)
+				{
+					TableCell cell = new TableCell();
+					cell.Width = 300;
+					tr.Cells.Add(cell);
+				}
+
+				// create Remove button for each row
+				// TODO fix the double click required for page updates; OnPreRender? ViewState?
+				Button btnRemove = new Button();
+				btnRemove.Attributes["Symbol"] = item.SymbolName;
+				btnRemove.Attributes["ListName"] = item.ListName;
+				btnRemove.Text = "Remove";
+				btnRemove.Click += new EventHandler(btnRemove_Click);
+				tr.Cells[numColumns - 1].Controls.Add(btnRemove);
+
+				tr.Cells[0].Text = item.SymbolName;
+				tr.Cells[1].Text = currentPrice.ToString("N2") + " as of " + date.ToShortDateString();
 				priceChange = currentPrice - previousPrice;
 
-				// set color and prefix of price change column
-				if (priceChange > 0 && priceChange != 0)
+				if (priceChange > 0)
 				{
-					tblRow.Cells[2].Text = "+ ";
-					tblRow.Cells[2].Attributes["style"] = "color:green";
-					tblRow.Cells[3].Text = "+ ";
-					tblRow.Cells[3].Attributes["style"] = "color:green";
+					string prefix = "+ ";
+					string style = "color:green";
+
+					tr.Cells[2].Text = prefix;
+					tr.Cells[2].Attributes["style"] = style;
+					tr.Cells[3].Text = prefix;
+					tr.Cells[3].Attributes["style"] = style;
 				}
-				if (priceChange < 0 && priceChange != 0)
+				if (priceChange < 0)
 				{
-					tblRow.Cells[2].Text = "- ";
-					tblRow.Cells[2].Attributes["style"] = "color:red";
-					tblRow.Cells[3].Text = "- ";
-					tblRow.Cells[3].Attributes["style"] = "color:red";
+					string prefix = "- ";
+					string style = "color:red";
+
+					tr.Cells[2].Text = prefix;
+					tr.Cells[2].Attributes["style"] = style;
+					tr.Cells[3].Text = prefix;
+					tr.Cells[3].Attributes["style"] = style;
 				}
 
-				tblRow.Cells[2].Text += Math.Abs(priceChange).ToString("N2");
-				tblRow.Cells[3].Text = Math.Abs(priceChange / previousPrice * 100).ToString("N2") + "%";
-
-				tblWatchList.Rows.Add(tblRow); // finally add the row to the page
-			}	
+				tr.Cells[2].Text += Math.Abs(priceChange).ToString("N2");
+				tr.Cells[3].Text += Math.Abs(priceChange / previousPrice * 100).ToString("N2") + "%";
+				tblWatchList.Rows.Add(tr); // finally add the row to the page
+			}
 		}
 
         protected void updateList()
         {
-            showWatchList(ddlistWatchLists.SelectedValue);
+            showWatchList();
         }
 
 		protected void btnRemove_Click(object sender, EventArgs e)

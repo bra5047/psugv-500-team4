@@ -30,7 +30,7 @@ namespace AlgoTrader.watchlist
         List<Quote> IWatchListManager.GetQuotes(string symbolName)
         {
             TraderContext db = new TraderContext();
-            var query = db.Quotes.Where(a => a.SymbolName.Equals(symbolName));
+			var query = db.Quotes.Where(x => x.SymbolName.Equals(symbolName));
             List<Quote> result = new List<Quote>();
 
             foreach (Quote q in query)
@@ -44,7 +44,7 @@ namespace AlgoTrader.watchlist
 		IWatchList IWatchListManager.GetWatchList(string listName)
 		{
 			TraderContext db = new TraderContext();
-            var query = db.WatchListItems.Where(a => a.ListName.Equals(listName)).OrderBy(a => a.SymbolName).ToList();
+            var query = db.WatchListItems.Where(x => x.ListName.Equals(listName));
             IWatchList result = new WatchList();
             
 			foreach (WatchListItem q in query)
@@ -58,7 +58,7 @@ namespace AlgoTrader.watchlist
         List<WatchList> IWatchListManager.GetAllWatchLists()
         {
             TraderContext db = new TraderContext();
-            var query = db.WatchLists;
+			var query = db.WatchLists.OrderBy(x => x.ListName);
             List<WatchList> result = new List<WatchList>();
 
             foreach (WatchList w in query)
@@ -71,7 +71,7 @@ namespace AlgoTrader.watchlist
 
 		public WatchListManager()
 		{
-			//_dbContext = null;
+			_dbContext = null;
 		}
 
 		public WatchListManager(TraderContext db)
