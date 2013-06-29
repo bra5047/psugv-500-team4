@@ -11,8 +11,10 @@ namespace AlgoTrader.Interfaces
 {
 	public interface IWatchListManager
 	{
-		List<Quote> GetQuotes();
+		List<Quote> GetQuotes(string symbolName);
 
 		IWatchList GetWatchList(string listName);
+
+        List<WatchList> GetAllWatchLists();
 	}
 }

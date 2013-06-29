@@ -15,27 +15,43 @@ namespace AlgoTraderSite
 	{
 		private static IWatchListManager wlm = new WatchListManager();
 		private static IWatchList wl = new WatchList("Default");
-		private static List<Quote> quotes = new List<Quote>();
-		public static bool showing = false;
+        private static List<Quote> quotes = new List<Quote>();
+		//public static bool showing = false;
 		public int numColumns = 5;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			statusMessage.InnerText = string.Empty; // status string above the list
-			
-			if (!showing)
+			listWatchLists();
+			if (!IsPostBack)
 			{
-				wl = wlm.GetWatchList("Default");
-				quotes = wlm.GetQuotes();
-				showing = true;
+				
 			}
-			showWatchList(wl);
+			else
+			{
+
+			}
+
+			//statusMessage.InnerText = string.Empty; // status string above the list
+			showWatchList(ddlistWatchLists.SelectedValue);
 		}
 
-		public void showWatchList(IWatchList watchlist)
+        public void listWatchLists()
+        {
+            ddlistWatchLists.Items.Clear();
+            List<WatchList> watchlists = new List<WatchList>();
+            watchlists = wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList();
+
+            foreach (WatchList w in watchlists)
+            {
+                ddlistWatchLists.Items.Add(w.ListName);
+            }
+        }
+
+		public void showWatchList(string lname)
 		{
+            wl = wlm.GetWatchList(lname);
 			tblWatchList.Controls.Clear(); // clear the page
-			watchlist.items = watchlist.items.OrderBy(a => a.SymbolName).ToList();
+			wl.items = wl.items.OrderBy(a => a.SymbolName).ToList();
 
 			TableHeaderRow headers = new TableHeaderRow();
 			for (int i = 0; i < numColumns; i++)
@@ -51,10 +67,10 @@ namespace AlgoTraderSite
 			headers.Cells[4].Text = "ACTIONS";
 			tblWatchList.Rows.Add(headers);
 
-			for (int row = 0; row < watchlist.items.Count; row++)
+			for (int row = 0; row < wl.items.Count; row++)
 			{
-				string symbolName = watchlist.items[row].SymbolName;
-				string listName = watchlist.items[row].ListName;
+				string symbolName = wl.items[row].SymbolName;
+				string listName = wl.items[row].ListName;
 				double currentPrice = 0;
 				double previousPrice = 0;
 				double priceChange = 0;
@@ -121,6 +137,11 @@ namespace AlgoTraderSite
 			}	
 		}
 
+        protected void updateList()
+        {
+            showWatchList(ddlistWatchLists.SelectedValue);
+        }
+
 		protected void btnRemove_Click(object sender, EventArgs e)
 		{
 			bool success = false;
@@ -133,33 +154,40 @@ namespace AlgoTraderSite
 				statusMessage.InnerText = symbol + " from list " + listName + " removed successfully.";
 			}
 
-			showWatchList(wl);
+            updateList();
 		}
 
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
 			string symbol = this.tbAddToWatchList.Text.Trim().ToUpper();
+			string listName = this.ddlistWatchLists.SelectedValue;
+
 			if (symbol.Length > 0)
 			{
-				wl.AddToList(new Symbol(symbol), "Default");
-				statusMessage.InnerText = symbol + " added to list " + "Default" + ".";
+				wl.AddToList(new Symbol(symbol), listName);
+				statusMessage.InnerText = symbol + " added to list " + listName + ".";
 
 				//REMOVE
 				//THIS
 				//LATER
 				Quote q1 = new Quote();
-				q1.price = 500.00;
+				q1.price = new Random().NextDouble() * (400 - 100) + 100;
 				q1.SymbolName = symbol;
 				q1.timestamp = DateTime.Now;
 				quotes.Add(q1);
 
 				Quote q2 = new Quote();
-				q2.price = 400.00;
+				q2.price = new Random().NextDouble() * (400 - 100) + 100;
 				q2.SymbolName = symbol;
 				q2.timestamp = DateTime.Now.AddDays(-1);
 				quotes.Add(q2);
 			}
-			showWatchList(wl);
+            updateList();
 		}
+
+        protected void ddlistWatchLists_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateList();
+        }
 	}
 }

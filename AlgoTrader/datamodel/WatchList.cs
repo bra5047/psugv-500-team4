@@ -37,21 +37,42 @@ namespace AlgoTrader.datamodel
 
 		bool IWatchList.AddToList(ISymbol symbol, string listName)
 		{
-			foreach (WatchListItem item in Items)
-			{
-				if (item.SymbolName == symbol.name && item.ListName == listName)
-					return false;
-			}
+			TraderContext db = new TraderContext();
+			var SYMBOL_QUERY = db.Symbols.Where(x => x.name.Equals(symbol.name)).ToList();
+			var WLI_QUERY = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(listName))).ToList();
 
-			Items.Add(new WatchListItem(symbol, listName));
-			return true;
+			if (WLI_QUERY.Count>=1)
+			{
+				return false;
+			}
+			else
+			{
+				if (SYMBOL_QUERY.Count == 0)
+				{
+					Symbol s = new Symbol(symbol.name);
+					db.Symbols.Add(s);
+					db.SaveChanges();
+				}
+
+				db.WatchListItems.Add(new WatchListItem(symbol, listName));
+				db.SaveChanges();
+				return true;
+			}
 		}
 
 		bool IWatchList.RemoveFromList(ISymbol symbol, string listName)
 		{
-			if (Items.FindAll(x => (x.SymbolName == symbol.name && x.ListName == listName)).Count >= 1)
+			TraderContext db = new TraderContext();
+			var query = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(ListName))).ToList();
+
+			if (query.Count >= 1)
 			{
-				Items.RemoveAll(x => (x.SymbolName == symbol.name && x.ListName == listName));
+				foreach (WatchListItem item in query)
+				{
+					db.WatchListItems.Remove(item);
+					db.SaveChanges();
+				}
+
 				return true;
 			}
 			else
