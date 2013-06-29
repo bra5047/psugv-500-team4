@@ -20,8 +20,15 @@ namespace AlgoTraderSite
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			statusMessage.InnerText = string.Empty; // status string above the list
-			listWatchLists();
+			if (!IsPostBack)
+			{
+				listWatchLists();
+			}
+			else
+			{
+
+			}
+			statusMessage.InnerText = string.Empty;
 			showWatchList();
 		}
 
@@ -29,7 +36,7 @@ namespace AlgoTraderSite
         {
             ddlistWatchLists.Items.Clear();
             List<WatchList> watchlists = new List<WatchList>();
-            watchlists = wlm.GetAllWatchLists();
+            watchlists = wlm.GetAllWatchLists().OrderBy(x=>x.ListName).ToList();
 
             foreach (WatchList w in watchlists)
             {
@@ -43,6 +50,7 @@ namespace AlgoTraderSite
 
 			tblWatchList.Controls.Clear();
             wl = wlm.GetWatchList(lName);
+			wl.items.OrderBy(x => x.SymbolName);
 
 			TableHeaderRow headers = new TableHeaderRow();
 			string[] headerNames = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
@@ -82,7 +90,7 @@ namespace AlgoTraderSite
 				}
 
 				// create Remove button for each row
-				// TODO fix the double click required for page updates; OnPreRender? ViewState?
+				// TODO fix the double click required for page updates; OnPreRender? ViewState? Ajax?
 				Button btnRemove = new Button();
 				btnRemove.Attributes["Symbol"] = item.SymbolName;
 				btnRemove.Attributes["ListName"] = item.ListName;
@@ -117,7 +125,7 @@ namespace AlgoTraderSite
 
 				tr.Cells[2].Text += Math.Abs(priceChange).ToString("N2");
 				tr.Cells[3].Text += Math.Abs(priceChange / previousPrice * 100).ToString("N2") + "%";
-				tblWatchList.Rows.Add(tr); // finally add the row to the page
+				tblWatchList.Rows.Add(tr);
 			}
 		}
 
@@ -151,9 +159,7 @@ namespace AlgoTraderSite
 				wl.AddToList(new Symbol(symbol), listName);
 				statusMessage.InnerText = symbol + " added to list " + listName + ".";
 
-				//REMOVE
-				//THIS
-				//LATER
+				// TODO remove this later
 				Quote q1 = new Quote();
 				q1.price = new Random().NextDouble() * (400 - 100) + 100;
 				q1.SymbolName = symbol;

@@ -10,10 +10,10 @@
         </div>
     </section>
 </asp:Content>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent" EnableViewState="true">
 	<div id="statusMessage" runat="server"></div>
-    <asp:Label runat="server" Text="List: "></asp:Label><asp:DropDownList runat="server" ID="ddlistWatchLists" EnableViewState="true" OnSelectedIndexChanged="ddlistWatchLists_SelectedIndexChanged"></asp:DropDownList>
-	<asp:TextBox runat="server" ID="tbAddToWatchList" ></asp:TextBox>
+    <asp:Label runat="server" Text="List: " ID="lblWatchLists"></asp:Label><asp:DropDownList runat="server" ID="ddlistWatchLists" EnableViewState="true" OnSelectedIndexChanged="ddlistWatchLists_SelectedIndexChanged"></asp:DropDownList>
+	<asp:TextBox runat="server" ID="tbAddToWatchList"></asp:TextBox>
 	<asp:Button runat="server" ID="btnAddToWatchList" Text="Add to Watch List" OnClick="btnAddToWatchList_Click"/>
-	<asp:Table runat="server" ID="tblWatchList"></asp:Table>
+	<asp:Table runat="server" ID="tblWatchList" EnableViewState="true"></asp:Table>
 </asp:Content>
