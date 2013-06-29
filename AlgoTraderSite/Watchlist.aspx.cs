@@ -165,19 +165,19 @@ namespace AlgoTraderSite
 			if (symbol.Length > 0)
 			{
 				wl.AddToList(new Symbol(symbol), listName);
-				statusMessage.InnerText = symbol + " added to list " + "Default" + ".";
+				statusMessage.InnerText = symbol + " added to list " + listName + ".";
 
 				//REMOVE
 				//THIS
 				//LATER
 				Quote q1 = new Quote();
-				q1.price = 500.00;
+				q1.price = new Random().NextDouble() * (400 - 100) + 100;
 				q1.SymbolName = symbol;
 				q1.timestamp = DateTime.Now;
 				quotes.Add(q1);
 
 				Quote q2 = new Quote();
-				q2.price = 400.00;
+				q2.price = new Random().NextDouble() * (400 - 100) + 100;
 				q2.SymbolName = symbol;
 				q2.timestamp = DateTime.Now.AddDays(-1);
 				quotes.Add(q2);
