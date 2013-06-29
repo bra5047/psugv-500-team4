@@ -16,26 +16,40 @@ namespace AlgoTraderSite
 		private static IWatchListManager wlm = new WatchListManager();
 		private static IWatchList wl = new WatchList("Default");
 		private static List<Quote> quotes = new List<Quote>();
+        private List<WatchList> watchlists = new List<WatchList>();
 		public static bool showing = false;
 		public int numColumns = 5;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			statusMessage.InnerText = string.Empty; // status string above the list
-			
+            listWatchLists();
+
 			if (!showing)
 			{
-				wl = wlm.GetWatchList("Default");
-				quotes = wlm.GetQuotes("GOOG");
+				
+                quotes = wlm.GetQuotes("GOOG");
 				showing = true;
 			}
-			showWatchList(wl);
+			showWatchList(ddlistWatchLists.SelectedValue);
 		}
 
-		public void showWatchList(IWatchList watchlist)
+        public void listWatchLists()
+        {
+            watchlists.Clear();
+            watchlists = wlm.GetAllWatchLists();
+            List<WatchList> ordered = watchlists.OrderBy(x=>x.ListName).ToList();
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                ddlistWatchLists.Items.Add(ordered[i].ListName);
+            }
+        }
+
+		public void showWatchList(string lname)
 		{
+            wl = wlm.GetWatchList(lname);
 			tblWatchList.Controls.Clear(); // clear the page
-			watchlist.items = watchlist.items.OrderBy(a => a.SymbolName).ToList();
+			wl.items = wl.items.OrderBy(a => a.SymbolName).ToList();
 
 			TableHeaderRow headers = new TableHeaderRow();
 			for (int i = 0; i < numColumns; i++)
@@ -51,10 +65,10 @@ namespace AlgoTraderSite
 			headers.Cells[4].Text = "ACTIONS";
 			tblWatchList.Rows.Add(headers);
 
-			for (int row = 0; row < watchlist.items.Count; row++)
+			for (int row = 0; row < wl.items.Count; row++)
 			{
-				string symbolName = watchlist.items[row].SymbolName;
-				string listName = watchlist.items[row].ListName;
+				string symbolName = wl.items[row].SymbolName;
+				string listName = wl.items[row].ListName;
 				double currentPrice = 0;
 				double previousPrice = 0;
 				double priceChange = 0;
@@ -121,6 +135,11 @@ namespace AlgoTraderSite
 			}	
 		}
 
+        protected void updateList()
+        {
+            showWatchList(ddlistWatchLists.SelectedValue);
+        }
+
 		protected void btnRemove_Click(object sender, EventArgs e)
 		{
 			bool success = false;
@@ -133,7 +152,7 @@ namespace AlgoTraderSite
 				statusMessage.InnerText = symbol + " from list " + listName + " removed successfully.";
 			}
 
-			showWatchList(wl);
+            updateList();
 		}
 
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
@@ -159,7 +178,12 @@ namespace AlgoTraderSite
 				q2.timestamp = DateTime.Now.AddDays(-1);
 				quotes.Add(q2);
 			}
-			showWatchList(wl);
+            updateList();
 		}
+
+        protected void ddlistWatchLists_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateList();
+        }
 	}
 }

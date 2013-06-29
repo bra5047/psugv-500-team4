@@ -27,6 +27,20 @@ namespace AlgoTrader.watchlist
 			}
 		}
 
+        List<Quote> IWatchListManager.GetQuotes(string symbolName)
+        {
+            TraderContext db = new TraderContext();
+            var query = db.Quotes.Where(a => a.SymbolName.Equals(symbolName));
+            List<Quote> result = new List<Quote>();
+
+            foreach (Quote q in query)
+            {
+                result.Add(q);
+            }
+
+            return result;
+        }
+
 		IWatchList IWatchListManager.GetWatchList(string listName)
 		{
 			TraderContext db = new TraderContext();
@@ -41,19 +55,19 @@ namespace AlgoTrader.watchlist
 			return result;
 		}
 
-		List<Quote> IWatchListManager.GetQuotes(string symbolName)
-		{
-			TraderContext db = new TraderContext();
-            var query = db.Quotes.Where(a => a.SymbolName.Equals(symbolName));
-            List<Quote> result = new List<Quote>();
+        List<WatchList> IWatchListManager.GetAllWatchLists()
+        {
+            TraderContext db = new TraderContext();
+            var query = db.WatchLists;
+            List<WatchList> result = new List<WatchList>();
 
-            foreach (Quote q in query)
+            foreach (WatchList w in query)
             {
-                result.Add(q);
+                result.Add(w);
             }
 
-			return result;
-		}
+            return result;
+        }
 
 		public WatchListManager()
 		{

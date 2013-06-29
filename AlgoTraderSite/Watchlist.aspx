@@ -12,6 +12,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<div id="statusMessage" runat="server"></div>
+    <asp:Label runat="server" Text="List: "></asp:Label><asp:DropDownList runat="server" ID="ddlistWatchLists" OnSelectedIndexChanged="ddlistWatchLists_SelectedIndexChanged"></asp:DropDownList>
 	<asp:TextBox runat="server" ID="tbAddToWatchList" ></asp:TextBox>
 	<asp:Button runat="server" ID="btnAddToWatchList" Text="Add to Watch List" OnClick="btnAddToWatchList_Click"/>
 	<asp:Table runat="server" ID="tblWatchList"></asp:Table>
