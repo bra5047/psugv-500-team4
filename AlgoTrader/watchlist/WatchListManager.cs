@@ -49,7 +49,7 @@ namespace AlgoTrader.watchlist
             
 			foreach (WatchListItem q in query)
 			{
-				result.AddToList(q.Symbol, q.ListName);
+				result.items.Add(q);
 			}
 
 			return result;

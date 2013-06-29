@@ -21,14 +21,17 @@ namespace AlgoTraderSite
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			statusMessage.InnerText = string.Empty; // status string above the list
-            listWatchLists();
+			listWatchLists();
+			if (!IsPostBack)
+			{
+				
+			}
+			else
+			{
 
-            //if (!showing)
-            //{
-            //    quotes = wlm.GetQuotes("GOOG");
-            //    showing = true;
-            //}
+			}
+
+			//statusMessage.InnerText = string.Empty; // status string above the list
 			showWatchList(ddlistWatchLists.SelectedValue);
 		}
 
@@ -157,9 +160,11 @@ namespace AlgoTraderSite
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
 			string symbol = this.tbAddToWatchList.Text.Trim().ToUpper();
+			string listName = this.ddlistWatchLists.SelectedValue;
+
 			if (symbol.Length > 0)
 			{
-				wl.AddToList(new Symbol(symbol), "Default");
+				wl.AddToList(new Symbol(symbol), listName);
 				statusMessage.InnerText = symbol + " added to list " + "Default" + ".";
 
 				//REMOVE

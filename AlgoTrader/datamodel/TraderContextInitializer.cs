@@ -70,7 +70,9 @@ namespace AlgoTrader.datamodel
             Symbol s7 = new Symbol("NVDA");
             Symbol s8 = new Symbol("QCOM");
             Symbol s9 = new Symbol("PANL");
-            Symbol s10 = new Symbol("ALSDKJALKSDJ");
+            Symbol s10 = new Symbol("FB");
+			Symbol s11 = new Symbol("LNKD");
+			Symbol s12 = new Symbol("ZNGA");
             context.Symbols.Add(s1);
             context.Symbols.Add(s2);
             context.Symbols.Add(s3);
@@ -81,11 +83,13 @@ namespace AlgoTrader.datamodel
             context.Symbols.Add(s8);
             context.Symbols.Add(s9);
             context.Symbols.Add(s10);
+			context.Symbols.Add(s11);
+			context.Symbols.Add(s12);
             context.SaveChanges();
 
             WatchList w1 = new WatchList();
             WatchList w2 = new WatchList("Other");
-            WatchList w3 = new WatchList("Test 1");
+            WatchList w3 = new WatchList("Test List");
             WatchList w4 = new WatchList("Future Purchases");
             context.WatchLists.Add(w1);
             context.WatchLists.Add(w2);
@@ -103,8 +107,8 @@ namespace AlgoTrader.datamodel
             WatchListItem wl8 = new WatchListItem(new Symbol("NVDA"), "Default");
             WatchListItem wl9 = new WatchListItem(new Symbol("QCOM"), "Default");
             WatchListItem wl10 = new WatchListItem(new Symbol("PANL"), "Default");
-            WatchListItem wl11 = new WatchListItem(new Symbol("FB"), "Test 1");
-            WatchListItem wl12 = new WatchListItem(new Symbol("LNKD"), "Test 1");
+            WatchListItem wl11 = new WatchListItem(new Symbol("FB"), "Other");
+            WatchListItem wl12 = new WatchListItem(new Symbol("LNKD"), "Test List");
             WatchListItem wl13 = new WatchListItem(new Symbol("ZNGA"), "Future Purchases");
             context.WatchListItems.Add(wl1);
             context.WatchListItems.Add(wl2);
@@ -116,6 +120,9 @@ namespace AlgoTrader.datamodel
             context.WatchListItems.Add(wl8);
             context.WatchListItems.Add(wl9);
             context.WatchListItems.Add(wl10);
+			context.WatchListItems.Add(wl11);
+			context.WatchListItems.Add(wl12);
+			context.WatchListItems.Add(wl13);
             context.SaveChanges();
 
             Quote q = new Quote();
