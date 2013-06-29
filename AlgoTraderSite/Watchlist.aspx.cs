@@ -15,8 +15,7 @@ namespace AlgoTraderSite
 	{
 		private static IWatchListManager wlm = new WatchListManager();
 		private static IWatchList wl = new WatchList("Default");
-		private static List<Quote> quotes = new List<Quote>();
-        private List<WatchList> watchlists = new List<WatchList>();
+        private static List<Quote> quotes = new List<Quote>();
 		public static bool showing = false;
 		public int numColumns = 5;
 
@@ -27,7 +26,6 @@ namespace AlgoTraderSite
 
 			if (!showing)
 			{
-				
                 quotes = wlm.GetQuotes("GOOG");
 				showing = true;
 			}
@@ -36,12 +34,12 @@ namespace AlgoTraderSite
 
         public void listWatchLists()
         {
-            watchlists.Clear();
-            watchlists = wlm.GetAllWatchLists();
-            List<WatchList> ordered = watchlists.OrderBy(x=>x.ListName).ToList();
-            for (int i = 0; i < ordered.Count; i++)
+            ddlistWatchLists.Items.Clear();
+            List<WatchList> watchlists = new List<WatchList>();
+            watchlists = wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList();
+            foreach (WatchList w in watchlists)
             {
-                ddlistWatchLists.Items.Add(ordered[i].ListName);
+                ddlistWatchLists.Items.Add(w.ListName);
             }
         }
 
