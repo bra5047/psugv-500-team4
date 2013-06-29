@@ -85,8 +85,12 @@ namespace AlgoTrader.datamodel
 
             WatchList w1 = new WatchList();
             WatchList w2 = new WatchList("Other");
+            WatchList w3 = new WatchList("Test 1");
+            WatchList w4 = new WatchList("Future Purchases");
             context.WatchLists.Add(w1);
             context.WatchLists.Add(w2);
+            context.WatchLists.Add(w3);
+            context.WatchLists.Add(w4);
             context.SaveChanges();
 
             WatchListItem wl1 = new WatchListItem(new Symbol("GOOG"), "Default");
@@ -99,6 +103,9 @@ namespace AlgoTrader.datamodel
             WatchListItem wl8 = new WatchListItem(new Symbol("NVDA"), "Default");
             WatchListItem wl9 = new WatchListItem(new Symbol("QCOM"), "Default");
             WatchListItem wl10 = new WatchListItem(new Symbol("PANL"), "Default");
+            WatchListItem wl11 = new WatchListItem(new Symbol("FB"), "Test 1");
+            WatchListItem wl12 = new WatchListItem(new Symbol("LNKD"), "Test 1");
+            WatchListItem wl13 = new WatchListItem(new Symbol("ZNGA"), "Future Purchases");
             context.WatchListItems.Add(wl1);
             context.WatchListItems.Add(wl2);
             context.WatchListItems.Add(wl3);
@@ -113,125 +120,161 @@ namespace AlgoTrader.datamodel
 
             Quote q = new Quote();
             q.price = 890.22;
-            q.timestamp = new DateTime(2013, 06, 18);
+			q.timestamp = DateTime.Now;
             q.SymbolName = "GOOG";
             context.Quotes.Add(q);
 
             Quote q2 = new Quote();
             q2.price = 760.47;
-            q2.timestamp = new DateTime(2013, 06, 17);
+			q2.timestamp = DateTime.Now.AddMinutes(-15);
             q2.SymbolName = "GOOG";
             context.Quotes.Add(q2);
 
             Quote q3 = new Quote();
             q3.price = 438.89;
-            q3.timestamp = new DateTime(2013, 06, 18);
+			q3.timestamp = DateTime.Now;
             q3.SymbolName = "AAPL";
             context.Quotes.Add(q3);
 
             Quote q4 = new Quote();
             q4.price = 441.03;
-            q4.timestamp = new DateTime(2013, 06, 17);
+			q4.timestamp = DateTime.Now.AddMinutes(-15);
             q4.SymbolName = "AAPL";
             context.Quotes.Add(q4);
 
             Quote q5 = new Quote();
             q5.price = 50.53;
-            q5.timestamp = new DateTime(2013, 06, 18);
+			q5.timestamp = DateTime.Now;
             q5.SymbolName = "VZ";
             context.Quotes.Add(q5);
 
             Quote q6 = new Quote();
             q6.price = 49.14;
-            q6.timestamp = new DateTime(2013, 06, 17);
+			q6.timestamp = DateTime.Now.AddMinutes(-15);
             q6.SymbolName = "VZ";
             context.Quotes.Add(q6);
 
             Quote q7 = new Quote();
             q7.price = 25.01;
-            q7.timestamp = new DateTime(2013, 06, 18);
+			q7.timestamp = DateTime.Now;
             q7.SymbolName = "INTC";
             context.Quotes.Add(q7);
 
             Quote q8 = new Quote();
             q8.price = 24.53;
-            q8.timestamp = new DateTime(2013, 06, 17);
+			q8.timestamp = DateTime.Now.AddMinutes(-15);
             q8.SymbolName = "INTC";
             context.Quotes.Add(q8);
 
             Quote q9 = new Quote();
             q9.price = 35.47;
-            q9.timestamp = new DateTime(2013, 06, 18);
+			q9.timestamp = DateTime.Now;
             q9.SymbolName = "MSFT";
             context.Quotes.Add(q9);
 
             Quote q10 = new Quote();
             q10.price = 35.67;
-            q10.timestamp = new DateTime(2013, 06, 17);
+			q10.timestamp = DateTime.Now.AddMinutes(-15);
             q10.SymbolName = "MSFT";
             context.Quotes.Add(q10);
 
             Quote q11 = new Quote();
             q11.price = 20.12;
-            q11.timestamp = new DateTime(2013, 06, 18);
+			q11.timestamp = DateTime.Now;
             q11.SymbolName = "HP";
             context.Quotes.Add(q11);
 
             Quote q12 = new Quote();
             q12.price = 22.43;
-            q12.timestamp = new DateTime(2013, 06, 17);
+			q12.timestamp = DateTime.Now.AddMinutes(-15);
             q12.SymbolName = "HP";
             context.Quotes.Add(q12);
 
             Quote q13 = new Quote();
             q13.price = 25.10;
-            q13.timestamp = new DateTime(2013, 06, 18);
+			q13.timestamp = DateTime.Now;
             q13.SymbolName = "NVDA";
             context.Quotes.Add(q13);
 
             Quote q14 = new Quote();
             q14.price = 25.10;
-            q14.timestamp = new DateTime(2013, 06, 14);
+			q14.timestamp = DateTime.Now.AddMinutes(-15);
             q14.SymbolName = "NVDA";
             context.Quotes.Add(q14);
 
             Quote q15 = new Quote();
             q15.price = 130.40;
-            q15.timestamp = new DateTime(2013, 06, 18);
+			q15.timestamp = DateTime.Now;
             q15.SymbolName = "QCOM";
             context.Quotes.Add(q15);
 
             Quote q16 = new Quote();
             q16.price = 118.27;
-            q16.timestamp = new DateTime(2013, 06, 16);
+			q16.timestamp = DateTime.Now.AddMinutes(-15);
             q16.SymbolName = "QCOM";
             context.Quotes.Add(q16);
 
             Quote q17 = new Quote();
             q17.price = 83.61;
-            q17.timestamp = new DateTime(2013, 06, 18);
+			q17.timestamp = DateTime.Now;
             q17.SymbolName = "PANL";
             context.Quotes.Add(q17);
 
             Quote q18 = new Quote();
             q18.price = 90.43;
-            q18.timestamp = new DateTime(2013, 06, 16);
+			q18.timestamp = DateTime.Now.AddMinutes(-15);
             q18.SymbolName = "PANL";
             context.Quotes.Add(q18);
 
             Quote q19 = new Quote();
             q19.price = 4.14;
-            q19.timestamp = new DateTime(2013, 06, 18);
+			q19.timestamp = DateTime.Now;
             q19.SymbolName = "AMD";
             context.Quotes.Add(q19);
 
             Quote q20 = new Quote();
             q20.price = 4.08;
-            q20.timestamp = new DateTime(2013, 06, 17);
+			q20.timestamp = DateTime.Now.AddMinutes(-15);
             q20.SymbolName = "AMD";
             context.Quotes.Add(q20);
-            context.SaveChanges();
 
+            Quote q21 = new Quote();
+            q21.price = 24.88;
+			q21.timestamp = DateTime.Now;
+            q21.SymbolName = "FB";
+            context.Quotes.Add(q21);
+
+            Quote q22 = new Quote();
+            q22.price = 25.63;
+			q22.timestamp = DateTime.Now.AddMinutes(-15);
+            q22.SymbolName = "FB";
+            context.Quotes.Add(q22);
+
+			Quote q23 = new Quote();
+			q23.price = 178.30;
+			q23.timestamp = DateTime.Now;
+			q23.SymbolName = "LNKD";
+			context.Quotes.Add(q23);
+
+			Quote q24 = new Quote();
+			q24.price = 180.45;
+			q24.timestamp = DateTime.Now.AddMinutes(-15);
+			q24.SymbolName = "LNKD";
+			context.Quotes.Add(q24);
+
+			Quote q25 = new Quote();
+			q25.price = 2.78;
+			q25.timestamp = DateTime.Now;
+			q25.SymbolName = "ZNGA";
+			context.Quotes.Add(q25);
+
+			Quote q26 = new Quote();
+			q26.price = 2.86;
+			q26.timestamp = DateTime.Now.AddMinutes(-15);
+			q26.SymbolName = "ZNGA";
+			context.Quotes.Add(q26);
+
+            context.SaveChanges();
         }
     }
 }
