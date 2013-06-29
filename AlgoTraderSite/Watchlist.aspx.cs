@@ -26,7 +26,7 @@ namespace AlgoTraderSite
 			if (!showing)
 			{
 				wl = wlm.GetWatchList("Default");
-				quotes = wlm.GetQuotes();
+				quotes = wlm.GetQuotes("GOOG");
 				showing = true;
 			}
 			showWatchList(wl);
