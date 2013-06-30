@@ -85,20 +85,14 @@ namespace AlgoTraderSite
 				for (int i = 0; i < numColumns; i++)
 				{
 					TableCell cell = new TableCell();
-					cell.Width = 300;
 					tr.Cells.Add(cell);
 				}
 
-				// create Remove button for each row
-				// TODO fix the double click required for page updates; OnPreRender? ViewState? Ajax?
-				Button btnRemove = new Button();
-				btnRemove.Attributes["Symbol"] = item.SymbolName;
-				btnRemove.Attributes["ListName"] = item.ListName;
-				btnRemove.Text = "Remove";
-				btnRemove.Click += new EventHandler(btnRemove_Click);
-				tr.Cells[numColumns - 1].Controls.Add(btnRemove);
-
+				// TODO get long name info from quote manager - should it be stored in the database?
+				string fullName = "Full symbol name here";
+				string fullNameStyle = "color:gray; font-weight:300";
 				tr.Cells[0].Text = item.SymbolName;
+				tr.Cells[0].Text += new HtmlString(" <span style='" + fullNameStyle + "'>(" + fullName + ")</span>");
 				tr.Cells[1].Text = currentPrice.ToString("N2") + " as of " + date.ToShortDateString();
 				priceChange = currentPrice - previousPrice;
 
@@ -125,6 +119,20 @@ namespace AlgoTraderSite
 
 				tr.Cells[2].Text += Math.Abs(priceChange).ToString("N2");
 				tr.Cells[3].Text += Math.Abs(priceChange / previousPrice * 100).ToString("N2") + "%";
+
+				// create Remove button for each row
+				// TODO fix the double click required for page updates; OnPreRender? ViewState? Ajax?
+				Button btnRemove = new Button();
+				btnRemove.Attributes["Symbol"] = item.SymbolName;
+				btnRemove.Attributes["ListName"] = item.ListName;
+				btnRemove.Text = "Remove";
+				btnRemove.Click += new EventHandler(btnRemove_Click);
+				tr.Cells[numColumns - 1].Controls.Add(btnRemove);
+
+				// set widths
+				tr.Cells[0].Width = new Unit("40%");
+				tr.Cells[1].Width = new Unit("20%");
+
 				tblWatchList.Rows.Add(tr);
 			}
 		}

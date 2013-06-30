@@ -66,10 +66,10 @@ namespace AlgoTrader.datamodel
             Symbol s3 = new Symbol("INTC");
             Symbol s4 = new Symbol("MSFT");
             Symbol s5 = new Symbol("HP");
-            Symbol s6 = new Symbol("AMD");
+            Symbol s6 = new Symbol("PANL");
             Symbol s7 = new Symbol("NVDA");
             Symbol s8 = new Symbol("QCOM");
-            Symbol s9 = new Symbol("PANL");
+            Symbol s9 = new Symbol("AMD");
             Symbol s10 = new Symbol("FB");
 			Symbol s11 = new Symbol("LNKD");
 			Symbol s12 = new Symbol("ZNGA");

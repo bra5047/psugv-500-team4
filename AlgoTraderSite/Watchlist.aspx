@@ -15,5 +15,5 @@
     <asp:Label runat="server" Text="List: " ID="lblWatchLists"></asp:Label><asp:DropDownList runat="server" ID="ddlistWatchLists" EnableViewState="true" OnSelectedIndexChanged="ddlistWatchLists_SelectedIndexChanged"></asp:DropDownList>
 	<asp:TextBox runat="server" ID="tbAddToWatchList"></asp:TextBox>
 	<asp:Button runat="server" ID="btnAddToWatchList" Text="Add to Watch List" OnClick="btnAddToWatchList_Click"/>
-	<asp:Table runat="server" ID="tblWatchList" EnableViewState="true"></asp:Table>
+	<asp:Table runat="server" ID="tblWatchList" EnableViewState="true" Width="100%"></asp:Table>
 </asp:Content>
