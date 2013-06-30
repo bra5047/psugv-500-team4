@@ -99,7 +99,7 @@ namespace AlgoTraderSite
 				ttbl.Rows.Add(theader);
 
 				// Add trade data rows
-				foreach (TradeMessage t in p.Trades)
+				foreach (TradeMessage t in p.Trades.OrderByDescending(x=>x.Timestamp))
 				{
 					TableRow trow = new TableRow();
 					for (int i = 0; i < tcolumns; i++)
