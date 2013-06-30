@@ -110,7 +110,7 @@ namespace AlgoTrader.datamodel
 					t.quantity = rand.Next(1, 50);
 					t.type = tradeTypes.Buy;
 					t.TransactionId = Guid.NewGuid().ToString();
-					t.timestamp = DateTime.Now.AddDays(rand.Next(1, 60) * -1);
+					t.timestamp = DateTime.Now.AddSeconds(rand.Next(1, (60 * 60 * 24 * 60) + 1) * -1); // any time between 60 days ago
 					p.price += t.price;
 					context.Trades.Add(t);
 				}

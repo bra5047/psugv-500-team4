@@ -56,7 +56,7 @@ namespace AlgoTraderSite
 				cell.Width = new Unit(widths[i]);
 				pheader.Cells.Add(cell);
 			}
-			PortfolioTable.Rows.Add(pheader);			
+			PortfolioTable.Rows.Add(pheader);
 
 			foreach (PositionMessage p in portfolio.GetOpenPositions().OrderBy(x => x.SymbolName))
 			{
@@ -99,7 +99,7 @@ namespace AlgoTraderSite
 				ttbl.Rows.Add(theader);
 
 				// Add trade data rows
-				foreach (TradeMessage t in p.Trades.OrderByDescending(x=>x.Timestamp))
+				foreach (TradeMessage t in p.Trades.OrderByDescending(x => x.Timestamp))
 				{
 					TableRow trow = new TableRow();
 					for (int i = 0; i < tcolumns; i++)
@@ -108,7 +108,9 @@ namespace AlgoTraderSite
 						trow.Cells.Add(cell);
 					}
 
+					string style = "style='color:gray; font-weight: 300'";
 					trow.Cells[1].Text = t.Timestamp.ToString();
+					trow.Cells[1].Text += new HtmlString(String.Format(" <span {0}>({1})</span>", style, getTimeSpan(t.Timestamp)));
 					trow.Cells[2].Text = t.Quantity.ToString();
 					trow.Cells[3].Text = "$" + t.Price.ToString();
 					trow.Cells[4].Text = t.Type.ToString();
@@ -128,6 +130,28 @@ namespace AlgoTraderSite
 				tContainerCell.Controls.Add(ttbl);
 				tContainerRow.Cells.Add(tContainerCell);
 				PortfolioTable.Rows.Add(tContainerRow);
+			}
+		}
+
+		private string getTimeSpan(DateTime timestamp)
+		{
+			TimeSpan timespan = (DateTime.Now - timestamp);
+
+			if (timespan.TotalSeconds < 60) // less than 1 minute
+			{
+				return timespan.Seconds + " seconds ago";
+			}
+			else if (timespan.TotalMinutes < 60) // less than 1 hour
+			{
+				return timespan.Minutes + " minutes ago";
+			}
+			else if (timespan.TotalHours < 24) // less than 24 hours
+			{
+				return timespan.Hours + " hours ago";
+			}
+			else // over a day
+			{
+				return timespan.Days + " days ago";
 			}
 		}
 
