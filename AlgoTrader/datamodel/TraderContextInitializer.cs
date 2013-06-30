@@ -8,282 +8,116 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    class TraderContextInitializer : DropCreateDatabaseAlways<TraderContext>
-    {
-        protected override void Seed(TraderContext context)
-        {
-            Portfolio portfolio = new Portfolio();
-            portfolio.Cash = 10000;
-            context.Portfolios.Add(portfolio);
-            context.SaveChanges();
+	class TraderContextInitializer : DropCreateDatabaseAlways<TraderContext>
+	{
+		protected override void Seed(TraderContext context)
+		{
+			Portfolio portfolio = new Portfolio();
+			portfolio.Cash = 10000;
+			context.Portfolios.Add(portfolio);
+			context.SaveChanges();
 
-            Symbol s = new Symbol("GOOG");
-            context.Symbols.Add(s);
-            context.SaveChanges();
+			Symbol s = new Symbol("GOOG");
+			context.Symbols.Add(s);
+			context.SaveChanges();
 
-            Position pos1 = new Position();
-            pos1.price = 100;
-            pos1.quantity = 5;
-            pos1.status = positionStatus.Open;
-            pos1.Symbol = s;
-            pos1.Portfolio = portfolio;
-            context.Positions.Add(pos1);
-            context.SaveChanges();
+			Position pos1 = new Position();
+			pos1.price = 100;
+			pos1.quantity = 5;
+			pos1.status = positionStatus.Open;
+			pos1.Symbol = s;
+			pos1.Portfolio = portfolio;
+			context.Positions.Add(pos1);
+			context.SaveChanges();
 
-            Trade t1 = new Trade();
-            t1.Symbol = s;
-            t1.Position = pos1;
-            t1.price = 20;
-            t1.quantity = 5;
-            t1.type = tradeTypes.Buy;
-            t1.TransactionId = Guid.NewGuid().ToString();
-            t1.timestamp = DateTime.Now;
-            context.Trades.Add(t1);
-            context.SaveChanges();
+			Trade t1 = new Trade();
+			t1.Symbol = s;
+			t1.Position = pos1;
+			t1.price = 20;
+			t1.quantity = 5;
+			t1.type = tradeTypes.Buy;
+			t1.TransactionId = Guid.NewGuid().ToString();
+			t1.timestamp = DateTime.Now;
+			context.Trades.Add(t1);
+			context.SaveChanges();
 
-            Quote q1 = new Quote();
-            q1.Symbol = s;
-            q1.timestamp = DateTime.Now;
-            q1.price = 20.15;
-            context.Quotes.Add(q1);
-            context.SaveChanges();
+			Quote q1 = new Quote();
+			q1.Symbol = s;
+			q1.timestamp = DateTime.Now;
+			q1.price = 20.15;
+			context.Quotes.Add(q1);
+			context.SaveChanges();
 
-            Alert a1 = new Alert();
-            a1.AlertId = Guid.NewGuid();
-            a1.Symbol = s;
-            a1.Timestamp = DateTime.Now;
-            a1.Type = tradeTypes.Buy;
-            a1.Quantity = 100;
-            a1.SentTo = "bra5047@psu.edu";
-            a1.Price = 10.45;
-            a1.ResponseCode = responseCodes.Pending;
-            context.Alerts.Add(a1);
-            context.SaveChanges();
-
-            // Adam's stuff to fill in db tables
-            Symbol s1 = new Symbol("AAPL");
-            Symbol s2 = new Symbol("VZ");
-            Symbol s3 = new Symbol("INTC");
-            Symbol s4 = new Symbol("MSFT");
-            Symbol s5 = new Symbol("HP");
-            Symbol s6 = new Symbol("PANL");
-            Symbol s7 = new Symbol("NVDA");
-            Symbol s8 = new Symbol("QCOM");
-            Symbol s9 = new Symbol("AMD");
-            Symbol s10 = new Symbol("FB");
-			Symbol s11 = new Symbol("LNKD");
-			Symbol s12 = new Symbol("ZNGA");
-            context.Symbols.Add(s1);
-            context.Symbols.Add(s2);
-            context.Symbols.Add(s3);
-            context.Symbols.Add(s4);
-            context.Symbols.Add(s5);
-            context.Symbols.Add(s6);
-            context.Symbols.Add(s7);
-            context.Symbols.Add(s8);
-            context.Symbols.Add(s9);
-            context.Symbols.Add(s10);
-			context.Symbols.Add(s11);
-			context.Symbols.Add(s12);
-            context.SaveChanges();
-
-            WatchList w1 = new WatchList();
-            WatchList w2 = new WatchList("Other");
-            WatchList w3 = new WatchList("Test List");
-            WatchList w4 = new WatchList("Future Purchases");
-            context.WatchLists.Add(w1);
-            context.WatchLists.Add(w2);
-            context.WatchLists.Add(w3);
-            context.WatchLists.Add(w4);
-            context.SaveChanges();
-
-            WatchListItem wl1 = new WatchListItem(s, "Default");
-            WatchListItem wl2 = new WatchListItem(s1, "Default");
-            WatchListItem wl3 = new WatchListItem(s2, "Default");
-            WatchListItem wl4 = new WatchListItem(s3, "Default");
-            WatchListItem wl5 = new WatchListItem(s4, "Default");
-            WatchListItem wl6 = new WatchListItem(s5, "Default");
-            WatchListItem wl7 = new WatchListItem(s6, "Default");
-            WatchListItem wl8 = new WatchListItem(s7, "Default");
-            WatchListItem wl9 = new WatchListItem(s8, "Default");
-            WatchListItem wl10 = new WatchListItem(s9, "Default");
-            WatchListItem wl11 = new WatchListItem(s10, "Other");
-            WatchListItem wl12 = new WatchListItem(s11, "Test List");
-            WatchListItem wl13 = new WatchListItem(s12, "Future Purchases");
-            context.WatchListItems.Add(wl1);
-            context.WatchListItems.Add(wl2);
-            context.WatchListItems.Add(wl3);
-            context.WatchListItems.Add(wl4);
-            context.WatchListItems.Add(wl5);
-            context.WatchListItems.Add(wl6);
-            context.WatchListItems.Add(wl7);
-            context.WatchListItems.Add(wl8);
-            context.WatchListItems.Add(wl9);
-            context.WatchListItems.Add(wl10);
-			context.WatchListItems.Add(wl11);
-			context.WatchListItems.Add(wl12);
-			context.WatchListItems.Add(wl13);
-            context.SaveChanges();
+			Alert a1 = new Alert();
+			a1.AlertId = Guid.NewGuid();
+			a1.Symbol = s;
+			a1.Timestamp = DateTime.Now;
+			a1.Type = tradeTypes.Buy;
+			a1.Quantity = 100;
+			a1.SentTo = "bra5047@psu.edu";
+			a1.Price = 10.45;
+			a1.ResponseCode = responseCodes.Pending;
+			context.Alerts.Add(a1);
+			context.SaveChanges();
 
 
-			// not needed because there's already a GOOG quote
-			//Quote q = new Quote();
-			//q.price = 890.22;
-			//q.timestamp = DateTime.Now;
-			//q.SymbolName = s.name;
-			//context.Quotes.Add(q);
+			// Adam's stuff to fill in db tables
+			string[] symbols = { "AAPL", "VZ", "INTC", "MSFT", "HP", "PANL", "NVDA", "QCOM", "AMD", "FB", "LNKD", "ZNGA" };
+			string[] watchlists = { "", "Other", "Test List", "Future Purchases" };
+			Random rand = new Random();
 
-            Quote q2 = new Quote();
-            q2.price = 18.37;
-			q2.timestamp = DateTime.Now.AddMinutes(-15);
-            q2.SymbolName = s.name;
-            context.Quotes.Add(q2);
+			for (int i = 0; i < watchlists.Length; i++)
+			{
+				WatchList w = new WatchList(watchlists[i]);
+				context.WatchLists.Add(w);
+			}
+			context.SaveChanges();
 
-            Quote q3 = new Quote();
-            q3.price = 438.89;
-			q3.timestamp = DateTime.Now;
-            q3.SymbolName = s1.name;
-            context.Quotes.Add(q3);
+			for (int i = 0; i < symbols.Length; i++)
+			{
+				Symbol symbol = new Symbol(symbols[i]);
+				context.Symbols.Add(symbol);
+				context.SaveChanges();
 
-            Quote q4 = new Quote();
-            q4.price = 441.03;
-			q4.timestamp = DateTime.Now.AddMinutes(-15);
-            q4.SymbolName = s1.name;
-            context.Quotes.Add(q4);
+				WatchListItem wli = new WatchListItem(symbol, watchlists[rand.Next(0, watchlists.Length)]);
+				context.WatchListItems.Add(wli);
+				context.SaveChanges();
 
-            Quote q5 = new Quote();
-            q5.price = 50.53;
-			q5.timestamp = DateTime.Now;
-            q5.SymbolName = s2.name;
-            context.Quotes.Add(q5);
+				Quote quote1 = new Quote();
+				quote1.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
+				quote1.timestamp = DateTime.Now;
+				quote1.SymbolName = symbol.name;
+				context.Quotes.Add(quote1);
 
-            Quote q6 = new Quote();
-            q6.price = 49.14;
-			q6.timestamp = DateTime.Now.AddMinutes(-15);
-            q6.SymbolName = s2.name;
-            context.Quotes.Add(q6);
+				Quote quote2 = new Quote();
+				quote2.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
+				quote2.timestamp = DateTime.Now.AddMinutes(-15);
+				quote2.SymbolName = symbol.name;
+				context.Quotes.Add(quote2);
+				context.SaveChanges();
 
-            Quote q7 = new Quote();
-            q7.price = 25.01;
-			q7.timestamp = DateTime.Now;
-            q7.SymbolName = s3.name;
-            context.Quotes.Add(q7);
+				Position p = new Position();
+				p.status = positionStatus.Open;
+				p.Symbol = symbol;
+				p.Portfolio = portfolio;
 
-            Quote q8 = new Quote();
-            q8.price = 24.53;
-			q8.timestamp = DateTime.Now.AddMinutes(-15);
-            q8.SymbolName = s3.name;
-            context.Quotes.Add(q8);
-
-            Quote q9 = new Quote();
-            q9.price = 35.47;
-			q9.timestamp = DateTime.Now;
-            q9.SymbolName = s4.name;
-            context.Quotes.Add(q9);
-
-            Quote q10 = new Quote();
-            q10.price = 35.67;
-			q10.timestamp = DateTime.Now.AddMinutes(-15);
-            q10.SymbolName = s4.name;
-            context.Quotes.Add(q10);
-
-            Quote q11 = new Quote();
-            q11.price = 20.12;
-			q11.timestamp = DateTime.Now;
-            q11.SymbolName = s5.name;
-            context.Quotes.Add(q11);
-
-            Quote q12 = new Quote();
-            q12.price = 22.43;
-			q12.timestamp = DateTime.Now.AddMinutes(-15);
-            q12.SymbolName = s5.name;
-            context.Quotes.Add(q12);
-
-            Quote q13 = new Quote();
-            q13.price = 25.10;
-			q13.timestamp = DateTime.Now;
-            q13.SymbolName = s6.name;
-            context.Quotes.Add(q13);
-
-            Quote q14 = new Quote();
-            q14.price = 25.10;
-			q14.timestamp = DateTime.Now.AddMinutes(-15);
-            q14.SymbolName = s6.name;
-            context.Quotes.Add(q14);
-
-            Quote q15 = new Quote();
-            q15.price = 130.40;
-			q15.timestamp = DateTime.Now;
-            q15.SymbolName = s7.name;
-            context.Quotes.Add(q15);
-
-            Quote q16 = new Quote();
-            q16.price = 118.27;
-			q16.timestamp = DateTime.Now.AddMinutes(-15);
-            q16.SymbolName = s7.name;
-            context.Quotes.Add(q16);
-
-            Quote q17 = new Quote();
-            q17.price = 83.61;
-			q17.timestamp = DateTime.Now;
-            q17.SymbolName = s8.name;
-            context.Quotes.Add(q17);
-
-            Quote q18 = new Quote();
-            q18.price = 90.43;
-			q18.timestamp = DateTime.Now.AddMinutes(-15);
-            q18.SymbolName = s8.name;
-            context.Quotes.Add(q18);
-
-            Quote q19 = new Quote();
-            q19.price = 4.14;
-			q19.timestamp = DateTime.Now;
-            q19.SymbolName = s9.name;
-            context.Quotes.Add(q19);
-
-            Quote q20 = new Quote();
-            q20.price = 4.08;
-			q20.timestamp = DateTime.Now.AddMinutes(-15);
-            q20.SymbolName = s9.name;
-            context.Quotes.Add(q20);
-
-            Quote q21 = new Quote();
-            q21.price = 24.88;
-			q21.timestamp = DateTime.Now;
-            q21.SymbolName = s10.name;
-            context.Quotes.Add(q21);
-
-            Quote q22 = new Quote();
-            q22.price = 25.63;
-			q22.timestamp = DateTime.Now.AddMinutes(-15);
-            q22.SymbolName = s10.name;
-            context.Quotes.Add(q22);
-
-			Quote q23 = new Quote();
-			q23.price = 178.30;
-			q23.timestamp = DateTime.Now;
-			q23.SymbolName = s11.name;
-			context.Quotes.Add(q23);
-
-			Quote q24 = new Quote();
-			q24.price = 180.45;
-			q24.timestamp = DateTime.Now.AddMinutes(-15);
-			q24.SymbolName = s11.name;
-			context.Quotes.Add(q24);
-
-			Quote q25 = new Quote();
-			q25.price = 2.78;
-			q25.timestamp = DateTime.Now;
-			q25.SymbolName = s12.name;
-			context.Quotes.Add(q25);
-
-			Quote q26 = new Quote();
-			q26.price = 2.86;
-			q26.timestamp = DateTime.Now.AddMinutes(-15);
-			q26.SymbolName = s12.name;
-			context.Quotes.Add(q26);
-
-            context.SaveChanges();
-        }
-    }
+				for (int j = 0; j < 5; j++)
+				{
+					Trade t = new Trade();
+					t.Symbol = symbol;
+					t.Position = p;
+					t.price = rand.Next(10, 100);
+					t.quantity = rand.Next(1, 50);
+					t.type = tradeTypes.Buy;
+					t.TransactionId = Guid.NewGuid().ToString();
+					t.timestamp = DateTime.Now.AddDays(rand.Next(1, 60) * -1);
+					p.price += t.price;
+					context.Trades.Add(t);
+				}
+				p.Recalculate();
+				context.Positions.Add(p);
+				context.SaveChanges();
+			}
+		}
+	}
 }

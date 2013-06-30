@@ -84,7 +84,15 @@ namespace AlgoTrader.datamodel
 		public WatchList(string listName)
 		{
 			Items = new List<WatchListItem>();
-			ListName = listName;
+
+			if (listName.Length > 0)
+			{
+				ListName = listName;
+			}
+			else
+			{
+				ListName = "Default";
+			}			
 		}
 
 		public WatchList()

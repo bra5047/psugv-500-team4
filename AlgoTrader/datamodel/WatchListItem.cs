@@ -25,7 +25,15 @@ namespace AlgoTrader.datamodel
 		public WatchListItem(ISymbol symbol, string listName)
 		{
 			SymbolName = symbol.name.ToString();
-			ListName = listName;
+
+			if (listName.Length > 0)
+			{
+				ListName = listName;
+			}
+			else
+			{
+				ListName = "Default";
+			}
 		}
 
         public WatchListItem()
