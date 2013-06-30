@@ -68,7 +68,7 @@ namespace AlgoTraderSite
 					TableCell cell = new TableCell();
 					prow.Cells.Add(cell);
 				}
-
+				// TODO replace with real company name
 				string fullName = " (" + "Full name" + ")";
 				string fullNameStyle = "style='color:gray; font-weight:300'";
 				// TODO replace with expander image or text;
