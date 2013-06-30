@@ -14,13 +14,15 @@ namespace AlgoTraderSite
 	public partial class MyPortfolio : Page
 	{
 		private PortfolioManagerClient portfolio;
-		private string[] pheaders = { "COMPANY", "QUANTITY", "PRICE", "STATUS", "ACTIONS" };
-		private string[] theaders = { "DATE", "QUANTITY", "PRICE", "TYPE" };
-		private int columns = 5;
-		private int tcolumns = 4;
+		private string[] pheaders = { "", "COMPANY", "QUANTITY", "PRICE", "STATUS", "ACTIONS" };
+		private string[] theaders = { "", "DATE", "QUANTITY", "PRICE", "TYPE", "" };
+		private string[] widths = { "5%", "41%", "11%", "11%", "11%", "11%" };
+		private int columns = 6;
+		private int tcolumns = 6;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			#region old code
 			//TreeNode root = new TreeNode("Portfolio");
 			//portfolio = new PortfolioManagerClient();
 
@@ -42,6 +44,7 @@ namespace AlgoTraderSite
 			//}
 			//PortfolioTree.Nodes.Clear();
 			//PortfolioTree.Nodes.Add(root);
+			#endregion
 
 			portfolio = new PortfolioManagerClient();
 
@@ -50,6 +53,7 @@ namespace AlgoTraderSite
 			{
 				TableHeaderCell cell = new TableHeaderCell();
 				cell.Text = pheaders[i];
+				cell.Width = new Unit(widths[i]);
 				pheader.Cells.Add(cell);
 			}
 			PortfolioTable.Rows.Add(pheader);			
@@ -67,27 +71,34 @@ namespace AlgoTraderSite
 
 				string fullName = " (" + "Full name" + ")";
 				string fullNameStyle = "style='color:gray; font-weight:300'";
-				prow.Cells[0].Text = p.SymbolName;
-				prow.Cells[0].Text += new HtmlString("<span " + fullNameStyle + ">" + fullName + "</span>");
-				prow.Cells[1].Text = p.Quantity.ToString();
-				prow.Cells[2].Text = "$" + p.Price.ToString();
-				prow.Cells[3].Text = p.Status.ToString();
+				// TODO replace with expander image or text;
+				prow.Cells[0].Text = "+";
+				prow.Cells[1].Text = p.SymbolName;
+				prow.Cells[1].Text += new HtmlString("<span " + fullNameStyle + ">" + fullName + "</span>");
+				prow.Cells[2].Text = p.Quantity.ToString();
+				prow.Cells[3].Text = "$" + p.Price.ToString();
+				prow.Cells[4].Text = p.Status.ToString();
 
 				// make a table for the trades, to be nested in positions table
 				Table ttbl = new Table();
+				ttbl.Width = new Unit("100%");
 				TableRow tContainerRow = new TableRow();
 				TableCell tContainerCell = new TableCell(); // create container cell for trade table
-				tContainerRow.Width = new Unit("100%");
-				tContainerCell.ColumnSpan = columns; // make the cell span the width of the positions table
+				//tContainerRow.Width = new Unit("100%");
+				tContainerCell.ColumnSpan = columns; // make the cell span the width of the positions table - 1
 
+				// Add trade header row
 				TableHeaderRow theader = new TableHeaderRow();
 				for (int i = 0; i < tcolumns; i++)
 				{
 					TableHeaderCell cell = new TableHeaderCell();
 					cell.Text = theaders[i];
+					cell.Width = new Unit(widths[i]);
 					theader.Cells.Add(cell);
 				}
-				
+				ttbl.Rows.Add(theader);
+
+				// Add trade data rows
 				foreach (TradeMessage t in p.Trades)
 				{
 					TableRow trow = new TableRow();
@@ -97,10 +108,10 @@ namespace AlgoTraderSite
 						trow.Cells.Add(cell);
 					}
 
-					trow.Cells[0].Text = t.Timestamp.ToString();
-					trow.Cells[1].Text = t.Quantity.ToString();
-					trow.Cells[2].Text = t.Price.ToString();
-					trow.Cells[3].Text = t.Type.ToString();
+					trow.Cells[1].Text = t.Timestamp.ToString();
+					trow.Cells[2].Text = t.Quantity.ToString();
+					trow.Cells[3].Text = "$" + t.Price.ToString();
+					trow.Cells[4].Text = t.Type.ToString();
 					ttbl.Rows.Add(trow);
 					lastPrice = t.Price;
 				}
@@ -114,7 +125,6 @@ namespace AlgoTraderSite
 				prow.Cells[columns - 1].Controls.Add(btnAction);
 
 				PortfolioTable.Rows.Add(prow);
-				PortfolioTable.Rows.Add(theader);
 				tContainerCell.Controls.Add(ttbl);
 				tContainerRow.Cells.Add(tContainerCell);
 				PortfolioTable.Rows.Add(tContainerRow);
