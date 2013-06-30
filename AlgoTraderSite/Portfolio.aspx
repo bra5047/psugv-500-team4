@@ -12,4 +12,6 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <asp:TreeView ID="PortfolioTree" runat="server">
     </asp:TreeView>
+	<asp:Table ID="PortfolioTable" Width="100%" runat="server">
+	</asp:Table>
 </asp:Content>

@@ -16,7 +16,7 @@ namespace AlgoTraderSite
 		private static IWatchListManager wlm = new WatchListManager();
 		private static IWatchList wl = new WatchList("Default");
         private static List<Quote> quotes = new List<Quote>();
-		public int numColumns = 5;
+		private int numColumns = 5;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -89,7 +89,7 @@ namespace AlgoTraderSite
 				}
 
 				// TODO get long name info from quote manager - should it be stored in the database?
-				string fullName = "Full symbol name here";
+				string fullName = "long name goes here";
 				string fullNameStyle = "color:gray; font-weight:300";
 				tr.Cells[0].Text = item.SymbolName;
 				tr.Cells[0].Text += new HtmlString(" <span style='" + fullNameStyle + "'>(" + fullName + ")</span>");
