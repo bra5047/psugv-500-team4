@@ -77,11 +77,9 @@ namespace AlgoTrader.datamodel
 			{
 				Symbol symbol = new Symbol(symbols[i]);
 				context.Symbols.Add(symbol);
-				context.SaveChanges();
 
 				WatchListItem wli = new WatchListItem(symbol, watchlists[rand.Next(0, watchlists.Length)]);
 				context.WatchListItems.Add(wli);
-				context.SaveChanges();
 
 				Quote quote1 = new Quote();
 				quote1.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
@@ -94,7 +92,6 @@ namespace AlgoTrader.datamodel
 				quote2.timestamp = DateTime.Now.AddMinutes(-15);
 				quote2.SymbolName = symbol.name;
 				context.Quotes.Add(quote2);
-				context.SaveChanges();
 
 				Position p = new Position();
 				p.status = positionStatus.Open;
@@ -116,8 +113,8 @@ namespace AlgoTrader.datamodel
 				}
 				p.Recalculate();
 				context.Positions.Add(p);
-				context.SaveChanges();
 			}
+			context.SaveChanges();
 		}
 	}
 }

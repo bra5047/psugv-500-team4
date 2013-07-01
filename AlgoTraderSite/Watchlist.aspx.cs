@@ -14,7 +14,7 @@ namespace AlgoTraderSite
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();
-		private static IWatchList wl = new WatchList("Default");
+		private static IWatchList wl;
         private static List<Quote> quotes = new List<Quote>();
 		private int numColumns = 5;
 

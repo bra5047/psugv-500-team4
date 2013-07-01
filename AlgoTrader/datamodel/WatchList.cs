@@ -63,7 +63,7 @@ namespace AlgoTrader.datamodel
 		bool IWatchList.RemoveFromList(ISymbol symbol, string listName)
 		{
 			TraderContext db = new TraderContext();
-			var query = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(ListName))).ToList();
+			var query = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(listName))).ToList();
 
 			if (query.Count >= 1)
 			{

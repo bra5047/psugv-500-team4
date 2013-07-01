@@ -14,8 +14,8 @@ namespace AlgoTraderSite
 	public partial class MyPortfolio : Page
 	{
 		private PortfolioManagerClient portfolio;
-		private string[] pheaders = { "", "COMPANY", "QUANTITY", "PRICE", "STATUS", "ACTIONS" };
-		private string[] theaders = { "", "DATE", "QUANTITY", "PRICE", "TYPE", "" };
+		private string[] pheaders = { "", "Company", "Quantity", "Price", "Status", "Actions" };
+		private string[] theaders = { "", "Date", "Quantity", "Price", "Type", "" };
 		private string[] widths = { "5%", "41%", "11%", "11%", "11%", "11%" };
 		private int columns = 6;
 		private int tcolumns = 6;
@@ -23,15 +23,6 @@ namespace AlgoTraderSite
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			portfolio = new PortfolioManagerClient();
-
-			PortfolioGrid.DataSource = portfolio.GetOpenPositions().OrderBy(x=>x.SymbolName);
-			PortfolioGrid.Width = new Unit("100%");
-			PortfolioGrid.DataBind();
-
-			for (int i = 0; i < PortfolioGrid.Columns.Count; i++)
-			{
-				PortfolioGrid.Columns[i].ItemStyle.Width = new Unit(widths[i]);
-			}
 
 			Table tblHeader = new Table();
 			tblHeader.ID = "Header";
@@ -41,7 +32,7 @@ namespace AlgoTraderSite
 			{
 				TableHeaderCell cell = new TableHeaderCell();
 				cell.Text = pheaders[i];
-				cell.Width = new Unit(widths[i]);				
+				cell.Width = new Unit(widths[i]);
 				pheader.Cells.Add(cell);
 			}
 			tblHeader.Rows.Add(pheader);
@@ -70,7 +61,7 @@ namespace AlgoTraderSite
 				string fullNameStyle = "style='color:gray; font-weight:300'";
 
 				// TODO replace with expander image or text;
-				prow.Cells[0].Text = "+";
+				//prow.Cells[0].Text = "+";
 				prow.Cells[1].Text = p.SymbolName;
 				prow.Cells[1].Text += new HtmlString("<span " + fullNameStyle + ">" + fullName + "</span>");
 				prow.Cells[2].Text = p.Quantity.ToString();
@@ -117,7 +108,12 @@ namespace AlgoTraderSite
 					lastPrice = t.Price;
 				}
 
-				// create button to buy/sell stuff
+				// Buttons
+				Button btnToggle = new Button();
+				btnToggle.Text = "+";
+				btnToggle.Attributes["SymbolName"] = p.SymbolName;
+				prow.Cells[0].Controls.Add(btnToggle);
+
 				Button btnAction = new Button();
 				btnAction.Text = "Buy / Sell";
 				btnAction.Attributes["SymbolName"] = p.SymbolName;
@@ -131,36 +127,79 @@ namespace AlgoTraderSite
 				positionTable.Rows.Add(tContainerRow);
 				PortfolioDiv.Controls.Add(positionTable);
 			}
+
 		}
 
 		private string getTimeSpan(DateTime timestamp)
 		{
 			TimeSpan timespan = (DateTime.Now - timestamp);
+			string output = null;
+			string single = " ago";
+			string plural = "s ago";
 
 			if (timespan.TotalSeconds < 60) // less than 1 minute
 			{
-				return timespan.Seconds + " seconds ago";
+				if (timespan.Seconds == 1)
+				{
+					output = single;
+				}
+				else
+				{
+					output = plural;
+				}
+				return timespan.Seconds + "second" + output;
 			}
 			else if (timespan.TotalMinutes < 60) // less than 1 hour
 			{
-				return timespan.Minutes + " minutes ago";
+				if (timespan.Minutes == 1)
+				{
+					output = single;
+				}
+				else
+				{
+					output = plural;
+				}
+				return timespan.Minutes + " minute" + output;
 			}
 			else if (timespan.TotalHours < 24) // less than 24 hours
 			{
-				return timespan.Hours + " hours ago";
+				if (timespan.Hours == 1)
+				{
+					output = single;
+				}
+				else
+				{
+					output = plural;
+				}
+				return timespan.Hours + " hour" + output;
 			}
 			else // over a day
 			{
-				return timespan.Days + " days ago";
+				if (timespan.Days == 1)
+				{
+					output = single;
+				}
+				else
+				{
+					output = plural;
+				}
+
+				return timespan.Days + " day" + output;
 			}
 		}
 
 		private void toggleTable(object sender, EventArgs e)
 		{
-
 			Table tbl = (Table)sender;
-
-			
+			if (tbl.Rows[1].Visible == true)
+			{
+				tbl.Rows[1].Visible = false;
+				
+			}
+			else
+			{
+				tbl.Rows[1].Visible = true;
+			}
 		}
 
 		protected void btnClick(object sender, EventArgs e)

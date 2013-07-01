@@ -13,24 +13,6 @@ namespace AlgoTraderSite {
     public partial class MyPortfolio {
         
         /// <summary>
-        /// PortfolioGrid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView PortfolioGrid;
-        
-        /// <summary>
-        /// PortfolioTree control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TreeView PortfolioTree;
-        
-        /// <summary>
         /// PortfolioDiv control.
         /// </summary>
         /// <remarks>
@@ -38,14 +20,5 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PortfolioDiv;
-        
-        /// <summary>
-        /// PortfolioTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table PortfolioTable;
     }
 }
