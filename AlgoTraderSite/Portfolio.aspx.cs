@@ -22,35 +22,16 @@ namespace AlgoTraderSite
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			#region old code
-			//TreeNode root = new TreeNode("Portfolio");
-			//portfolio = new PortfolioManagerClient();
-
-			//foreach (PositionMessage p in portfolio.GetOpenPositions())
-			//{
-			//	string s = String.Format("{0}     {1}     ${2}     {3}", p.SymbolName, p.Quantity, p.Price, p.Status);
-			//	TreeNode n = new TreeNode(s);
-
-			//	double lastPrice = 0;
-
-			//	foreach (TradeMessage t in p.Trades)
-			//	{
-			//		string tstr = String.Format("{0}     {1}     ${2}     {3}", t.Timestamp.ToString(), t.Quantity.ToString(), t.Price.ToString(), t.Type.ToString());
-			//		n.ChildNodes.Add(new TreeNode(tstr));
-			//		lastPrice = t.Price;
-			//	}
-			//	n.NavigateUrl = "BuySell.aspx?s=" + p.SymbolName + "&p=" + lastPrice.ToString();
-			//	root.ChildNodes.Add(n);
-			//}
-			//PortfolioTree.Nodes.Clear();
-			//PortfolioTree.Nodes.Add(root);
-			#endregion
-
 			portfolio = new PortfolioManagerClient();
 
 			PortfolioGrid.DataSource = portfolio.GetOpenPositions().OrderBy(x=>x.SymbolName);
 			PortfolioGrid.Width = new Unit("100%");
 			PortfolioGrid.DataBind();
+
+			for (int i = 0; i < PortfolioGrid.Columns.Count; i++)
+			{
+				PortfolioGrid.Columns[i].ItemStyle.Width = new Unit(widths[i]);
+			}
 
 			Table tblHeader = new Table();
 			tblHeader.ID = "Header";

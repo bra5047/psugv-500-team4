@@ -17,11 +17,11 @@
 					<asp:Label runat="server">+</asp:Label>
 				</ItemTemplate>
 			</asp:TemplateField>
-			<asp:BoundField HeaderText="Company" DataField="SymbolName" ItemStyle-Width="41%" />
-			<asp:BoundField HeaderText="Quantity" DataField="Quantity" ItemStyle-Width="11%"/>
-			<asp:BoundField HeaderText="Price" DataField="Price" DataFormatString="{0:C}" ItemStyle-Width="11%" />
-			<asp:BoundField HeaderText="Status" DataField="Status" ItemStyle-Width="11%" />
-			<asp:ButtonField HeaderText="Actions" ButtonType="Button" Text="Buy/Sell" ItemStyle-Width="11%" />
+			<asp:BoundField HeaderText="Company" DataField="SymbolName" />
+			<asp:BoundField HeaderText="Quantity" DataField="Quantity" />
+			<asp:BoundField HeaderText="Price" DataField="Price" DataFormatString="{0:C}" />
+			<asp:BoundField HeaderText="Status" DataField="Status" />
+			<asp:ButtonField HeaderText="Actions" ButtonType="Button" Text="Buy/Sell" />
 		</Columns>
 	</asp:GridView>
 
