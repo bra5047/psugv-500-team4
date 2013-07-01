@@ -10,8 +10,28 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <asp:TreeView ID="PortfolioTree" runat="server">
+	<asp:GridView ID="PortfolioGrid" AllowSorting="true" runat="server" AutoGenerateColumns="false">
+		<Columns>
+			<asp:TemplateField HeaderText="" ItemStyle-Width="5%">
+				<ItemTemplate>
+					<asp:Label runat="server">+</asp:Label>
+				</ItemTemplate>
+			</asp:TemplateField>
+			<asp:BoundField HeaderText="Company" DataField="SymbolName" ItemStyle-Width="41%" />
+			<asp:BoundField HeaderText="Quantity" DataField="Quantity" ItemStyle-Width="11%"/>
+			<asp:BoundField HeaderText="Price" DataField="Price" DataFormatString="{0:C}" ItemStyle-Width="11%" />
+			<asp:BoundField HeaderText="Status" DataField="Status" ItemStyle-Width="11%" />
+			<asp:ButtonField HeaderText="Actions" ButtonType="Button" Text="Buy/Sell" ItemStyle-Width="11%" />
+		</Columns>
+	</asp:GridView>
+
+
+
+	<asp:TreeView ID="PortfolioTree" runat="server">
     </asp:TreeView>
-	<asp:Table ID="PortfolioTable" Width="100%" runat="server">
-	</asp:Table>
+	<div id="PortfolioDiv" style="width:100%" runat="server">
+
+	</div>
+	<!--<asp:Table ID="PortfolioTable" Width="100%" runat="server">
+	</asp:Table>-->
 </asp:Content>
