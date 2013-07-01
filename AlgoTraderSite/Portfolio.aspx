@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="My Portfolio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Portfolio.aspx.cs" Inherits="AlgoTraderSite.MyPortfolio" %>
-
 <asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
     <section class="featured">
         <div class="content-wrapper">
@@ -10,6 +9,6 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-	<div id="PortfolioDiv" style="width:100%" runat="server">
+	<div id="PortfolioDiv" class="asdf" style="width:100%" runat="server">
 	</div>
 </asp:Content>

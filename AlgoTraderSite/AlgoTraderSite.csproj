@@ -200,6 +200,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Portfolio.aspx" />
+    <Content Include="Scripts\AlgoTrader\AlgoTrader.js" />
     <Content Include="Service References\UserAgent.Client\AlgoTraderSite.UserAgent.Client.AlertMessage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
