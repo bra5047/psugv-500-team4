@@ -22,55 +22,53 @@ namespace AlgoTraderSite
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			#region old code
-			//TreeNode root = new TreeNode("Portfolio");
-			//portfolio = new PortfolioManagerClient();
-
-			//foreach (PositionMessage p in portfolio.GetOpenPositions())
-			//{
-			//	string s = String.Format("{0}     {1}     ${2}     {3}", p.SymbolName, p.Quantity, p.Price, p.Status);
-			//	TreeNode n = new TreeNode(s);
-
-			//	double lastPrice = 0;
-
-			//	foreach (TradeMessage t in p.Trades)
-			//	{
-			//		string tstr = String.Format("{0}     {1}     ${2}     {3}", t.Timestamp.ToString(), t.Quantity.ToString(), t.Price.ToString(), t.Type.ToString());
-			//		n.ChildNodes.Add(new TreeNode(tstr));
-			//		lastPrice = t.Price;
-			//	}
-			//	n.NavigateUrl = "BuySell.aspx?s=" + p.SymbolName + "&p=" + lastPrice.ToString();
-			//	root.ChildNodes.Add(n);
-			//}
-			//PortfolioTree.Nodes.Clear();
-			//PortfolioTree.Nodes.Add(root);
-			#endregion
-
 			portfolio = new PortfolioManagerClient();
 
+			PortfolioGrid.DataSource = portfolio.GetOpenPositions().OrderBy(x=>x.SymbolName);
+			PortfolioGrid.Width = new Unit("100%");
+			PortfolioGrid.DataBind();
+
+			for (int i = 0; i < PortfolioGrid.Columns.Count; i++)
+			{
+				PortfolioGrid.Columns[i].ItemStyle.Width = new Unit(widths[i]);
+			}
+
+			Table tblHeader = new Table();
+			tblHeader.ID = "Header";
+			tblHeader.Width = new Unit("100%");
 			TableHeaderRow pheader = new TableHeaderRow();
 			for (int i = 0; i < columns; i++)
 			{
 				TableHeaderCell cell = new TableHeaderCell();
 				cell.Text = pheaders[i];
-				cell.Width = new Unit(widths[i]);
+				cell.Width = new Unit(widths[i]);				
 				pheader.Cells.Add(cell);
 			}
-			PortfolioTable.Rows.Add(pheader);
+			tblHeader.Rows.Add(pheader);
+			PortfolioDiv.Controls.Add(tblHeader);
 
 			foreach (PositionMessage p in portfolio.GetOpenPositions().OrderBy(x => x.SymbolName))
 			{
 				double lastPrice = 0;
 
+				// create a new table for each position
+				Table positionTable = new Table();
+				positionTable.ID = p.SymbolName;
+				positionTable.Width = new Unit("100%");
+
+				// position row
 				TableRow prow = new TableRow();
 				for (int i = 0; i < columns; i++)
 				{
 					TableCell cell = new TableCell();
+					cell.Width = new Unit(widths[i]);
 					prow.Cells.Add(cell);
 				}
+
 				// TODO replace with real company name
 				string fullName = " (" + "Full name" + ")";
 				string fullNameStyle = "style='color:gray; font-weight:300'";
+
 				// TODO replace with expander image or text;
 				prow.Cells[0].Text = "+";
 				prow.Cells[1].Text = p.SymbolName;
@@ -79,15 +77,16 @@ namespace AlgoTraderSite
 				prow.Cells[3].Text = "$" + p.Price.ToString();
 				prow.Cells[4].Text = p.Status.ToString();
 
+
+				// TRADE TABLE STUFF
 				// make a table for the trades, to be nested in positions table
 				Table ttbl = new Table();
 				ttbl.Width = new Unit("100%");
 				TableRow tContainerRow = new TableRow();
 				TableCell tContainerCell = new TableCell(); // create container cell for trade table
-				//tContainerRow.Width = new Unit("100%");
-				tContainerCell.ColumnSpan = columns; // make the cell span the width of the positions table - 1
+				tContainerCell.ColumnSpan = columns; // make the cell span the width of the positions table
 
-				// Add trade header row
+				// trade header
 				TableHeaderRow theader = new TableHeaderRow();
 				for (int i = 0; i < tcolumns; i++)
 				{
@@ -98,7 +97,7 @@ namespace AlgoTraderSite
 				}
 				ttbl.Rows.Add(theader);
 
-				// Add trade data rows
+				// trade rows
 				foreach (TradeMessage t in p.Trades.OrderByDescending(x => x.Timestamp))
 				{
 					TableRow trow = new TableRow();
@@ -126,10 +125,11 @@ namespace AlgoTraderSite
 				btnAction.Click += new EventHandler(btnClick);
 				prow.Cells[columns - 1].Controls.Add(btnAction);
 
-				PortfolioTable.Rows.Add(prow);
+				positionTable.Rows.Add(prow);
 				tContainerCell.Controls.Add(ttbl);
 				tContainerRow.Cells.Add(tContainerCell);
-				PortfolioTable.Rows.Add(tContainerRow);
+				positionTable.Rows.Add(tContainerRow);
+				PortfolioDiv.Controls.Add(positionTable);
 			}
 		}
 
@@ -153,6 +153,14 @@ namespace AlgoTraderSite
 			{
 				return timespan.Days + " days ago";
 			}
+		}
+
+		private void toggleTable(object sender, EventArgs e)
+		{
+
+			Table tbl = (Table)sender;
+
+			
 		}
 
 		protected void btnClick(object sender, EventArgs e)
