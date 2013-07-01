@@ -133,7 +133,7 @@ namespace AlgoTraderSite
 					TableCell cell = new TableCell();
 					trow.Cells.Add(cell);
 				}
-				trow.Cells[1].Text = t.Timestamp.ToString();
+				trow.Cells[1].Text = String.Format("{0:d} at {0:T}", t.Timestamp);
 				trow.Cells[1].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", getTimeSpan(t.Timestamp)));
 				trow.Cells[2].Text = String.Format("{0:N0}", t.Quantity);
 				trow.Cells[3].Text = String.Format("{0:C}", t.Price);
