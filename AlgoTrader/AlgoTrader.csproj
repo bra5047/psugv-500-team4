@@ -87,6 +87,7 @@
     <Compile Include="portfolio\PositionMessage.cs" />
     <Compile Include="portfolio\TradeMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="strategy\ParabolicSarMetric.cs" />
     <Compile Include="strategy\QuoteProvider.cs" />
     <Compile Include="strategy\SignalAlerter.cs" />
     <Compile Include="strategy\SmaMetric.cs" />
