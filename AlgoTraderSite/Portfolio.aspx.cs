@@ -22,188 +22,175 @@ namespace AlgoTraderSite
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (!IsPostBack)
+			showPositions();
+		}
+
+		private void showPositions()
+		{
+			portfolio = new PortfolioManagerClient();
+			PortfolioDiv.Controls.Add(createHeader());
+
+			foreach (PositionMessage p in portfolio.GetOpenPositions().OrderBy(x => x.SymbolName))
 			{
-				portfolio = new PortfolioManagerClient();
+				Table ptbl = createPositionTable(p);
+				Table ttbl = createTradeTable(p);
 
-				Table tblHeader = new Table();
-				tblHeader.ID = "Header";
-				tblHeader.Width = new Unit("100%");
-				TableHeaderRow pheader = new TableHeaderRow();
-				for (int i = 0; i < columns; i++)
-				{
-					TableHeaderCell cell = new TableHeaderCell();
-					cell.Text = pheaders[i];
-					cell.Width = new Unit(widths[i]);
-					pheader.Cells.Add(cell);
-				}
-				tblHeader.Rows.Add(pheader);
-				PortfolioDiv.Controls.Add(tblHeader);
+				TableRow containerRow = new TableRow();
+				TableCell containerCell = new TableCell(); // create container cell for trade table
+				containerCell.ColumnSpan = columns; // make the cell span the width of the positions table
+				containerRow.CssClass = "TradeRow";
+				containerRow.Attributes["style"] = "visibility:hidden; display:none";
 
-				foreach (PositionMessage p in portfolio.GetOpenPositions().OrderBy(x => x.SymbolName))
-				{
-					double lastPrice = 0;
-
-					// create a new table for each position
-					Table positionTable = new Table();
-					positionTable.Width = new Unit("100%");
-
-					// position row
-					TableRow prow = new TableRow();
-					for (int i = 0; i < columns; i++)
-					{
-						TableCell cell = new TableCell();
-						cell.Width = new Unit(widths[i]);
-						prow.Cells.Add(cell);
-					}
-
-					// TODO replace with real company name
-					string fullName = " (" + "Full name" + ")";
-					string fullNameStyle = "style='color:gray; font-weight:300'";
-
-					// TODO replace with expander image or text;
-					//prow.Cells[0].Text = "+";
-					prow.Cells[1].Text = p.SymbolName;
-					prow.Cells[1].Text += new HtmlString("<span " + fullNameStyle + ">" + fullName + "</span>");
-					prow.Cells[2].Text = p.Quantity.ToString();
-					prow.Cells[3].Text = "$" + p.Price.ToString();
-					prow.Cells[4].Text = p.Status.ToString();
-
-
-					// TRADE TABLE STUFF
-					// make a table for the trades, to be nested in positions table
-					Table ttbl = new Table();
-					ttbl.Width = new Unit("100%");
-					TableRow tContainerRow = new TableRow();
-					TableCell tContainerCell = new TableCell(); // create container cell for trade table
-					tContainerCell.ColumnSpan = columns; // make the cell span the width of the positions table
-					tContainerRow.CssClass = "TradeRow";
-					tContainerRow.Attributes["style"] = "visibility:hidden; display:none";
-
-					// trade header
-					TableHeaderRow theader = new TableHeaderRow();
-					for (int i = 0; i < tcolumns; i++)
-					{
-						TableHeaderCell cell = new TableHeaderCell();
-						cell.Text = theaders[i];
-						cell.Width = new Unit(widths[i]);
-						theader.Cells.Add(cell);
-					}
-					ttbl.Rows.Add(theader);
-
-					// trade rows
-					foreach (TradeMessage t in p.Trades.OrderByDescending(x => x.Timestamp))
-					{
-						TableRow trow = new TableRow();
-						for (int i = 0; i < tcolumns; i++)
-						{
-							TableCell cell = new TableCell();
-							trow.Cells.Add(cell);
-						}
-
-						string style = "style='color:gray; font-weight: 300'";
-						trow.Cells[1].Text = t.Timestamp.ToString();
-						trow.Cells[1].Text += new HtmlString(String.Format(" <span {0}>({1})</span>", style, getTimeSpan(t.Timestamp)));
-						trow.Cells[2].Text = t.Quantity.ToString();
-						trow.Cells[3].Text = "$" + t.Price.ToString();
-						trow.Cells[4].Text = t.Type.ToString();
-						ttbl.Rows.Add(trow);
-						lastPrice = t.Price;
-					}
-
-					// Buttons
-					Button btnToggle = new Button();
-					btnToggle.Text = "+";
-					btnToggle.Attributes["SymbolName"] = p.SymbolName;
-					btnToggle.OnClientClick = "return false";
-					btnToggle.CssClass = "toggle";
-					prow.Cells[0].Controls.Add(btnToggle);
-
-					Button btnAction = new Button();
-					btnAction.Text = "Buy / Sell";
-					btnAction.Attributes["SymbolName"] = p.SymbolName;
-					btnAction.Attributes["LastPrice"] = lastPrice.ToString();
-					btnAction.Click += new EventHandler(btnClick);
-					prow.Cells[columns - 1].Controls.Add(btnAction);
-
-					positionTable.Rows.Add(prow);
-					tContainerCell.Controls.Add(ttbl);
-					tContainerRow.Cells.Add(tContainerCell);
-					positionTable.Rows.Add(tContainerRow);
-					PortfolioDiv.Controls.Add(positionTable);
-				}
+				containerCell.Controls.Add(ttbl); // add trade table to cell
+				containerRow.Cells.Add(containerCell); // add cell to row
+				ptbl.Rows.Add(containerRow); // add row to position table
+				PortfolioDiv.Controls.Add(ptbl); // add position table to div
 			}
+		}
+
+		private Table createHeader()
+		{
+			Table tbl = new Table();
+			tbl.Width = new Unit("100%");
+			TableHeaderRow header = new TableHeaderRow();
+			for (int i = 0; i < columns; i++)
+			{
+				TableHeaderCell cell = new TableHeaderCell();
+				cell.Text = pheaders[i];
+				cell.Width = new Unit(widths[i]);
+				header.Cells.Add(cell);
+			}
+			tbl.Rows.Add(header);
+
+			return tbl;
+		}
+
+		private Table createPositionTable(PositionMessage pm)
+		{
+			double lastPrice = pm.Trades.OrderByDescending(x=>x.Timestamp).Select(x=>x.Price).FirstOrDefault();
+			string fullName = "Full name"; // TODO replace with real company name
+
+			Table tbl = new Table();
+			tbl.Width = new Unit("100%");
+
+			TableRow row = new TableRow();
+			for (int i = 0; i < columns; i++)
+			{
+				TableCell cell = new TableCell();
+				cell.Width = new Unit(widths[i]);
+				row.Cells.Add(cell);
+			}
+
+			row.Cells[0].Text = "+";// TODO replace with expander image or text;
+			row.Cells[1].Text += new HtmlString(pm.SymbolName + " <span class='subtext'>(" + fullName + ")</span>");
+			row.Cells[2].Text = String.Format("{0:N0}", pm.Quantity);
+			row.Cells[3].Text = String.Format("{0:C}", pm.Price);
+			row.Cells[4].Text = pm.Status.ToString();
+			row.Cells[4].CssClass = getCssClass(pm.Status.ToString());
+
+			// BUTTONS
+			Button btnToggle = new Button();
+			btnToggle.Text = "+";
+			btnToggle.Width = new Unit("80%");
+			btnToggle.OnClientClick = "return false";
+			btnToggle.CssClass = "toggle";
+			btnToggle.UseSubmitBehavior = false;
+			row.Cells[0].Controls.Add(btnToggle);
+
+			Button btnAction = new Button();
+			btnAction.Text = "Buy / Sell";
+			btnAction.Attributes["SymbolName"] = pm.SymbolName;
+			btnAction.Attributes["LastPrice"] = lastPrice.ToString();
+			btnAction.UseSubmitBehavior = false;
+			btnAction.Click += new EventHandler(btnClick);
+			row.Cells[columns - 1].Controls.Add(btnAction);
+
+			tbl.Rows.Add(row);
+
+			return tbl;
+		}
+
+		private Table createTradeTable(PositionMessage pm)
+		{
+			Table tbl = new Table();
+			tbl.Width = new Unit("100%");
+
+			TableHeaderRow header = new TableHeaderRow();
+			for (int i = 0; i < tcolumns; i++)
+			{
+				TableHeaderCell cell = new TableHeaderCell();
+				cell.Text = theaders[i];
+				cell.Width = new Unit(widths[i]);
+				header.Cells.Add(cell);
+			}
+			tbl.Rows.Add(header);
+
+			foreach (TradeMessage t in pm.Trades.OrderByDescending(x => x.Timestamp))
+			{
+				TableRow trow = new TableRow();
+				for (int i = 0; i < tcolumns; i++)
+				{
+					TableCell cell = new TableCell();
+					trow.Cells.Add(cell);
+				}
+				trow.Cells[1].Text = t.Timestamp.ToString();
+				trow.Cells[1].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", getTimeSpan(t.Timestamp)));
+				trow.Cells[2].Text = String.Format("{0:N0}", t.Quantity);
+				trow.Cells[3].Text = String.Format("{0:C}", t.Price);
+				trow.Cells[4].Text = t.Type.ToString();
+				trow.Cells[4].CssClass = getCssClass(t.Type.ToString());
+
+				tbl.Rows.Add(trow);
+			}
+
+			return tbl;
 		}
 
 		private string getTimeSpan(DateTime timestamp)
 		{
 			TimeSpan timespan = (DateTime.Now - timestamp);
-			string output = null;
-			string single = " ago";
-			string plural = "s ago";
+			int time = 0;
+			string unit = string.Empty;
+			string plural = "s";
 
 			if (timespan.TotalSeconds < 60) // less than 1 minute
 			{
-				if (timespan.Seconds == 1)
-				{
-					output = single;
-				}
-				else
-				{
-					output = plural;
-				}
-				return timespan.Seconds + "second" + output;
+				time = timespan.Seconds;
+				unit = "second";
 			}
 			else if (timespan.TotalMinutes < 60) // less than 1 hour
 			{
-				if (timespan.Minutes == 1)
-				{
-					output = single;
-				}
-				else
-				{
-					output = plural;
-				}
-				return timespan.Minutes + " minute" + output;
+				time = timespan.Minutes;
+				unit = "minute";
 			}
 			else if (timespan.TotalHours < 24) // less than 24 hours
 			{
-				if (timespan.Hours == 1)
-				{
-					output = single;
-				}
-				else
-				{
-					output = plural;
-				}
-				return timespan.Hours + " hour" + output;
+				time = timespan.Hours;
+				unit = "hour";
 			}
 			else // over a day
 			{
-				if (timespan.Days == 1)
-				{
-					output = single;
-				}
-				else
-				{
-					output = plural;
-				}
-
-				return timespan.Days + " day" + output;
+				time = timespan.Days;
+				unit = "day";
 			}
+
+			if (time == 1)
+			{
+				plural = string.Empty;
+			}
+
+			return String.Format("{0} {1}{2} ago", time, unit, plural);
 		}
 
-		private void toggleTable(object sender, EventArgs e)
+		private string getCssClass(string s)
 		{
-			Table tbl = (Table)sender;
-			if (tbl.Rows[1].Visible == true)
+			if (s.Equals("Buy") || s.Equals("Open"))
 			{
-				tbl.Rows[1].Visible = false;
-				
+				return "green";
 			}
 			else
 			{
-				tbl.Rows[1].Visible = true;
+				return "red";
 			}
 		}
 

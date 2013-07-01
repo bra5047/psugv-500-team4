@@ -98,7 +98,7 @@ namespace AlgoTrader.datamodel
 				p.Symbol = symbol;
 				p.Portfolio = portfolio;
 
-				for (int j = 0; j < 5; j++)
+				for (int j = 0; j < new Random().Next(5, 10); j++)
 				{
 					Trade t = new Trade();
 					t.Symbol = symbol;

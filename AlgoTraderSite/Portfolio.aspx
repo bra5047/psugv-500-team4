@@ -9,6 +9,7 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-	<div id="PortfolioDiv" class="asdf" style="width:100%" runat="server">
-	</div>
+	<div id="Status" runat="server"></div>
+	<asp:Button UseSubmitBehavior="false" CssClass="ExpandAll" OnClientClick="return false" Text="Expand All" Width="200" runat="server" />
+	<div id="PortfolioDiv" style="width:100%" runat="server"></div>
 </asp:Content>

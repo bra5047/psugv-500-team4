@@ -99,12 +99,11 @@ namespace AlgoTraderSite
 				if (priceChange > 0)
 				{
 					string prefix = "+ ";
-					string style = "color:green";
 
 					tr.Cells[2].Text = prefix;
-					tr.Cells[2].Attributes["style"] = style;
+					tr.Cells[2].CssClass = "green";
 					tr.Cells[3].Text = prefix;
-					tr.Cells[3].Attributes["style"] = style;
+					tr.Cells[3].CssClass = "green";
 				}
 				if (priceChange < 0)
 				{

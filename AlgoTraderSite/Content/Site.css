@@ -96,6 +96,19 @@ h5, h6 {
 		text-decoration: none;
 	}
 
+.green{
+	color: green;
+}
+
+.red {
+	color: red;
+}
+
+.subtext {
+	font-weight:300;
+	color: gray;
+}
+
 /* main layout
 ----------------------------------------------------------*/
 .content-wrapper {
