@@ -7,15 +7,16 @@
 html {
 	margin: 0;
 	padding: 0;
+	height: 100%;
 }
 
 body {
 	font-family: 'Open Sans', sans-serif;
 	background-color: #fff;
-	color: #333;
 	font-size: 1em;
 	margin: 0;
 	padding: 0;
+	height: 100%;
 }
 
 a {
@@ -110,15 +111,16 @@ h5, h6 {
 
 /* main layout
 ----------------------------------------------------------*/
+
 .content-wrapper {
 	margin: 0 auto;
 	min-width: 960px;
 }
 
 #body {
-	background-color: #efeeef;
 	clear: both;
 	padding-bottom: 35px;
+	min-height:75vh;
 }
 
 .main-content {
@@ -134,13 +136,14 @@ h5, h6 {
 
 header .content-wrapper {
 	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 footer {
+	border-top: 1px solid lightblue;
 	clear: both;
-	background-color: #e2e2e2;
 	font-size: 1em;
-	height: 100px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -150,14 +153,13 @@ footer {
 ----------------------------------------------------------*/
 .site-title {
 	color: #333;
-	/*font-family: 'Fauna One', serif, monospace;*/
 	font-family: 'Lily Script One', cursive;
-	font-size: 3em;
+	font-size: 4em;
 	font-weight: bold;
 	margin: 0;
 }
 
-	.site-title a, .site-title a:hover, .site-title a:active {
+	.site-title a {
 		background: none;
 		color: #333;
 		outline: none;
@@ -171,8 +173,8 @@ footer {
 	}
 
 		.site-title a:hover, .site-title a:active {
-			-webkit-text-shadow: 20px 20px 20px rgba(0,0,0,.5);
-			text-shadow: 20px 20px 20px rgba(0,0,0,.5);
+			-webkit-text-shadow: 2px 2px 20px rgba(0,0,0,.75);
+			text-shadow: 2px 2px 20px rgba(0,0,0,.75);
 		}
 
 
@@ -212,9 +214,8 @@ footer {
 /* menu
 ----------------------------------------------------------*/
 ul#menu {
-	font-size: 1.2em;
+	font-size: 1.8em;
 	font-weight: 400;
-	margin: 0 0 5px;
 	padding: 0;
 	text-align: right;
 }

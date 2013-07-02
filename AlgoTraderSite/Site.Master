@@ -46,8 +46,8 @@
                 </p>
             </div>
             <div class="float-right">
-                <section id="login">
-                    <!--<asp:LoginView runat="server" ViewStateMode="Disabled">
+                <!--<section id="login">
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
                                 <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
@@ -61,8 +61,8 @@
                                 <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
                             </p>
                         </LoggedInTemplate>
-                    </asp:LoginView>-->
-                </section>
+                    </asp:LoginView>
+                </section>-->
                 <nav>
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
