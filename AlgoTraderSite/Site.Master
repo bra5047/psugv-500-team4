@@ -67,7 +67,7 @@
                     <ul id="menu">
                         <li><a runat="server" href="~/">Home</a></li>
 						<li><a runat="server" href="~/WatchList">Watchlist</a></li>
-						<li><a runat="server" href="~/Portfolio">My Porfolio</a></li>
+						<li><a runat="server" href="~/Portfolio">My Portfolio</a></li>
 						<li><a runat="server" href="~/Settings">Settings</a></li>
                     </ul>
                 </nav>

@@ -1,6 +1,6 @@
 ﻿@charset "utf-8";
 @import url(http://fonts.googleapis.com/css?family=Fauna+One); /* serif */
-@import url(http://fonts.googleapis.com/css?family=Lily+Script+One); /* cursive */
+@import url(http://fonts.googleapis.com/css?family=Righteous); /* cursive */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300); /* sans-serif */
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700); /* sans-serif */
 
@@ -124,9 +124,7 @@ h5, h6 {
 
 .main-content {
 	/*background: url("../Images/accent.png") no-repeat;*/
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-top: 30px;
+	padding: 20px 20px 20px 20px;
 }
 
 .featured + .main-content {
@@ -136,13 +134,13 @@ h5, h6 {
 header .content-wrapper {
 	padding-left: 20px;
 	padding-right: 20px;
+	position: relative;
 }
 
 footer {
 	border-top: 1px solid lightblue;
 	clear: both;
 	font-size: 1em;
-	margin-top: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -151,28 +149,31 @@ footer {
 ----------------------------------------------------------*/
 .site-title {
 	color: #333;
-	font-family: 'Lily Script One', cursive;
+	font-family: 'Righteous', cursive;
 	font-size: 5em;
 	font-weight: bold;
 	margin: 0;
+	position: relative;
+	top: 21px;
+	text-transform: uppercase;
 }
 
 	.site-title a {
 		background: none;
-		color: #333;
+		color: deepskyblue;
 		outline: none;
 		text-decoration: none;
-		-webkit-text-shadow: 2px 2px 5px rgba(0,0,0,.5);
-		text-shadow: 2px 2px 5px rgba(0,0,0,.5);
-		-moz-transition: all .3s ease;
-		-o-transition: all .3s ease;
-		-webkit-transition: all .3s ease;
-		transition: all .3s ease;
+		-webkit-text-shadow: 0px 0px 0px rgba(0,0,0,0);
+		text-shadow: 0px 0px 0px rgba(0,0,0,0);
+		-moz-transition: all .25s ease;
+		-o-transition: all .25s ease;
+		-webkit-transition: all .25s ease;
+		transition: all .25s ease;
 	}
 
 		.site-title a:hover, .site-title a:active {
-			-webkit-text-shadow: 2px 2px 20px rgba(0,0,0,.75);
-			text-shadow: 2px 2px 20px rgba(0,0,0,.75);
+			-webkit-text-shadow: 0px 0px 10px deepskyblue;
+			text-shadow: 0px 0px 10px deepskyblue;
 		}
 
 
@@ -213,28 +214,44 @@ footer {
 ----------------------------------------------------------*/
 ul#menu {
 	font-size: 1.8em;
-	font-weight: 400;
-	padding: 0;
+	font-weight: 300;
 	text-align: right;
+	position: absolute;
+	top: 1.1em;
+	right: 0px;
+	text-transform: uppercase;
 }
 
 	ul#menu li {
 		display: inline;
 		list-style: none;
-		padding-left: 15px;
 	}
 
 		ul#menu li a {
 			background: none;
-			color: #999;
+			color: deepskyblue;
 			text-decoration: none;
+			padding-left: 20px;
+			padding-right: 20px;
+			-moz-transition: all .15s ease;
+			-o-transition: all .15s ease;
+			-webkit-transition: all .15s ease;
+			transition: all .15s ease;
 		}
 
 			ul#menu li a:hover {
-				color: #333;
-				text-decoration: none;
+				color: white;
+				background-color: lightsteelblue;
 			}
 
+			ul#menu li a.selected {
+				-moz-transition: none;
+				-o-transition: none;
+				-webkit-transition: none;
+				transition: none;
+				color: white;
+				background-color: deepskyblue;
+			}
 
 /* page elements
 ----------------------------------------------------------*/
@@ -244,12 +261,7 @@ ul#menu {
 }
 
 	.featured .content-wrapper {
-		background-color: skyblue;
-		/*background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-		background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-		background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
-		background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-		background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);*/
+		background-color: deepskyblue;
 		color: #3e5667;
 		padding: 5px 20px 5px 20px;
 	}
@@ -795,7 +807,7 @@ tr {
 
 @-moz-keyframes fadeIn {
 	from {
-		margin-left: 30%;
+		margin-left: 25%;
 		opacity: 0;
 	}
 
@@ -807,7 +819,7 @@ tr {
 
 @-webkit-keyframes fadeIn {
 	from {
-		margin-left: 30%;
+		margin-left: 25%;
 		opacity: 0;
 	}
 
@@ -819,7 +831,7 @@ tr {
 
 @keyframes fadeIn {
 	from {
-		margin-left: 30%;
+		margin-left: 25%;
 		opacity: 0;
 	}
 

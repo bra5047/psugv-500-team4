@@ -1,5 +1,8 @@
-﻿$(document).ready(function (e) {
+﻿$(document).ready(function () {
 
+	// NAV
+	setNavCss();
+	
 	// PORTFOLIO
 	$(".toggle").click(function (e) {
 		var $target = $(e.target).parents("table:first"); // target = button -> cell -> row -> table
@@ -31,3 +34,20 @@
 		$target.prop("value", value);
 	});
 });
+
+function setNavCss() {
+	var page = $("h1").text();
+	var tab = 0;
+	if (page === "Welcome") {
+		tab = 1;
+	} else if (page === "Watchlist") {
+		tab = 2;
+	} else if (page === "My Portfolio") {
+		tab = 3;
+	} else if (page === "Settings") {
+		tab = 4;
+	} else {
+		tab = 0;
+	}
+	$("ul li:nth-child(" + tab + ")").children("a").addClass("selected");
+}
