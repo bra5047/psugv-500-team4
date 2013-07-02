@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
 using AlgoTrader.portfolio;
+using AlgoTrader.Email;
 using log4net;
 
 namespace AlgoTrader.useragent
@@ -20,6 +21,7 @@ namespace AlgoTrader.useragent
             TraderContext db = DbContext;
             Symbol s = db.Symbols.Where(x => x.name == symbolName).FirstOrDefault();
             Alert a = new Alert();
+            a.Timestamp = DateTime.Now;
             a.Symbol = s;
             a.Type = type;
             a.Quantity = quantity;
@@ -27,6 +29,11 @@ namespace AlgoTrader.useragent
             a.ResponseCode = responseCodes.Pending;
             db.Alerts.Add(a);
             db.SaveChanges();
+
+            IEmail email = new EmailSender();
+            string to_address = db.SystemSettings.Where(x => x.Module == "UserAgent" && x.Name == "ALERTS_EMAIL_ADDRESS_TO").FirstOrDefault().Value;
+            if (to_address == null) throw new Exception("Unable to load user email address for alerts.");
+            email.sendEmail(to_address, symbolName);
             db.Dispose();
         }
 

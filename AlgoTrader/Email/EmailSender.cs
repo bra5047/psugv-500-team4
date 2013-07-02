@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net;
 
-using AlgoTrader.interfaces;
+using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.Email
 {
