@@ -91,7 +91,7 @@ namespace AlgoTraderSite
 				// TODO get long name info from quote manager - should it be stored in the database?
 				string fullName = "long name goes here";
 				tr.Cells[0].Text = item.SymbolName;
-				tr.Cells[0].Text += new HtmlString(String.Format(" <span style='subtext'>({0})</span>", fullName));
+				tr.Cells[0].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
 				tr.Cells[1].Text = currentPrice.ToString("N2") + " as of " + date.ToShortDateString();
 				priceChange = currentPrice - previousPrice;
 

@@ -119,8 +119,7 @@ h5, h6 {
 
 #body {
 	clear: both;
-	padding-bottom: 35px;
-	min-height:75vh;
+	min-height:80vh;
 }
 
 .main-content {
@@ -135,7 +134,6 @@ h5, h6 {
 }
 
 header .content-wrapper {
-	padding-top: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -147,7 +145,6 @@ footer {
 	padding-left: 20px;
 	padding-right: 20px;
 }
-
 
 /* site title
 ----------------------------------------------------------*/
@@ -246,7 +243,7 @@ ul#menu {
 }
 
 	.featured .content-wrapper {
-		background-color: #7ac0da;
+		background-color: lightblue;
 		background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
 		background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
 		background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
@@ -603,14 +600,10 @@ td {
 
 tr {
 	background-color: none;
-	-moz-transition: background-color .15s ease;
-	-o-transition: background-color .15s ease;
-	-webkit-transition: background-color .15s ease;
-	transition: background-color .15s ease;
 }
 
 	tr.main:hover,tr.main:active{
-		background-color: lightblue;
+		background-color: #eee;
 	}
 
 tr.pager td {
