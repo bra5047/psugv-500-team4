@@ -96,7 +96,7 @@ h5, h6 {
 		text-decoration: none;
 	}
 
-.green{
+.green {
 	color: green;
 }
 
@@ -105,7 +105,7 @@ h5, h6 {
 }
 
 .subtext {
-	font-weight:300;
+	font-weight: 300;
 	color: gray;
 }
 
@@ -119,7 +119,7 @@ h5, h6 {
 
 #body {
 	clear: both;
-	min-height:80vh;
+	min-height: 80vh;
 }
 
 .main-content {
@@ -151,7 +151,7 @@ footer {
 .site-title {
 	color: #333;
 	font-family: 'Lily Script One', cursive;
-	font-size: 4em;
+	font-size: 5em;
 	font-weight: bold;
 	margin: 0;
 }
@@ -243,18 +243,29 @@ ul#menu {
 }
 
 	.featured .content-wrapper {
-		background-color: lightblue;
-		background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+		background-color: skyblue;
+		/*background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
 		background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
 		background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
 		background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
-		background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+		background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);*/
 		color: #3e5667;
-		padding: 20px 20px 20px 20px;
+		padding: 5px 20px 5px 20px;
 	}
 
 	.featured hgroup.title h1, .featured hgroup.title h2 {
 		color: #fff;
+		-moz-animation: fadeIn .5s ease;
+		-o-animation: fadeIn .5s ease;
+		-webkit-animation: fadeIn .5s ease;
+		animation: fadeIn .5s ease;
+		-moz-animation-delay: .25s;
+		-o-animation-delay: .25s;
+		-webkit-animation-delay: .25s;
+		animation-delay: .25s;
+		-o-animation-fill-mode: both;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
 	}
 
 	.featured p {
@@ -438,7 +449,7 @@ input, textarea {
 	color: #333;
 	font-size: 1.2em;
 	padding: 5px;
-	}
+}
 
 textarea {
 	font-family: inherit;
@@ -463,11 +474,11 @@ button {
 	cursor: pointer;
 	margin-left: 5px;
 	margin-right: 5px;
-	min-width:30px;
+	min-width: 30px;
 	width: auto;
 }
 
-	input[type="button"].toggle{
+	input[type="button"].toggle {
 		width: 35px;
 		vertical-align: central;
 	}
@@ -543,19 +554,19 @@ table {
 	width: 100%;
 }
 
-table.main {
-	font-size: 1.5em;
-}
+	table.main {
+		font-size: 1.5em;
+	}
 
-table.sub {
-	font-size: .7em;
-}
+	table.sub {
+		font-size: .7em;
+	}
 
 th {
 	font-size: 1em;
 	text-align: left;
 	border: none 0px;
-	text-transform:uppercase;
+	text-transform: uppercase;
 }
 
 	th a {
@@ -602,13 +613,13 @@ tr {
 	background-color: none;
 }
 
-	tr.main:hover,tr.main:active{
+	tr.main:hover, tr.main:active {
 		background-color: #eee;
 	}
 
-tr.pager td {
-	padding: 0 0.25em 0 0;
-}
+	tr.pager td {
+		padding: 0 0.25em 0 0;
+	}
 
 
 /********************
@@ -780,3 +791,39 @@ tr.pager td {
 		}
 }
 /* END: Mobile Styles */
+
+@-moz-keyframes fadeIn {
+	from {
+		margin-left: 30%;
+		opacity: 0;
+	}
+
+	to {
+		margin-left: 0%;
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	from {
+		margin-left: 30%;
+		opacity: 0;
+	}
+
+	to {
+		margin-left: 0%;
+		opacity: 1;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		margin-left: 30%;
+		opacity: 0;
+	}
+
+	to {
+		margin-left: 0%;
+		opacity: 1;
+	}
+}
