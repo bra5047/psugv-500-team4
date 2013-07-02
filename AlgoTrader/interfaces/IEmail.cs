@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlgoTrader.interfaces
+namespace AlgoTrader.Interfaces
 {
-    interface IEmail
+    public interface IEmail
     {
         void sendEmail(string Recipient, string SymbolName);
 

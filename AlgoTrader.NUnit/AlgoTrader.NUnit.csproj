@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParabolicSarMetricTest.cs" />
     <Compile Include="PortfolioRuleTests.cs" />
     <Compile Include="TradeTests.cs" />
     <Compile Include="WatchListTest.cs" />

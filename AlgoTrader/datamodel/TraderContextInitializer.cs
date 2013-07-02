@@ -60,6 +60,13 @@ namespace AlgoTrader.datamodel
 			context.Alerts.Add(a1);
 			context.SaveChanges();
 
+            SystemSetting emailaddress = new SystemSetting();
+            emailaddress.Module = "UserAgent";
+            emailaddress.Name = "ALERTS_EMAIL_ADDRESS_TO";
+            emailaddress.Value = "AlgTrader500@Gmail.com";
+            context.SystemSettings.Add(emailaddress);
+            context.SaveChanges();
+
 
 			// Adam's stuff to fill in db tables
 			string[] symbols = { "AAPL", "VZ", "INTC", "MSFT", "HP", "PANL", "NVDA", "QCOM", "AMD", "FB", "LNKD", "ZNGA" };
