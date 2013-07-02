@@ -90,9 +90,8 @@ namespace AlgoTraderSite
 
 				// TODO get long name info from quote manager - should it be stored in the database?
 				string fullName = "long name goes here";
-				string fullNameStyle = "style='color:gray; font-weight:300'";
 				tr.Cells[0].Text = item.SymbolName;
-				tr.Cells[0].Text += new HtmlString(String.Format(" <span {0}>({1})</span>", fullNameStyle, fullName));
+				tr.Cells[0].Text += new HtmlString(String.Format(" <span style='subtext'>({0})</span>", fullName));
 				tr.Cells[1].Text = currentPrice.ToString("N2") + " as of " + date.ToShortDateString();
 				priceChange = currentPrice - previousPrice;
 
@@ -131,6 +130,10 @@ namespace AlgoTraderSite
 				// set widths
 				tr.Cells[0].Width = new Unit("40%");
 				tr.Cells[1].Width = new Unit("20%");
+
+				//css stuff
+				tblWatchList.CssClass = "main";
+				tr.CssClass = "main";
 
 				tblWatchList.Rows.Add(tr);
 			}

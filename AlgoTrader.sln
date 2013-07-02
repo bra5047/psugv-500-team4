@@ -25,6 +25,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93F4380B-4ACC-4F6D-A7DE-67E7DEF72659}"
 	ProjectSection(SolutionItems) = preProject
 		test.txt = test.txt
+		WE-browsers.xml = WE-browsers.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATQouteMngrUpdate", "ATQouteMngrUpdate\ATQouteMngrUpdate.csproj", "{CBC7B1B4-D92B-4DA4-8C01-293B32DBCF3F}"

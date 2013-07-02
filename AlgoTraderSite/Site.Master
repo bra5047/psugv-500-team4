@@ -47,7 +47,7 @@
             </div>
             <div class="float-right">
                 <section id="login">
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <!--<asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul>
                                 <li><a id="registerLink" runat="server" href="~/Account/Register">Register</a></li>
@@ -61,7 +61,7 @@
                                 <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
                             </p>
                         </LoggedInTemplate>
-                    </asp:LoginView>
+                    </asp:LoginView>-->
                 </section>
                 <nav>
                     <ul id="menu">
@@ -81,7 +81,7 @@
     </div>
     <footer>
         <div class="content-wrapper">
-            <div class="float-left">
+            <div class="float-right">
                 <p>&copy; <%: DateTime.Now.Year %> - Pennsylvania State University | <a id="A1" runat="server" href="~/About">About</a> | <a id="A2" runat="server" href="~/Contact">Contact</a></p>
             </div>
         </div>

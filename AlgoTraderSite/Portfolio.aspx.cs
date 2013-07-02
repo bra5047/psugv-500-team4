@@ -71,9 +71,8 @@ namespace AlgoTraderSite
 			string fullName = "Full name"; // TODO replace with real company name
 
 			Table tbl = new Table();
-			tbl.Width = new Unit("100%");
-
 			TableRow row = new TableRow();
+
 			for (int i = 0; i < columns; i++)
 			{
 				TableCell cell = new TableCell();
@@ -91,9 +90,8 @@ namespace AlgoTraderSite
 			// BUTTONS
 			Button btnToggle = new Button();
 			btnToggle.Text = "+";
-			btnToggle.Width = new Unit("80%");
 			btnToggle.OnClientClick = "return false";
-			btnToggle.CssClass = "toggle";
+			
 			btnToggle.UseSubmitBehavior = false;
 			row.Cells[0].Controls.Add(btnToggle);
 
@@ -107,13 +105,17 @@ namespace AlgoTraderSite
 
 			tbl.Rows.Add(row);
 
+			// css stuff
+			tbl.CssClass = "main";
+			row.CssClass = "main";
+			btnToggle.CssClass = "toggle";
+
 			return tbl;
 		}
 
 		private Table createTradeTable(PositionMessage pm)
 		{
 			Table tbl = new Table();
-			tbl.Width = new Unit("100%");
 
 			TableHeaderRow header = new TableHeaderRow();
 			for (int i = 0; i < tcolumns; i++)
@@ -142,6 +144,9 @@ namespace AlgoTraderSite
 
 				tbl.Rows.Add(trow);
 			}
+
+			// css stuff
+			tbl.CssClass = "sub";
 
 			return tbl;
 		}

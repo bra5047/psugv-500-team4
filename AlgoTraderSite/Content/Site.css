@@ -2,9 +2,9 @@
 @import url(http://fonts.googleapis.com/css?family=Fauna+One); /* serif */
 @import url(http://fonts.googleapis.com/css?family=Lily+Script+One); /* cursive */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300); /* sans-serif */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700); /* sans-serif */
 
 html {
-	background-color: #e2e2e2;
 	margin: 0;
 	padding: 0;
 }
@@ -12,9 +12,8 @@ html {
 body {
 	font-family: 'Open Sans', sans-serif;
 	background-color: #fff;
-	border-top: solid 10px #000;
 	color: #333;
-	font-size: .85em;
+	font-size: 1em;
 	margin: 0;
 	padding: 0;
 }
@@ -113,7 +112,7 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
 	margin: 0 auto;
-	max-width: 960px;
+	min-width: 960px;
 }
 
 #body {
@@ -123,13 +122,14 @@ h5, h6 {
 }
 
 .main-content {
-	background: url("../Images/accent.png") no-repeat;
-	padding-left: 10px;
+	/*background: url("../Images/accent.png") no-repeat;*/
+	padding-left: 20px;
+	padding-right: 20px;
 	padding-top: 30px;
 }
 
 .featured + .main-content {
-	background: url("../Images/heroAccent.png") no-repeat;
+	/*background: url("../Images/heroAccent.png") no-repeat;*/
 }
 
 header .content-wrapper {
@@ -139,8 +139,10 @@ header .content-wrapper {
 footer {
 	clear: both;
 	background-color: #e2e2e2;
-	font-size: .8em;
+	font-size: 1em;
 	height: 100px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 
@@ -437,7 +439,6 @@ input, textarea {
 	background: #fff;
 	color: #333;
 	font-size: 1.2em;
-	margin: 5px 0 6px 0;
 	padding: 5px;
 	}
 
@@ -459,15 +460,19 @@ input[type="checkbox"] {
 input[type="submit"],
 input[type="button"],
 button {
-	background-color: #d3dce0;
-	border: 1px solid #787878;
+	background-color: lightgray;
+	border: 1px solid darkgray;
 	cursor: pointer;
-	font-size: 1.2em;
-	font-weight: 600;
-	padding: 7px;
-	margin-right: 8px;
+	margin-left: 5px;
+	margin-right: 5px;
+	min-width:30px;
 	width: auto;
 }
+
+	input[type="button"].toggle{
+		width: 35px;
+		vertical-align: central;
+	}
 
 td input[type="submit"],
 td input[type="button"],
@@ -536,15 +541,23 @@ input[type="checkbox"].input-validation-error {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	margin-top: 0.75em;
 	border: 0 none;
+	width: 100%;
+}
+
+table.main {
+	font-size: 1.5em;
+}
+
+table.sub {
+	font-size: .7em;
 }
 
 th {
-	font-size: .7em;
+	font-size: 1em;
 	text-align: left;
 	border: none 0px;
-	padding-left: 0;
+	text-transform:uppercase;
 }
 
 	th a {
@@ -584,9 +597,20 @@ th {
 		}
 
 td {
-	/*padding: 0.25em 2em 0.25em 0em;*/
 	border: 0 none;
 }
+
+tr {
+	background-color: none;
+	-moz-transition: background-color .15s ease;
+	-o-transition: background-color .15s ease;
+	-webkit-transition: background-color .15s ease;
+	transition: background-color .15s ease;
+}
+
+	tr.main:hover,tr.main:active{
+		background-color: lightblue;
+	}
 
 tr.pager td {
 	padding: 0 0.25em 0 0;
