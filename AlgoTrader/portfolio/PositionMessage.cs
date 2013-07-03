@@ -21,6 +21,8 @@ namespace AlgoTrader.portfolio
         public positionStatus Status;
         [DataMember]
         public List<TradeMessage> Trades;
+        [DataMember]
+        public double Basis;
 
         public PositionMessage()
         {
@@ -33,6 +35,7 @@ namespace AlgoTrader.portfolio
             this.Price = position.price;
             this.Quantity = position.quantity;
             this.Status = position.status;
+            this.Basis = position.basis;
 
             foreach (ITrade t in position.trades)
             {

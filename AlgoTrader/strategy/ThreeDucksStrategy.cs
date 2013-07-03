@@ -141,8 +141,10 @@ namespace AlgoTrader.strategy
             else
             {
                 return false;
-            }           
+            }
         }
+
+
 
         public bool stopWatching(string symbolName)
         {

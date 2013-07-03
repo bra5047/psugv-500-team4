@@ -22,8 +22,8 @@ namespace AlgoTrader.Interfaces
         int quantity { get; set; }
         positionStatus status { get; set; }
         List<ITrade> trades { get; }
+        double basis { get; }
     
         void updatePosition(ITrade trade);
-        void closePosition();
     }
 }

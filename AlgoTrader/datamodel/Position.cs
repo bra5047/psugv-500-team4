@@ -25,6 +25,16 @@ namespace AlgoTrader.datamodel
         public positionStatus status { get; set; }
         public virtual List<Trade> Trades { get; set; }
 
+        [NotMapped]
+        public double basis
+        {
+            get
+            {
+                if (quantity == 0) return 0;
+                return (price / quantity);
+            }
+        }
+
         public void Recalculate()
         {
             if (status == positionStatus.Closed) return;
@@ -46,11 +56,6 @@ namespace AlgoTrader.datamodel
         }
 
         public void updatePosition(ITrade trade)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void closePosition()
         {
             throw new NotImplementedException();
         }
