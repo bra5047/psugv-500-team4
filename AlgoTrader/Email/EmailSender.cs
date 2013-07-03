@@ -12,18 +12,29 @@ namespace AlgoTrader.Email
 {
     class EmailSender:IEmail
     {
-        public void sendEmail(string Recipient, string SymbolName)
+        public void sendEmail(string Recipient, string SymbolName, string CurrentPrice, Boolean sell)
         {
             using (var client = new SmtpClient("smtp.gmail.com", 587))
             {
                 client.Credentials = new NetworkCredential("AlgTrader500@Gmail.com", "algSweng500");
                 var mail = new MailMessage();
                 mail.To.Add(Recipient);
-                mail.Subject = SymbolName + " request to sell";
                 mail.From = new MailAddress("AlgTrader500@gmail.com");
-                mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has dropped below the required parameters. <br/>" +
-                    "Do you wish to sell? <br/>" +
-                    "Please respond with either YES or NO";
+                if (sell)
+                {
+                    mail.Subject = SymbolName + " request to sell";
+                    mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has dropped below the required parameters. <br/>" +
+                        "Do you wish to sell? <br/>" +
+                        "Please respond with either YES or NO";
+                }
+                else
+                {
+                    mail.Subject = SymbolName + " request to buy";
+                    mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has risen above the required parameters. <br/>" +
+                        "Do you wish to sell? <br/>" +
+                        "Please respond with either YES or NO";
+                }
+
                 mail.IsBodyHtml = true;
                 client.EnableSsl = true;
                 client.Send(mail);
