@@ -199,6 +199,16 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Service References\Strategy.Client\AlgoTraderSite.Strategy.Client.StrategySummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Strategy.Client\ATStrategySvc.disco" />
+    <Content Include="Service References\Strategy.Client\configuration91.svcinfo" />
+    <Content Include="Service References\Strategy.Client\configuration.svcinfo" />
+    <Content Include="Service References\Strategy.Client\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <Content Include="Settings.aspx" />
     <Content Include="Portfolio.aspx" />
     <Content Include="Scripts\AlgoTrader\AlgoTrader.js" />
@@ -278,6 +288,16 @@
     <Content Include="Bundle.config" />
     <Content Include="Site.Mobile.Master" />
     <Content Include="Service References\UserAgent.Client\UserAgent.wsdl" />
+    <None Include="Service References\Strategy.Client\ATStrategySvc.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Strategy.Client\ATStrategySvc1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Strategy.Client\ATStrategySvc2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Service References\Strategy.Client\ThreeDucksStrategy.wsdl" />
     <None Include="Service References\UserAgent.Client\UserAgent.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -357,6 +377,11 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\Strategy.Client\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
@@ -462,6 +487,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\Portfolio.Client\" />
+    <WCFMetadataStorage Include="Service References\Strategy.Client\" />
     <WCFMetadataStorage Include="Service References\UserAgent.Client\" />
   </ItemGroup>
   <ItemGroup>
