@@ -27,26 +27,26 @@ namespace AlgoTrader.watchlist
 			}
 		}
 
-        List<Quote> IWatchListManager.GetQuotes(string symbolName)
-        {
-            TraderContext db = new TraderContext();
+		List<Quote> IWatchListManager.GetQuotes(string symbolName)
+		{
+			TraderContext db = new TraderContext();
 			var query = db.Quotes.Where(x => x.SymbolName.Equals(symbolName));
-            List<Quote> result = new List<Quote>();
+			List<Quote> result = new List<Quote>();
 
-            foreach (Quote q in query)
-            {
-                result.Add(q);
-            }
+			foreach (Quote q in query)
+			{
+				result.Add(q);
+			}
 
-            return result;
-        }
+			return result;
+		}
 
 		IWatchList IWatchListManager.GetWatchList(string listName)
 		{
 			TraderContext db = new TraderContext();
-            var query = db.WatchListItems.Where(x => x.ListName.Equals(listName));
-            IWatchList result = new WatchList();
-            
+			var query = db.WatchListItems.Where(x => x.ListName.Equals(listName));
+			IWatchList result = new WatchList();
+
 			foreach (WatchListItem q in query)
 			{
 				result.items.Add(q);
@@ -55,19 +55,52 @@ namespace AlgoTrader.watchlist
 			return result;
 		}
 
-        List<WatchList> IWatchListManager.GetAllWatchLists()
-        {
-            TraderContext db = new TraderContext();
+		List<WatchList> IWatchListManager.GetAllWatchLists()
+		{
+			TraderContext db = new TraderContext();
 			var query = db.WatchLists.OrderBy(x => x.ListName);
-            List<WatchList> result = new List<WatchList>();
+			List<WatchList> result = new List<WatchList>();
 
-            foreach (WatchList w in query)
-            {
-                result.Add(w);
-            }
+			foreach (WatchList w in query)
+			{
+				result.Add(w);
+			}
 
-            return result;
-        }
+			return result;
+		}
+
+		bool IWatchListManager.AddWatchList(string listName)
+		{
+			TraderContext db = new TraderContext();
+			var query = db.WatchLists.Where(x => x.ListName.Equals(listName));
+
+			if (query.Count() == 0)
+			{
+				WatchList w = new WatchList(listName);
+				db.WatchLists.Add(w);
+				db.SaveChanges();
+				return true;
+			}
+
+			return false;
+		}
+
+		bool IWatchListManager.DeleteWatchList(string listName)
+		{
+			TraderContext db = new TraderContext();
+			var query = db.WatchLists.Where(x => x.ListName.Equals(listName));
+
+			if (query.Count() > 0)
+			{
+				foreach (WatchList w in query)
+				{
+					db.WatchLists.Remove(w);
+				}
+				db.SaveChanges();
+				return true;
+			}
+			return false;
+		}
 
 		public WatchListManager()
 		{

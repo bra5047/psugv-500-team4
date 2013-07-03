@@ -58,7 +58,7 @@
     <Compile Include="ParabolicSarMetricTest.cs" />
     <Compile Include="PortfolioRuleTests.cs" />
     <Compile Include="TradeTests.cs" />
-    <Compile Include="WatchListTest.cs" />
+    <Compile Include="WatchListTests.cs" />
     <Compile Include="PortfolioManagerTest.cs" />
     <Compile Include="SmaMetricTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

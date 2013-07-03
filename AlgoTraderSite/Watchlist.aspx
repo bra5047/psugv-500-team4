@@ -15,8 +15,11 @@
 		<ContentTemplate>
 			<span>Lists:</span>
 			<asp:DropDownList ID="ddlistWatchLists" runat="server" EnableViewState="true" OnSelectedIndexChanged="ddlistWatchLists_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-			<asp:TextBox ID="Input" runat="server" placeholder="Enter a stock symbol" MaxLength="4" CssClass="watchlist-input"></asp:TextBox>
-			<asp:Button runat="server" ID="btnAddToWatchList" Text="Add" OnClick="btnAddToWatchList_Click" />
+			<asp:Button ID="btnDeleteList" Text="Delete List" OnClick="btnDeleteList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
+			<asp:TextBox ID="tbAddList" placeholder="Enter a list name" CssClass="watchlist-input" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
+			<asp:Button ID="btnAddList" Text="Add List" OnClick="btnAddList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
+			<asp:TextBox ID="tbAddToWatchList" placeholder="Enter a stock symbol" MaxLength="4" CssClass="watchlist-input" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
+			<asp:Button ID="btnAddToWatchList" Text="Add to list" OnClick="btnAddToWatchList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
 			<span id="statusMessage" runat="server"></span>
 			<div id="WatchlistDiv" runat="server"></div>
 		</ContentTemplate>

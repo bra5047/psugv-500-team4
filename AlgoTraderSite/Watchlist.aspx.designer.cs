@@ -31,13 +31,40 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.WebControls.DropDownList ddlistWatchLists;
         
         /// <summary>
-        /// Input control.
+        /// btnDeleteList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Input;
+        protected global::System.Web.UI.WebControls.Button btnDeleteList;
+        
+        /// <summary>
+        /// tbAddList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAddList;
+        
+        /// <summary>
+        /// btnAddList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddList;
+        
+        /// <summary>
+        /// tbAddToWatchList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAddToWatchList;
         
         /// <summary>
         /// btnAddToWatchList control.

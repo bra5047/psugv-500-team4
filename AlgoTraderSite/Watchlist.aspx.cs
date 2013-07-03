@@ -15,7 +15,7 @@ namespace AlgoTraderSite
 	{
 		private static IWatchListManager wlm = new WatchListManager();
 		private static IWatchList wl;
-        private static List<Quote> quotes = new List<Quote>();
+		private static List<Quote> quotes = new List<Quote>();
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
 		string[] widths = { "40%", "20%", "15%", "15%", "10%" };
 
@@ -25,24 +25,23 @@ namespace AlgoTraderSite
 			{
 				listWatchLists();
 			}
-			else
-			{
-							
-			}
 			showWatchList();
 		}
 
-        public void listWatchLists()
-        {
-            ddlistWatchLists.Items.Clear();
-            List<WatchList> watchlists = new List<WatchList>();
-            watchlists = wlm.GetAllWatchLists().OrderBy(x=>x.ListName).ToList();
+		public void listWatchLists()
+		{
+			ddlistWatchLists.Items.Clear();
+			List<WatchList> watchlists = new List<WatchList>();
+			watchlists = wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList();
 
-            foreach (WatchList w in watchlists)
-            {
-                ddlistWatchLists.Items.Add(w.ListName);
-            }
-        }
+			foreach (WatchList item in watchlists)
+			{
+				ListItem li = new ListItem();
+				li.Text = item.ListName;
+				li.Value = item.ListName;
+				ddlistWatchLists.Items.Add(li);
+			}
+		}
 
 		public void showWatchList()
 		{
@@ -52,7 +51,7 @@ namespace AlgoTraderSite
 			Table htbl = createHeader();
 			WatchlistDiv.Controls.Add(htbl);
 
-            wl = wlm.GetWatchList(lName);
+			wl = wlm.GetWatchList(lName);
 			wl.items.OrderBy(x => x.SymbolName);
 
 			foreach (WatchListItem item in wl.items)
@@ -139,7 +138,6 @@ namespace AlgoTraderSite
 			row.Cells[3].Text += Math.Abs(priceChange / previousPrice * 100).ToString("N2") + "%";
 
 			// create Remove button for each row
-			// TODO fix the double click required for page updates; OnPreRender? ViewState? Ajax?
 			Button btnRemove = new Button();
 			btnRemove.Attributes["Symbol"] = item.SymbolName;
 			btnRemove.Attributes["ListName"] = item.ListName;
@@ -163,11 +161,18 @@ namespace AlgoTraderSite
 			return tbl;
 		}
 
-        protected void updateList()
-        {
-            showWatchList();
-        }
+		protected void setStatus(string msg)
+		{
+			statusMessage.Controls.Clear();
+			statusMessage.InnerText = msg;
+		}
 
+		protected void updateList()
+		{
+			showWatchList();
+		}
+
+		#region Controls
 		protected void btnRemove_Click(object sender, EventArgs e)
 		{
 			bool success = false;
@@ -175,10 +180,10 @@ namespace AlgoTraderSite
 			string listName = ((Button)sender).Attributes["ListName"];
 
 			success = wl.RemoveFromList(new Symbol(symbol), listName);
-			
+
 			if (success)
 			{
-				statusMessage.InnerText = String.Format("{0} removed from list {1}.", symbol, listName);
+				setStatus(String.Format("{0} removed from list {1}.", symbol, listName));
 			}
 			updateList();
 		}
@@ -186,19 +191,19 @@ namespace AlgoTraderSite
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
 			bool success = false;
-			string symbol = this.Input.Text.Trim().ToUpper();
-			string listName = this.ddlistWatchLists.SelectedValue;
+			string symbol = tbAddToWatchList.Text.Trim().ToUpper();
+			string listName = ddlistWatchLists.SelectedValue;
 
 			if (symbol.Length > 0)
 			{
 				success = wl.AddToList(new Symbol(symbol), listName);
 				if (success)
 				{
-					statusMessage.InnerText = String.Format("{0} added to list {1}.", symbol, listName);
+					setStatus(String.Format("{0} added to list {1}.", symbol, listName));
 				}
 				else
 				{
-					statusMessage.InnerText = String.Format("{0} could not be added to {1}.", symbol, listName);
+					setStatus(String.Format("{0} could not be added to {1}.", symbol, listName));
 				}
 
 				TraderContext context = new TraderContext();
@@ -221,9 +226,51 @@ namespace AlgoTraderSite
 			updateList();
 		}
 
-        protected void ddlistWatchLists_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            updateList();
-        }
+		protected void ddlistWatchLists_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			updateList();
+		}
+
+		protected void btnDeleteList_Click(object sender, EventArgs e)
+		{
+			bool success = false;
+			string listName = ddlistWatchLists.SelectedValue;
+
+			foreach (WatchListItem w in wl.items.Where(x => x.SymbolName.Equals(listName)))
+			{
+				wl.RemoveFromList(w.Symbol, w.ListName);
+			}
+
+			success = wlm.DeleteWatchList(listName);
+
+			if (success)
+			{
+				setStatus(String.Format("List {0} deleted successfully.", listName));
+			}
+			else
+			{
+				setStatus(String.Format("List {0} could not be deleted.", listName));
+			}
+			listWatchLists();
+			updateList();
+		}
+
+		protected void btnAddList_Click(object sender, EventArgs e)
+		{
+			bool success = false;
+			string listName = tbAddList.Text;
+			success = wlm.AddWatchList(listName);
+
+			if (success)
+			{
+				setStatus(String.Format("Added list '{0}'", listName));
+			} else {
+				setStatus(String.Format("'{0}' could not be added.", listName));
+			}
+			listWatchLists();
+		}
+		#endregion
+
+
 	}
 }
