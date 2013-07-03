@@ -14,8 +14,8 @@ namespace AlgoTraderSite
 	public partial class MyPortfolio : Page
 	{
 		private PortfolioManagerClient portfolio;
-		private string[] pheaders = { "", "Company", "Quantity", "Price", "Status", "Actions" };
-		private string[] theaders = { "", "Date", "Quantity", "Price", "Type", "" };
+		private string[] pheaders = { "", "Company", "Shares", "Price", "Status", "Actions" };
+		private string[] theaders = { "", "Date", "Shares", "Price", "Type", "" };
 		private string[] widths = { "5%", "41%", "11%", "11%", "11%", "11%" };
 		private int columns = 6;
 		private int tcolumns = 6;
