@@ -21,6 +21,13 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="tradeTypes" nillable="true" type="tns:tradeTypes" />
+  <xs:complexType name="ArgumentExceptionFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParameterName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArgumentExceptionFault" nillable="true" type="tns:ArgumentExceptionFault" />
   <xs:complexType name="InsufficientQuantityFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="AvailableQuantity" type="xs:double" />
@@ -29,13 +36,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InsufficientQuantityFault" nillable="true" type="tns:InsufficientQuantityFault" />
-  <xs:complexType name="ArgumentExceptionFault">
+  <xs:complexType name="AllocationViolationFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ParameterName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArgumentExceptionFault" nillable="true" type="tns:ArgumentExceptionFault" />
+  <xs:element name="AllocationViolationFault" nillable="true" type="tns:AllocationViolationFault" />
   <xs:complexType name="InsufficientFundsFault">
     <xs:sequence>
       <xs:element minOccurs="0" name="AvailableAmount" type="xs:double" />
@@ -44,10 +50,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InsufficientFundsFault" nillable="true" type="tns:InsufficientFundsFault" />
-  <xs:complexType name="AllocationViolationFault">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="AllocationViolationFault" nillable="true" type="tns:AllocationViolationFault" />
 </xs:schema>

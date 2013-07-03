@@ -210,7 +210,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_sell_InsufficientQuantityFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_sell_ArgumentExceptionFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -229,7 +229,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_sell_ArgumentExceptionFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_sell_InsufficientQuantityFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -286,7 +286,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_buy_InsufficientFundsFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_buy_AllocationViolationFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -305,7 +305,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_buy_AllocationViolationFaultFault_Fault">
+  <wsp:Policy wsu:Id="WSHttpBinding_IPortfolioManager_buy_InsufficientFundsFaultFault_Fault">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -388,11 +388,11 @@
   <wsdl:message name="IPortfolioManager_sell_OutputMessage">
     <wsdl:part name="parameters" element="tns:sellResponse" />
   </wsdl:message>
-  <wsdl:message name="IPortfolioManager_sell_InsufficientQuantityFaultFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q1:InsufficientQuantityFault" />
-  </wsdl:message>
   <wsdl:message name="IPortfolioManager_sell_ArgumentExceptionFaultFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q2:ArgumentExceptionFault" />
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q1:ArgumentExceptionFault" />
+  </wsdl:message>
+  <wsdl:message name="IPortfolioManager_sell_InsufficientQuantityFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q2:InsufficientQuantityFault" />
   </wsdl:message>
   <wsdl:message name="IPortfolioManager_buy_InputMessage">
     <wsdl:part name="parameters" element="tns:buy" />
@@ -400,11 +400,11 @@
   <wsdl:message name="IPortfolioManager_buy_OutputMessage">
     <wsdl:part name="parameters" element="tns:buyResponse" />
   </wsdl:message>
-  <wsdl:message name="IPortfolioManager_buy_InsufficientFundsFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q3:InsufficientFundsFault" />
-  </wsdl:message>
   <wsdl:message name="IPortfolioManager_buy_AllocationViolationFaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q4:AllocationViolationFault" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q3:AllocationViolationFault" />
+  </wsdl:message>
+  <wsdl:message name="IPortfolioManager_buy_InsufficientFundsFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" name="detail" element="q4:InsufficientFundsFault" />
   </wsdl:message>
   <wsdl:message name="IPortfolioManager_getAvailableCash_InputMessage">
     <wsdl:part name="parameters" element="tns:getAvailableCash" />
@@ -424,14 +424,14 @@
     <wsdl:operation name="sell">
       <wsdl:input wsaw:Action="http://tempuri.org/IPortfolioManager/sell" message="tns:IPortfolioManager_sell_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPortfolioManager/sellResponse" message="tns:IPortfolioManager_sell_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPortfolioManager/sellInsufficientQuantityFaultFault" name="InsufficientQuantityFaultFault" message="tns:IPortfolioManager_sell_InsufficientQuantityFaultFault_FaultMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPortfolioManager/sellArgumentExceptionFaultFault" name="ArgumentExceptionFaultFault" message="tns:IPortfolioManager_sell_ArgumentExceptionFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPortfolioManager/sellInsufficientQuantityFaultFault" name="InsufficientQuantityFaultFault" message="tns:IPortfolioManager_sell_InsufficientQuantityFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="buy">
       <wsdl:input wsaw:Action="http://tempuri.org/IPortfolioManager/buy" message="tns:IPortfolioManager_buy_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPortfolioManager/buyResponse" message="tns:IPortfolioManager_buy_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPortfolioManager/buyInsufficientFundsFaultFault" name="InsufficientFundsFaultFault" message="tns:IPortfolioManager_buy_InsufficientFundsFaultFault_FaultMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPortfolioManager/buyAllocationViolationFaultFault" name="AllocationViolationFaultFault" message="tns:IPortfolioManager_buy_AllocationViolationFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPortfolioManager/buyInsufficientFundsFaultFault" name="InsufficientFundsFaultFault" message="tns:IPortfolioManager_buy_InsufficientFundsFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="getAvailableCash">
       <wsdl:input wsaw:Action="http://tempuri.org/IPortfolioManager/getAvailableCash" message="tns:IPortfolioManager_getAvailableCash_InputMessage" />
@@ -473,13 +473,13 @@
         <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_sell_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="InsufficientQuantityFaultFault">
-        <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_sell_InsufficientQuantityFaultFault_Fault" />
-        <soap12:fault use="literal" name="InsufficientQuantityFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="ArgumentExceptionFaultFault">
         <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_sell_ArgumentExceptionFaultFault_Fault" />
         <soap12:fault use="literal" name="ArgumentExceptionFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InsufficientQuantityFaultFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_sell_InsufficientQuantityFaultFault_Fault" />
+        <soap12:fault use="literal" name="InsufficientQuantityFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="buy">
@@ -492,13 +492,13 @@
         <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_buy_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="InsufficientFundsFaultFault">
-        <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_buy_InsufficientFundsFaultFault_Fault" />
-        <soap12:fault use="literal" name="InsufficientFundsFaultFault" namespace="" />
-      </wsdl:fault>
       <wsdl:fault name="AllocationViolationFaultFault">
         <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_buy_AllocationViolationFaultFault_Fault" />
         <soap12:fault use="literal" name="AllocationViolationFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InsufficientFundsFaultFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IPortfolioManager_buy_InsufficientFundsFaultFault_Fault" />
+        <soap12:fault use="literal" name="InsufficientFundsFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getAvailableCash">

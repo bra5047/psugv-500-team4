@@ -9,6 +9,7 @@
   <xs:element name="ArrayOfPositionMessage" nillable="true" type="tns:ArrayOfPositionMessage" />
   <xs:complexType name="PositionMessage">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Basis" type="xs:double" />
       <xs:element minOccurs="0" name="Price" type="xs:double" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces" minOccurs="0" name="Status" type="q1:positionStatus" />
