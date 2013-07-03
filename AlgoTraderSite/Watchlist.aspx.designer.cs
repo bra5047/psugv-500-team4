@@ -13,22 +13,13 @@ namespace AlgoTraderSite {
     public partial class WatchListPage {
         
         /// <summary>
-        /// statusMessage control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusMessage;
-        
-        /// <summary>
-        /// lblWatchLists control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWatchLists;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
         /// ddlistWatchLists control.
@@ -38,6 +29,33 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlistWatchLists;
+        
+        /// <summary>
+        /// btnDeleteList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteList;
+        
+        /// <summary>
+        /// tbAddList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAddList;
+        
+        /// <summary>
+        /// btnAddList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddList;
         
         /// <summary>
         /// tbAddToWatchList control.
@@ -58,12 +76,21 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.WebControls.Button btnAddToWatchList;
         
         /// <summary>
-        /// tblWatchList control.
+        /// statusMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblWatchList;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusMessage;
+        
+        /// <summary>
+        /// WatchlistDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WatchlistDiv;
     }
 }
