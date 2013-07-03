@@ -8,7 +8,7 @@ namespace AlgoTrader.Interfaces
 {
     public interface IEmail
     {
-        void sendEmail(string Recipient, string SymbolName);
+        void sendEmail(string Recipient, string SymbolName, string CurrentPrice, Boolean sell);
 
     }
 }
