@@ -33,7 +33,7 @@ namespace AlgoTrader.useragent
             IEmail email = new EmailSender();
             string to_address = db.SystemSettings.Where(x => x.Module == "UserAgent" && x.Name == "ALERTS_EMAIL_ADDRESS_TO").FirstOrDefault().Value;
             if (to_address == null) throw new Exception("Unable to load user email address for alerts.");
-            email.sendEmail(to_address, symbolName, price.ToString(), (type == tradeTypes.Sell));
+            email.sendEmail(to_address, symbolName, price.ToString(), type);
             db.Dispose();
         }
 

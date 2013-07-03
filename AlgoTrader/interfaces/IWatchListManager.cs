@@ -14,6 +14,8 @@ namespace AlgoTrader.Interfaces
 		List<Quote> GetQuotes(string symbolName);
 
 		IWatchList GetWatchList(string listName);
+		bool AddWatchList(string listName);
+		bool DeleteWatchList(string listName);
 
         List<WatchList> GetAllWatchLists();
 	}

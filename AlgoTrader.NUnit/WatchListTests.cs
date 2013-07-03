@@ -11,7 +11,7 @@ using AlgoTrader.watchlist;
 namespace AlgoTrader.NUnit
 {
 	[TestFixture]
-	class WatchListTest
+	class WatchListTests
 	{
 		[Test]
 		public void AddToList()
