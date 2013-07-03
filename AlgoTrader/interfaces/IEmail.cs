@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AlgoTrader.datamodel;
 
 namespace AlgoTrader.Interfaces
 {
     public interface IEmail
     {
-        void sendEmail(string Recipient, string SymbolName, string CurrentPrice, Boolean sell);
+        void sendEmail(string Recipient, string SymbolName, string CurrentPrice, tradeTypes TradeType);
 
     }
 }
