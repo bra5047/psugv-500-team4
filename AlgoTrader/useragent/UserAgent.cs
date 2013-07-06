@@ -21,6 +21,7 @@ namespace AlgoTrader.useragent
             TraderContext db = DbContext;
             Symbol s = db.Symbols.Where(x => x.name == symbolName).FirstOrDefault();
             Alert a = new Alert();
+            a.AlertId = Guid.NewGuid();
             a.Timestamp = DateTime.Now;
             a.Symbol = s;
             a.Type = type;
