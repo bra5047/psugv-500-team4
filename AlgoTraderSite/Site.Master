@@ -36,7 +36,6 @@
 				<%--Site Scripts--%>
 			</Scripts>
 		</asp:ScriptManager>
-		<script type="text/javascript" src="~/Scripts/AlgoTrader/AlgoTrader.js"></script>
 		<header>
 			<div class="content-wrapper">
 				<div class="float-left">

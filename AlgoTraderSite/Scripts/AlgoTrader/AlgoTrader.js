@@ -35,7 +35,7 @@
 });
 
 function setNavCss() {
-	var page = $("h1").text();
+	var page = $("hgroup").children().text();
 	var tab = 0;
 	if (page === "Welcome") {
 		tab = 1;
