@@ -64,5 +64,31 @@ namespace AlgoTrader.strategy
                 }
             }
         }
+
+        public SortedList<DateTime, double> History
+        {
+            get
+            {
+                return _datapoints;
+            }
+        }
+
+        public string Label
+        {
+            get
+            {
+                string label = string.Empty;
+                TimeSpan t = new TimeSpan(0, 0, IntervalSeconds);
+                if (t.Hours > 0)
+                {
+                    label = String.Format("{0:d}h SMA", t.Hours);
+                }
+                else
+                {
+                    label = String.Format("{0:d}m SMA", t.Minutes);
+                }
+                return label;
+            }
+        }
     }
 }

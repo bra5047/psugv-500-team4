@@ -11,7 +11,7 @@ using AlgoTrader.datamodel;
 namespace AlgoTrader.NUnit
 {
     [TestFixture]
-    public class SmaMetricTest
+    public class SmaMetricTests
     {
         [Test]
         public void ComputeAverage()
@@ -57,6 +57,20 @@ namespace AlgoTrader.NUnit
             sma.Add(new DateTime(2013, 6, 13, 5, 0, 20), 10);
 
             Assert.AreEqual(10, sma.Avg);
+        }
+
+        [Test]
+        public void TestHoursLabel()
+        {
+            SmaMetric sma = new SmaMetric("GOOG", 50, 3600);
+            Assert.AreEqual("1h SMA", sma.Label);
+        }
+
+        [Test]
+        public void TestMinutesLabel()
+        {
+            SmaMetric sma = new SmaMetric("GOOG", 50, 300);
+            Assert.AreEqual("5m SMA", sma.Label);
         }
     }
 

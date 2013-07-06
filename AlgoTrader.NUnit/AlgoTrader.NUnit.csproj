@@ -60,7 +60,7 @@
     <Compile Include="TradeTests.cs" />
     <Compile Include="WatchListTests.cs" />
     <Compile Include="PortfolioManagerTest.cs" />
-    <Compile Include="SmaMetricTest.cs" />
+    <Compile Include="SmaMetricTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreeDucksStrategyTest.cs" />
   </ItemGroup>

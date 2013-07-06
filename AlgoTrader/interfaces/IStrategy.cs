@@ -23,7 +23,7 @@ namespace AlgoTrader.Interfaces
         [OperationContract]
         StrategySummary getSummary(string symbolName);
 
-        IStrategyDetail getDetailedAnalysis(ISymbol symbol);
+        StrategyDetail getDetailedAnalysis(string symbolName);
     }
 
     [DataContract]
@@ -78,5 +78,30 @@ namespace AlgoTrader.Interfaces
         Sell,
         [EnumMember]
         None
+    }
+
+    [DataContract]
+    public class StrategyDetail
+    {
+        [DataMember]
+        public string SymbolName;
+        [DataMember]
+        public SortedList<DateTime, double> History_Series_1;
+        [DataMember]
+        public SortedList<DateTime, double> History_Series_2;
+        [DataMember]
+        public SortedList<DateTime, double> History_Series_3;
+        [DataMember]
+        public string Metric_1_Label;
+        [DataMember]
+        public double Metric_1;
+        [DataMember]
+        public string Metric_2_Label;
+        [DataMember]
+        public double Metric_2;
+        [DataMember]
+        public string Metric_3_Label;
+        [DataMember]
+        public double Metric_3;
     }
 }

@@ -171,9 +171,23 @@ namespace AlgoTrader.strategy
             return s;
         }
 
-        public IStrategyDetail getDetailedAnalysis(ISymbol symbol)
+        public StrategyDetail getDetailedAnalysis(string symbolName)
         {
-            throw new NotImplementedException();
+            StrategyDetail s = new StrategyDetail();
+            s.SymbolName = symbolName;
+
+            List<SmaMetric> m = _metrics[symbolName];
+            s.Metric_1 = m[0].Avg;
+            s.Metric_1_Label = m[0].Label;
+            s.History_Series_1 = m[0].History;
+            s.Metric_2 = m[1].Avg;
+            s.Metric_2_Label = m[1].Label;
+            s.History_Series_2 = m[1].History;
+            s.Metric_3 = m[2].Avg;
+            s.Metric_3_Label = m[2].Label;
+            s.History_Series_3 = m[2].History;
+            
+            return s;
         }
     }
 }
