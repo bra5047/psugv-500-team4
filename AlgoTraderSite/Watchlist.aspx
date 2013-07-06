@@ -5,7 +5,6 @@
 		<div class="content-wrapper">
 			<hgroup class="title">
 				<h1><%: Title %></h1>
-				<h2></h2>
 			</hgroup>
 		</div>
 	</section>
@@ -13,15 +12,23 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<asp:UpdatePanel ID="UpdatePanel1" runat="server">
 		<ContentTemplate>
-			<span>Lists:</span>
-			<asp:DropDownList ID="ddlistWatchLists" runat="server" EnableViewState="true" OnSelectedIndexChanged="ddlistWatchLists_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-			<asp:Button ID="btnDeleteList" Text="Delete List" OnClick="btnDeleteList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
-			<asp:TextBox ID="tbAddList" placeholder="Enter a list name" CssClass="watchlist-input" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
-			<asp:Button ID="btnAddList" Text="Add List" OnClick="btnAddList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
-			<asp:TextBox ID="tbAddToWatchList" placeholder="Enter a stock symbol" MaxLength="4" CssClass="watchlist-input" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
-			<asp:Button ID="btnAddToWatchList" Text="Add to list" OnClick="btnAddToWatchList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
-			<span id="statusMessage" runat="server"></span>
-			<div id="WatchlistDiv" runat="server"></div>
+			<div class="panel-wrapper">
+				<div class="panel-watchlist">
+					<label class="header">Watchlists</label><br />
+					<asp:RadioButtonList ID="radioLists" DataValueField="ListName" DataTextField="ListName" OnSelectedIndexChanged="radioLists_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true" runat="server"></asp:RadioButtonList>
+					<asp:TextBox ID="tbAddList" placeholder="Enter a list name" CssClass="watchlist-input" Width="80%" MaxLength="20" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
+					<asp:Button ID="btnAddList" Text="+ Add List" OnClick="btnAddList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
+				</div>
+				<div class="maincontent">
+					<div class="input-group">
+						<asp:TextBox ID="tbAddToWatchList" placeholder="Enter a stock symbol" MaxLength="4" CssClass="watchlist-input" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
+						<asp:Button ID="btnAddToWatchList" Text="Add to list" OnClick="btnAddToWatchList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
+						<asp:Button ID="btnDeleteList" Text="Delete List" OnClick="btnDeleteList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
+					</div>
+					<asp:Label id="statusMessage" runat="server"></asp:Label>
+					<div id="WatchlistDiv" runat="server"></div>
+				</div>
+			</div>
 		</ContentTemplate>
 	</asp:UpdatePanel>
 </asp:Content>

@@ -23,29 +23,23 @@ namespace AlgoTraderSite
 		{
 			if (!IsPostBack)
 			{
+				radioLists.SelectedIndex = 0;
 				listWatchLists();
 			}
-			showWatchList();
+			updateList();
 		}
 
 		public void listWatchLists()
 		{
-			ddlistWatchLists.Items.Clear();
 			List<WatchList> watchlists = new List<WatchList>();
 			watchlists = wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList();
-
-			foreach (WatchList item in watchlists)
-			{
-				ListItem li = new ListItem();
-				li.Text = item.ListName;
-				li.Value = item.ListName;
-				ddlistWatchLists.Items.Add(li);
-			}
+			radioLists.DataSource = watchlists;
+			radioLists.DataBind();
 		}
 
-		public void showWatchList()
+		public void showWatchList(string listName)
 		{
-			string lName = ddlistWatchLists.SelectedValue;
+			string lName = listName;
 			WatchlistDiv.Controls.Clear();
 
 			Table htbl = createHeader();
@@ -90,7 +84,6 @@ namespace AlgoTraderSite
 			double priceChange = 0;
 			DateTime date = new DateTime();
 
-			// get the quotes
 			quotes = wlm.GetQuotes(item.SymbolName);
 			quotes.OrderBy(x => x.timestamp);
 
@@ -101,7 +94,6 @@ namespace AlgoTraderSite
 				previousPrice = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
 			}
 
-			// create the row and cells
 			TableRow row = new TableRow();
 			for (int i = 0; i < headers.Length; i++)
 			{
@@ -127,11 +119,10 @@ namespace AlgoTraderSite
 			if (priceChange < 0)
 			{
 				string prefix = "- ";
-				string style = "color:red";
 				row.Cells[2].Text = prefix;
-				row.Cells[2].Attributes["style"] = style;
+				row.Cells[2].CssClass = "red";
 				row.Cells[3].Text = prefix;
-				row.Cells[3].Attributes["style"] = style;
+				row.Cells[3].CssClass = "red";
 			}
 
 			row.Cells[2].Text += Math.Abs(priceChange).ToString("N2");
@@ -161,15 +152,24 @@ namespace AlgoTraderSite
 			return tbl;
 		}
 
-		protected void setStatus(string msg)
+		protected void setStatus(string msg, bool type)
 		{
 			statusMessage.Controls.Clear();
-			statusMessage.InnerText = msg;
+			statusMessage.Text = msg;
+
+			if (type)
+			{
+				statusMessage.CssClass = "message-success";
+			}
+			else
+			{
+				statusMessage.CssClass = "message-fail";
+			}
 		}
 
-		protected void updateList()
+		private void updateList()
 		{
-			showWatchList();
+			showWatchList(radioLists.SelectedValue);
 		}
 
 		#region Controls
@@ -183,7 +183,7 @@ namespace AlgoTraderSite
 
 			if (success)
 			{
-				setStatus(String.Format("{0} removed from list {1}.", symbol, listName));
+				setStatus(String.Format("{0} removed from list {1}.", symbol, listName), true);
 			}
 			updateList();
 		}
@@ -192,18 +192,18 @@ namespace AlgoTraderSite
 		{
 			bool success = false;
 			string symbol = tbAddToWatchList.Text.Trim().ToUpper();
-			string listName = ddlistWatchLists.SelectedValue;
+			string listName = radioLists.SelectedValue;
 
 			if (symbol.Length > 0)
 			{
 				success = wl.AddToList(new Symbol(symbol), listName);
 				if (success)
 				{
-					setStatus(String.Format("{0} added to list {1}.", symbol, listName));
+					setStatus(String.Format("{0} added to list {1}.", symbol, listName), true);
 				}
 				else
 				{
-					setStatus(String.Format("{0} could not be added to {1}.", symbol, listName));
+					setStatus(String.Format("{0} could not be added to {1}.", symbol, listName), false);
 				}
 
 				TraderContext context = new TraderContext();
@@ -226,15 +226,10 @@ namespace AlgoTraderSite
 			updateList();
 		}
 
-		protected void ddlistWatchLists_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			updateList();
-		}
-
 		protected void btnDeleteList_Click(object sender, EventArgs e)
 		{
 			bool success = false;
-			string listName = ddlistWatchLists.SelectedValue;
+			string listName = radioLists.SelectedValue;
 
 			foreach (WatchListItem w in wl.items.Where(x => x.SymbolName.Equals(listName)))
 			{
@@ -245,13 +240,14 @@ namespace AlgoTraderSite
 
 			if (success)
 			{
-				setStatus(String.Format("List {0} deleted successfully.", listName));
+				setStatus(String.Format("List {0} deleted successfully.", listName), true);
 			}
 			else
 			{
-				setStatus(String.Format("List {0} could not be deleted.", listName));
+				setStatus(String.Format("List {0} could not be deleted.", listName), false);
 			}
 			listWatchLists();
+			radioLists.SelectedIndex = 0;
 			updateList();
 		}
 
@@ -263,14 +259,19 @@ namespace AlgoTraderSite
 
 			if (success)
 			{
-				setStatus(String.Format("Added list '{0}'", listName));
-			} else {
-				setStatus(String.Format("'{0}' could not be added.", listName));
+				setStatus(String.Format("Added list '{0}'", listName), true);
+			}
+			else
+			{
+				setStatus(String.Format("'{0}' could not be added.", listName), false);
 			}
 			listWatchLists();
 		}
+
+		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			updateList();
+		}
 		#endregion
-
-
 	}
 }
