@@ -25,11 +25,14 @@ namespace AlgoTrader.strategy
         private QuoteProvider _quoteProvider;
         private ISignalAlerter _alerter;
 
+        private Object _init_lock;
+
         public ThreeDucksStrategy()
         {
             _metrics = new Dictionary<string, List<SmaMetric>>();
             _signals = new Dictionary<string, StrategySignal>();
             _alerter = new SignalAlerter();
+            _init_lock = new Object();
 
             FIRST_DUCK_SECONDS = 300;
             SECOND_DUCK_SECONDS = 3600;
@@ -74,19 +77,32 @@ namespace AlgoTrader.strategy
             ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
             log.DebugFormat("Bulk quote list received. Size: {0}", quotes.Count);
 
-            // this could be a big mess, so we attack it one symbol at a time
-            SortedSet<string> symbols = new SortedSet<string>(quotes.Select(x => x.SymbolName));
-
-            foreach (string s in symbols)
+            lock (_init_lock)
             {
-                // pull out the ones we want and run them in order
-                List<QuoteMessage> qs = quotes.OrderBy(x => x.timestamp).Where(y => y.SymbolName == s).ToList<QuoteMessage>();
-                foreach (QuoteMessage q in qs)
+                // this could be a big mess, so we attack it one symbol at a time
+                SortedSet<string> symbols = new SortedSet<string>(quotes.Select(x => x.SymbolName));
+                log.DebugFormat("Bulk quote list contained {0} symbols", symbols.Count);
+
+                foreach (string s in symbols)
                 {
-                    NewQuote(q);
+                    log.DebugFormat("Processing quotes for {0}", s);
+                    if (!_metrics.ContainsKey(s))
+                    {
+                        log.DebugFormat("Starting to watch {0}", s);
+                        startWatching(s);
+                    }
+                    // pull out the ones we want and run them in order
+                    List<QuoteMessage> qs = quotes.OrderBy(x => x.timestamp).Where(y => y.SymbolName == s).ToList<QuoteMessage>();
+                    log.DebugFormat("Extracted {0} quotes for symbol {1}", qs.Count, s);
+                    foreach (QuoteMessage q in qs)
+                    {
+                        NewQuote(q);
+                    }
+                    CheckSignals(qs.Last());
                 }
-                CheckSignals(qs.Last());
+                log.DebugFormat("Done processing symbols.");
             }
+            log.DebugFormat("Lock released.");
         }
 
         public void NewQuote(QuoteMessage quote)
@@ -173,20 +189,34 @@ namespace AlgoTrader.strategy
 
         public StrategyDetail getDetailedAnalysis(string symbolName)
         {
+            ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
+            log.DebugFormat("Detail request for {0}", symbolName);
+
             StrategyDetail s = new StrategyDetail();
             s.SymbolName = symbolName;
+            if (!_metrics.ContainsKey(symbolName)) return s;
 
-            List<SmaMetric> m = _metrics[symbolName];
-            s.Metric_1 = m[0].Avg;
-            s.Metric_1_Label = m[0].Label;
-            s.History_Series_1 = m[0].History;
-            s.Metric_2 = m[1].Avg;
-            s.Metric_2_Label = m[1].Label;
-            s.History_Series_2 = m[1].History;
-            s.Metric_3 = m[2].Avg;
-            s.Metric_3_Label = m[2].Label;
-            s.History_Series_3 = m[2].History;
-            
+            lock (_init_lock)
+            {
+                try
+                {
+                    List<SmaMetric> m = _metrics[symbolName];
+                    s.Metric_1 = m[0].Avg;
+                    s.Metric_1_Label = m[0].Label;
+                    s.History_Series_1 = m[0].History;
+                    s.Metric_2 = m[1].Avg;
+                    s.Metric_2_Label = m[1].Label;
+                    s.History_Series_2 = m[1].History;
+                    s.Metric_3 = m[2].Avg;
+                    s.Metric_3_Label = m[2].Label;
+                    s.History_Series_3 = m[2].History;
+                }
+                catch (Exception ex)
+                {
+                    log.Warn(ex.Message);
+                    log.Debug(ex.StackTrace);
+                }
+            }
             return s;
         }
     }

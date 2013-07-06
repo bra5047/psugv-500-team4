@@ -197,6 +197,195 @@ namespace AlgoTraderSite.Strategy.Client {
         None = 2,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StrategyDetail", Namespace="http://schemas.datacontract.org/2004/07/AlgoTrader.Interfaces")]
+    [System.SerializableAttribute()]
+    public partial class StrategyDetail : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.Dictionary<System.DateTime, double> History_Series_1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.Dictionary<System.DateTime, double> History_Series_2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.Dictionary<System.DateTime, double> History_Series_3Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double Metric_1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Metric_1_LabelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double Metric_2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Metric_2_LabelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double Metric_3Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Metric_3_LabelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SymbolNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.Dictionary<System.DateTime, double> History_Series_1 {
+            get {
+                return this.History_Series_1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.History_Series_1Field, value) != true)) {
+                    this.History_Series_1Field = value;
+                    this.RaisePropertyChanged("History_Series_1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.Dictionary<System.DateTime, double> History_Series_2 {
+            get {
+                return this.History_Series_2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.History_Series_2Field, value) != true)) {
+                    this.History_Series_2Field = value;
+                    this.RaisePropertyChanged("History_Series_2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.Dictionary<System.DateTime, double> History_Series_3 {
+            get {
+                return this.History_Series_3Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.History_Series_3Field, value) != true)) {
+                    this.History_Series_3Field = value;
+                    this.RaisePropertyChanged("History_Series_3");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Metric_1 {
+            get {
+                return this.Metric_1Field;
+            }
+            set {
+                if ((this.Metric_1Field.Equals(value) != true)) {
+                    this.Metric_1Field = value;
+                    this.RaisePropertyChanged("Metric_1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Metric_1_Label {
+            get {
+                return this.Metric_1_LabelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Metric_1_LabelField, value) != true)) {
+                    this.Metric_1_LabelField = value;
+                    this.RaisePropertyChanged("Metric_1_Label");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Metric_2 {
+            get {
+                return this.Metric_2Field;
+            }
+            set {
+                if ((this.Metric_2Field.Equals(value) != true)) {
+                    this.Metric_2Field = value;
+                    this.RaisePropertyChanged("Metric_2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Metric_2_Label {
+            get {
+                return this.Metric_2_LabelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Metric_2_LabelField, value) != true)) {
+                    this.Metric_2_LabelField = value;
+                    this.RaisePropertyChanged("Metric_2_Label");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Metric_3 {
+            get {
+                return this.Metric_3Field;
+            }
+            set {
+                if ((this.Metric_3Field.Equals(value) != true)) {
+                    this.Metric_3Field = value;
+                    this.RaisePropertyChanged("Metric_3");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Metric_3_Label {
+            get {
+                return this.Metric_3_LabelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Metric_3_LabelField, value) != true)) {
+                    this.Metric_3_LabelField = value;
+                    this.RaisePropertyChanged("Metric_3_Label");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SymbolName {
+            get {
+                return this.SymbolNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SymbolNameField, value) != true)) {
+                    this.SymbolNameField = value;
+                    this.RaisePropertyChanged("SymbolName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Strategy.Client.IStrategy")]
     public interface IStrategy {
@@ -224,6 +413,12 @@ namespace AlgoTraderSite.Strategy.Client {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStrategy/getSummary", ReplyAction="http://tempuri.org/IStrategy/getSummaryResponse")]
         System.Threading.Tasks.Task<AlgoTraderSite.Strategy.Client.StrategySummary> getSummaryAsync(string symbolName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStrategy/getDetailedAnalysis", ReplyAction="http://tempuri.org/IStrategy/getDetailedAnalysisResponse")]
+        AlgoTraderSite.Strategy.Client.StrategyDetail getDetailedAnalysis(string symbolName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IStrategy/getDetailedAnalysis", ReplyAction="http://tempuri.org/IStrategy/getDetailedAnalysisResponse")]
+        System.Threading.Tasks.Task<AlgoTraderSite.Strategy.Client.StrategyDetail> getDetailedAnalysisAsync(string symbolName);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -283,6 +478,14 @@ namespace AlgoTraderSite.Strategy.Client {
         
         public System.Threading.Tasks.Task<AlgoTraderSite.Strategy.Client.StrategySummary> getSummaryAsync(string symbolName) {
             return base.Channel.getSummaryAsync(symbolName);
+        }
+        
+        public AlgoTraderSite.Strategy.Client.StrategyDetail getDetailedAnalysis(string symbolName) {
+            return base.Channel.getDetailedAnalysis(symbolName);
+        }
+        
+        public System.Threading.Tasks.Task<AlgoTraderSite.Strategy.Client.StrategyDetail> getDetailedAnalysisAsync(string symbolName) {
+            return base.Channel.getDetailedAnalysisAsync(symbolName);
         }
     }
 }

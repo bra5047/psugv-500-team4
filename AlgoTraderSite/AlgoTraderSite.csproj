@@ -202,13 +202,16 @@
     <Content Include="Service References\Strategy.Client\AlgoTraderSite.Strategy.Client.StrategySummary.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\Strategy.Client\ATStrategySvc.disco" />
-    <Content Include="Service References\Strategy.Client\configuration91.svcinfo" />
-    <Content Include="Service References\Strategy.Client\configuration.svcinfo" />
-    <Content Include="Service References\Strategy.Client\Reference.svcmap">
+    <Content Include="Service References\Strategy.Client\AlgoTraderSite.Strategy.Client.StrategyDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\Strategy.Client\ATStrategySvc.disco" />
+    <None Include="Service References\Strategy.Client\configuration91.svcinfo" />
+    <None Include="Service References\Strategy.Client\configuration.svcinfo" />
+    <None Include="Service References\Strategy.Client\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Settings.aspx" />
     <Content Include="Portfolio.aspx" />
     <Content Include="Scripts\AlgoTrader\AlgoTrader.js" />
@@ -223,6 +226,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
     <Content Include="services\useragent\UserAgent.svc" />
+    <Content Include="TestStrategyDetail.aspx" />
     <Content Include="Watchlist.aspx" />
     <Content Include="debug.aspx" />
     <Content Include="Images\accent.png" />
@@ -297,7 +301,10 @@
     <None Include="Service References\Strategy.Client\ATStrategySvc2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Service References\Strategy.Client\ThreeDucksStrategy.wsdl" />
+    <None Include="Service References\Strategy.Client\ATStrategySvc3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Strategy.Client\ThreeDucksStrategy.wsdl" />
     <None Include="Service References\UserAgent.Client\UserAgent.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -401,6 +408,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="TestStrategyDetail.aspx.cs">
+      <DependentUpon>TestStrategyDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestStrategyDetail.aspx.designer.cs">
+      <DependentUpon>TestStrategyDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Watchlist.aspx.cs">
       <DependentUpon>Watchlist.aspx</DependentUpon>

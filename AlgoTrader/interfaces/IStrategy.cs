@@ -23,6 +23,7 @@ namespace AlgoTrader.Interfaces
         [OperationContract]
         StrategySummary getSummary(string symbolName);
 
+        [OperationContract]
         StrategyDetail getDetailedAnalysis(string symbolName);
     }
 

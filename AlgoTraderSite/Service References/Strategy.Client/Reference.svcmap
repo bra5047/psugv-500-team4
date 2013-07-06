@@ -22,11 +22,12 @@
     <MetadataSource Address="http://localhost:8000/AlgoTrader/services/ATStrategySvc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ThreeDucksStrategy.wsdl" MetadataType="Wsdl" ID="6d33c520-341d-4ee1-9dcf-9e9b9f29f417" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?wsdl" />
     <MetadataFile FileName="ATStrategySvc.xsd" MetadataType="Schema" ID="29bd5389-555e-4740-96f4-76520f260586" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?xsd=xsd1" />
     <MetadataFile FileName="ATStrategySvc.disco" MetadataType="Disco" ID="0a5dcb8d-a97e-4294-b163-92b7e38b6c80" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?disco" />
-    <MetadataFile FileName="ATStrategySvc1.xsd" MetadataType="Schema" ID="ae9e1bb8-cab1-4398-b78e-ee4181b2c7ec" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?xsd=xsd0" />
     <MetadataFile FileName="ATStrategySvc2.xsd" MetadataType="Schema" ID="ef05282b-2264-45a2-9116-5f0798176f73" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?xsd=xsd2" />
+    <MetadataFile FileName="ThreeDucksStrategy.wsdl" MetadataType="Wsdl" ID="6d33c520-341d-4ee1-9dcf-9e9b9f29f417" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?wsdl" />
+    <MetadataFile FileName="ATStrategySvc1.xsd" MetadataType="Schema" ID="ae9e1bb8-cab1-4398-b78e-ee4181b2c7ec" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?xsd=xsd0" />
+    <MetadataFile FileName="ATStrategySvc3.xsd" MetadataType="Schema" ID="6d3ad504-2c3f-43dd-96da-6c7ace66de24" SourceId="1" SourceUrl="http://localhost:8000/AlgoTrader/services/ATStrategySvc?xsd=xsd3" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
