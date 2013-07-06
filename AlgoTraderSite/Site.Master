@@ -40,9 +40,9 @@
 		<header>
 			<div class="content-wrapper">
 				<div class="float-left">
-					<p class="site-title">
+					<span class="site-title">
 						<a id="A1" runat="server" href="~/">AlgoTrader</a>
-					</p>
+					</span>
 				</div>
 				<div class="float-right">
 					<!--<section id="login">
@@ -64,7 +64,7 @@
                 </section>-->
 					<nav>
 						<ul id="menu">
-							<li><a id="A2" runat="server" href="~/"><span class="icon-home-2"> </span>Home</a></li>
+							<li><a id="A2" runat="server" href="~/"><span class="icon-home"> </span>Home</a></li>
 							<li><a id="A3" runat="server" href="~/WatchList"><span class="icon-eye"> </span>Watchlist</a></li>
 							<li><a id="A4" runat="server" href="~/Portfolio"><span class="icon-bars"> </span>My Portfolio</a></li>
 							<li><a id="A5" runat="server" href="~/Settings"><span class="icon-cog"> </span>Settings</a></li>
