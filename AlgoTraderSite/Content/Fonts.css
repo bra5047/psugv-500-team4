@@ -1,0 +1,94 @@
+﻿@font-face {
+	font-family: 'icomoon';
+	src:url('Fonts/icomoon.eot');
+	src:url('Fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('Fonts/icomoon.woff') format('woff'),
+		url('Fonts/icomoon.ttf') format('truetype'),
+		url('Fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-home, .icon-home-2, .icon-settings, .icon-equalizer, .icon-cog, .icon-cogs, .icon-wrench, .icon-close, .icon-spam, .icon-checkmark-circle, .icon-cancel-circle, .icon-remove, .icon-bars, .icon-stats, .icon-coin, .icon-bullhorn, .icon-star, .icon-eye {
+	font-family: 'icomoon';
+	font-size: .9em;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-home:before {
+	content: "\2617 ";
+}
+.icon-home-2:before {
+	content: "\2616 ";
+}
+.icon-settings:before {
+	content: "\2630";
+}
+.icon-equalizer:before {
+	content: "\2631";
+}
+.icon-cog:before {
+	content: "\2638";
+}
+.icon-cogs:before {
+	content: "\25ce";
+}
+.icon-wrench:before {
+	content: "\273f";
+}
+.icon-close:before {
+	content: "\2715";
+}
+.icon-spam:before {
+	content: "\2762";
+}
+.icon-checkmark-circle:before {
+	content: "\2713";
+}
+.icon-cancel-circle:before {
+	content: "\2717";
+}
+.icon-remove:before {
+	content: "\2701";
+}
+.icon-bars:before {
+	content: "\2652";
+}
+.icon-stats:before {
+	content: "\2653";
+}
+.icon-coin:before {
+	content: "\25a0";
+}
+.icon-bullhorn:before {
+	content: "\25c4";
+}
+.icon-star:before {
+	content: "\274b";
+}
+.icon-eye:before {
+	content: "\235c";
+}

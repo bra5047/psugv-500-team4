@@ -21,11 +21,11 @@
 				</div>
 				<div class="maincontent">
 					<div class="input-group">
-						<asp:TextBox ID="tbAddToWatchList" placeholder="Enter a stock symbol" MaxLength="4" CssClass="watchlist-input" runat="server" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
+						<asp:TextBox ID="tbAddToWatchList" placeholder="Enter a stock symbol" MaxLength="4" CssClass="watchlist-input" onfocus="this.select()" onmouseup="return false" onkeydown="return (event.keyCode!=13);" runat="server"></asp:TextBox>
 						<asp:Button ID="btnAddToWatchList" Text="Add to list" OnClick="btnAddToWatchList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
-						<asp:Button ID="btnDeleteList" Text="Delete List" OnClick="btnDeleteList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
+						<asp:Button ID="btnDeleteList" Text="Delete List" CssClass="delete" OnClick="btnDeleteList_Click" runat="server" onkeydown="return (event.keyCode!=13);" />
 					</div>
-					<asp:Label id="statusMessage" runat="server"></asp:Label>
+					<div id="statusMessage" runat="server"></div>
 					<div id="WatchlistDiv" runat="server"></div>
 				</div>
 			</div>

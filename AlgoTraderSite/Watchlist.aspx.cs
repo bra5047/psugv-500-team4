@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
@@ -155,16 +156,21 @@ namespace AlgoTraderSite
 		protected void setStatus(string msg, bool type)
 		{
 			statusMessage.Controls.Clear();
-			statusMessage.Text = msg;
+			HtmlGenericControl icon = new HtmlGenericControl("span");
+			HtmlGenericControl message = new HtmlGenericControl("span");
+			message.InnerText = msg;
 
 			if (type)
 			{
-				statusMessage.CssClass = "message-success";
+				message.Attributes.Add("class", "message-success");
+				message.InnerHtml = new HtmlString("<span class='icon-checkmark-circle'> </span>" + msg).ToString();
 			}
 			else
 			{
-				statusMessage.CssClass = "message-fail";
+				message.Attributes.Add("class", "message-fail");
+				message.InnerHtml = new HtmlString("<span class='icon-cancel-circle'> </span>" + msg).ToString();
 			}
+			statusMessage.Controls.Add(message);
 		}
 
 		private void updateList()
@@ -222,6 +228,10 @@ namespace AlgoTraderSite
 				context.Quotes.Add(q2);
 
 				context.SaveChanges();
+			}
+			else
+			{
+				setStatus("Stock symbol cannot be blank", false);
 			}
 			updateList();
 		}

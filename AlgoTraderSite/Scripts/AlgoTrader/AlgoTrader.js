@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 	// NAV
 	setNavCss();
-	
+
 	// PORTFOLIO
 	$(".toggle").click(function (e) {
 		var $target = $(e.target).parents("table:first"); // target = button -> cell -> row -> table

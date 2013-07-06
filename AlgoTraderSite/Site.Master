@@ -2,19 +2,20 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head runat="server">
+<head id="Head1" runat="server">
 	<meta charset="utf-8" />
 	<title><%: Page.Title %> - AlgoTrader</title>
-	<asp:PlaceHolder runat="server">
+	<asp:PlaceHolder ID="PlaceHolder1" runat="server">
 		<%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-	<webopt:BundleReference runat="server" Path="~/Content/css" />
+	<webopt:BundleReference ID="BundleReference1" runat="server" Path="~/Content/css" />
+	<link rel="stylesheet" href="~/Content/Fonts.css" type="text/css" />
 	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<meta name="viewport" content="width=device-width" />
 	<asp:ContentPlaceHolder runat="server" ID="HeadContent" />
 </head>
 <body>
-	<form runat="server">
+	<form id="Form1" runat="server">
 		<asp:ScriptManager ID="ScriptManager1" runat="server" ScriptPath="~/Scripts/">
 			<Scripts>
 				<%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
@@ -40,7 +41,7 @@
 			<div class="content-wrapper">
 				<div class="float-left">
 					<p class="site-title">
-						<a runat="server" href="~/">AlgoTrader</a>
+						<a id="A1" runat="server" href="~/">AlgoTrader</a>
 					</p>
 				</div>
 				<div class="float-right">
@@ -63,10 +64,10 @@
                 </section>-->
 					<nav>
 						<ul id="menu">
-							<li><a runat="server" href="~/">Home</a></li>
-							<li><a runat="server" href="~/WatchList">Watchlist</a></li>
-							<li><a runat="server" href="~/Portfolio">My Portfolio</a></li>
-							<li><a runat="server" href="~/Settings">Settings</a></li>
+							<li><a id="A2" runat="server" href="~/"><span class="icon-home-2"> </span>Home</a></li>
+							<li><a id="A3" runat="server" href="~/WatchList"><span class="icon-eye"> </span>Watchlist</a></li>
+							<li><a id="A4" runat="server" href="~/Portfolio"><span class="icon-bars"> </span>My Portfolio</a></li>
+							<li><a id="A5" runat="server" href="~/Settings"><span class="icon-cog"> </span>Settings</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -81,7 +82,7 @@
 		<footer>
 			<div class="content-wrapper">
 				<div class="float-right">
-					<p>&copy; <%: DateTime.Now.Year %> - Pennsylvania State University | <a id="A1" runat="server" href="~/About">About</a> | <a id="A2" runat="server" href="~/Contact">Contact</a></p>
+					<p>&copy; <%: DateTime.Now.Year %> - Pennsylvania State University | <a id="A6" runat="server" href="~/About">About</a> | <a id="A7" runat="server" href="~/Contact">Contact</a></p>
 				</div>
 			</div>
 		</footer>
