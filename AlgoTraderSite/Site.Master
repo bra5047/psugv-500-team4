@@ -64,10 +64,10 @@
                 </section>-->
 					<nav>
 						<ul id="menu">
-							<li><a runat="server" href="~/"><span class="icon-home"></span> Home</a></li>
-							<li><a runat="server" href="~/WatchList"><span class="icon-eye"></span> Watchlist</a></li>
-							<li><a runat="server" href="~/Portfolio"><span class="icon-bars"></span> My Portfolio</a></li>
-							<li><a runat="server" href="~/Settings"><span class="icon-cog"></span> Settings</a></li>
+							<li><a runat="server" href="~/"><span data-icon="&#xe004;"></span> Home</a></li>
+							<li><a runat="server" href="~/WatchList"><span data-icon="&#xe005;"></span> Watchlist</a></li>
+							<li><a runat="server" href="~/Portfolio"><span data-icon="&#xe015;"></span> My Portfolio</a></li>
+							<li><a runat="server" href="~/Settings"><span data-icon="&#xe006;"></span> Settings</a></li>
 						</ul>
 					</nav>
 				</div>

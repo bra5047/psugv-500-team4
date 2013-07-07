@@ -72,11 +72,15 @@ namespace AlgoTrader.watchlist
 		bool IWatchListManager.AddWatchList(string listName)
 		{
 			TraderContext db = new TraderContext();
-			var query = db.WatchLists.Where(x => x.ListName.Equals(listName));
-
+			string l = listName;
+			if (listName.Length == 0)
+			{
+				l = "Default";
+			}
+			var query = db.WatchLists.Where(x => x.ListName.Equals(l));
 			if (query.Count() == 0)
 			{
-				WatchList w = new WatchList(listName);
+				WatchList w = new WatchList(l);
 				db.WatchLists.Add(w);
 				db.SaveChanges();
 				return true;
@@ -88,9 +92,10 @@ namespace AlgoTrader.watchlist
 		bool IWatchListManager.DeleteWatchList(string listName)
 		{
 			TraderContext db = new TraderContext();
-			var query = db.WatchLists.Where(x => x.ListName.Equals(listName));
+			string l = listName;
+			var query = db.WatchLists.Where(x => x.ListName.Equals(l)).ToList();
 
-			if (query.Count() > 0)
+			if (query.Count > 0)
 			{
 				foreach (WatchList w in query)
 				{

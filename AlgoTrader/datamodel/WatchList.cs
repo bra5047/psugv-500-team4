@@ -9,11 +9,11 @@ using AlgoTrader.Interfaces;
 
 namespace AlgoTrader.datamodel
 {
-    public class WatchList : IWatchList
-    {
-        [Key]
-        public string ListName { get; set; }
-        public virtual List<WatchListItem> Items { get; set; }
+	public class WatchList : IWatchList
+	{
+		[Key]
+		public string ListName { get; set; }
+		public virtual List<WatchListItem> Items { get; set; }
 
 		List<ISymbol> IWatchList.symbols
 		{
@@ -37,42 +37,49 @@ namespace AlgoTrader.datamodel
 
 		bool IWatchList.AddToList(ISymbol symbol, string listName)
 		{
-			TraderContext db = new TraderContext();
-			var SYMBOL_QUERY = db.Symbols.Where(x => x.name.Equals(symbol.name)).ToList();
-			var WLI_QUERY = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(listName))).ToList();
+			string sname = symbol.name;
+			string lname = listName;
 
-			if (WLI_QUERY.Count>=1)
+			if (sname.Length > 0 && lname.Length > 0)
 			{
-				return false;
+				TraderContext db = new TraderContext();
+				// checks if watchlist item exists
+				var WLI_QUERY = db.WatchListItems.Where(x => (x.SymbolName.Equals(sname) && x.ListName.Equals(lname))).ToList();
+				if (WLI_QUERY.Count >= 1)
+				{
+					return false;
+				}
+				else // if not, checks if symbol exists
+				{
+					var SYMBOL_QUERY = db.Symbols.Where(x => x.name.Equals(sname)).ToList();
+					if (SYMBOL_QUERY.Count == 0)
+					{
+						Symbol s = new Symbol(sname);
+						db.Symbols.Add(s);
+						db.SaveChanges();
+					}
+					db.WatchListItems.Add(new WatchListItem(symbol, listName));
+					db.SaveChanges();
+					return true;
+				}
 			}
 			else
 			{
-				if (SYMBOL_QUERY.Count == 0)
-				{
-					Symbol s = new Symbol(symbol.name);
-					db.Symbols.Add(s);
-					db.SaveChanges();
-				}
-
-				db.WatchListItems.Add(new WatchListItem(symbol, listName));
-				db.SaveChanges();
-				return true;
+				return false;
 			}
 		}
 
 		bool IWatchList.RemoveFromList(ISymbol symbol, string listName)
 		{
 			TraderContext db = new TraderContext();
-			var query = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(listName))).ToList();
-
-			if (query.Count >= 1)
+			var query = db.WatchListItems.Where(x => (x.SymbolName.Equals(symbol.name) && x.ListName.Equals(listName)));
+			if (query.Count() > 0)
 			{
 				foreach (WatchListItem item in query)
 				{
 					db.WatchListItems.Remove(item);
-					db.SaveChanges();
 				}
-
+				db.SaveChanges();
 				return true;
 			}
 			else
@@ -92,7 +99,7 @@ namespace AlgoTrader.datamodel
 			else
 			{
 				ListName = "Default";
-			}			
+			}
 		}
 
 		public WatchList()
@@ -100,5 +107,5 @@ namespace AlgoTrader.datamodel
 			Items = new List<WatchListItem>();
 			ListName = "Default";
 		}
-    }
+	}
 }

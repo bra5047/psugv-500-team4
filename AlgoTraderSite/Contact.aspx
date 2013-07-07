@@ -1,10 +1,15 @@
 ﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="AlgoTraderSite.Contact" %>
 
+<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
+	<section class="featured">
+		<div class="content-wrapper">
+			<hgroup class="title">
+				<h1><%: Title %></h1>
+			</hgroup>
+		</div>
+	</section>
+</asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <hgroup class="title">
-        <h1><%: Title %></h1>
-    </hgroup>
-
     <section class="contact">
         <header>
             <h3>Email:</h3>

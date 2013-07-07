@@ -145,8 +145,8 @@
     <Content Include="Contact.aspx" />
     <Content Include="Content\FontGallery.html" />
     <Content Include="Content\Fonts.css" />
-    <Content Include="Content\Fonts\icomoon.dev.svg" />
-    <Content Include="Content\Fonts\icomoon.svg" />
+    <Content Include="Content\fonts\algotrader.dev.svg" />
+    <Content Include="Content\fonts\algotrader.svg" />
     <Content Include="Content\site-orig.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -209,9 +209,9 @@
     <Content Include="Service References\Strategy.Client\AlgoTraderSite.Strategy.Client.StrategyDetail.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Content\Fonts\icomoon.eot" />
-    <Content Include="Content\Fonts\icomoon.ttf" />
-    <Content Include="Content\Fonts\icomoon.woff" />
+    <Content Include="Content\fonts\algotrader.eot" />
+    <Content Include="Content\fonts\algotrader.ttf" />
+    <Content Include="Content\fonts\algotrader.woff" />
     <None Include="Service References\Strategy.Client\ATStrategySvc.disco" />
     <None Include="Service References\Strategy.Client\configuration91.svcinfo" />
     <None Include="Service References\Strategy.Client\configuration.svcinfo" />

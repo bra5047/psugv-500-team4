@@ -8,15 +8,20 @@ using System.Web.UI.HtmlControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
+using AlgoTrader.portfolio;
 using System.IO;
 
 namespace AlgoTraderSite
 {
+	// TODO disable delete button on portfolio
+	// TODO populate portfolio watchlist
+	// TODO switch images on sort buttons
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();
-		private static IWatchList wl;
+		private static IWatchList wl = new WatchList();
 		private static List<Quote> quotes = new List<Quote>();
+		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
 		string[] widths = { "40%", "20%", "15%", "15%", "10%" };
 
@@ -24,18 +29,37 @@ namespace AlgoTraderSite
 		{
 			if (!IsPostBack)
 			{
-				radioLists.SelectedIndex = 0;
 				listWatchLists();
 			}
-			updateList();
+			updateList();		
 		}
 
 		public void listWatchLists()
 		{
+			string value = radioLists.SelectedValue;
 			List<WatchList> watchlists = new List<WatchList>();
-			watchlists = wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList();
+			watchlists.Add(new WatchList(portfolioName));
+			watchlists.AddRange(wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList());
 			radioLists.DataSource = watchlists;
 			radioLists.DataBind();
+
+			if (value.Length > 0)
+			{
+				try
+				{
+					radioLists.SelectedValue = value;
+				}
+				catch
+				{
+					radioLists.SelectedIndex = 0;
+				}
+			}
+			else
+			{
+				radioLists.SelectedIndex = 0;
+			}
+
+			radioLists.Items[0].Text += new HtmlString(" <span class='icon-lock float-right' style='opacity:.5; line-height: 1.5em'></span>");
 		}
 
 		public void showWatchList(string listName)
@@ -43,16 +67,25 @@ namespace AlgoTraderSite
 			string lName = listName;
 			WatchlistDiv.Controls.Clear();
 
-			Table htbl = createHeader();
-			WatchlistDiv.Controls.Add(htbl);
-
 			wl = wlm.GetWatchList(lName);
-			wl.items.OrderBy(x => x.SymbolName);
-
-			foreach (WatchListItem item in wl.items)
+			if (wl.items.Count > 0)
 			{
-				Table wltbl = createWatchlistTable(item);
-				WatchlistDiv.Controls.Add(wltbl);
+				wl.items.OrderBy(x => x.SymbolName);
+
+				Table htbl = createHeader();
+				WatchlistDiv.Controls.Add(htbl);
+
+				foreach (WatchListItem item in wl.items)
+				{
+					Table wltbl = createWatchlistTable(item);
+					WatchlistDiv.Controls.Add(wltbl);
+				}
+			}
+			else
+			{
+				HtmlGenericControl empty = new HtmlGenericControl("h2");
+				empty.InnerText = "This list is empty. Why not add a symbol to watch?";
+				WatchlistDiv.Controls.Add(empty);
 			}
 		}
 
@@ -131,11 +164,11 @@ namespace AlgoTraderSite
 
 			// create Remove button for each row
 			Button btnRemove = new Button();
-			btnRemove.Attributes["Symbol"] = item.SymbolName;
-			btnRemove.Attributes["ListName"] = item.ListName;
+			btnRemove.Attributes.Add("Symbol", item.SymbolName);
+			btnRemove.Attributes.Add("ListName", item.ListName);
+			btnRemove.ID = "btnRemove" + item.SymbolName;
 			btnRemove.Text = "Remove";
-			btnRemove.ID = "btn" + item.SymbolName;
-			btnRemove.Click += new EventHandler(btnRemove_Click);
+			btnRemove.Click += btnRemove_Click;
 			row.Cells[headers.Length - 1].Controls.Add(btnRemove);
 
 			// set widths
@@ -156,19 +189,17 @@ namespace AlgoTraderSite
 		protected void setStatus(string msg, bool type)
 		{
 			statusMessage.Controls.Clear();
-			HtmlGenericControl icon = new HtmlGenericControl("span");
 			HtmlGenericControl message = new HtmlGenericControl("span");
-			message.InnerText = msg;
 
 			if (type)
 			{
 				message.Attributes.Add("class", "message-success");
-				message.InnerHtml = new HtmlString("<span class='icon-checkmark-circle'> </span>" + msg).ToString();
+				message.InnerHtml = new HtmlString("<span class='icon-ok-sign'></span> " + msg).ToString();
 			}
 			else
 			{
 				message.Attributes.Add("class", "message-fail");
-				message.InnerHtml = new HtmlString("<span class='icon-cancel-circle'> </span>" + msg).ToString();
+				message.InnerHtml = new HtmlString("<span class='icon-remove-sign'></span> " + msg).ToString();
 			}
 			statusMessage.Controls.Add(message);
 		}
@@ -185,11 +216,15 @@ namespace AlgoTraderSite
 			string symbol = ((Button)sender).Attributes["Symbol"];
 			string listName = ((Button)sender).Attributes["ListName"];
 
-			success = wl.RemoveFromList(new Symbol(symbol), listName);
-
-			if (success)
+			if (symbol.Length > 0 && listName.Length > 0)
 			{
-				setStatus(String.Format("{0} removed from list {1}.", symbol, listName), true);
+				success = wl.RemoveFromList(new Symbol(symbol), listName);
+
+				if (success)
+				{
+					setStatus(String.Format("{0} removed from list {1}.", symbol, listName), true);
+				}
+				
 			}
 			updateList();
 		}
@@ -228,12 +263,12 @@ namespace AlgoTraderSite
 				context.Quotes.Add(q2);
 
 				context.SaveChanges();
+				updateList();
 			}
 			else
 			{
 				setStatus("Stock symbol cannot be blank", false);
 			}
-			updateList();
 		}
 
 		protected void btnDeleteList_Click(object sender, EventArgs e)
@@ -241,41 +276,53 @@ namespace AlgoTraderSite
 			bool success = false;
 			string listName = radioLists.SelectedValue;
 
-			foreach (WatchListItem w in wl.items.Where(x => x.SymbolName.Equals(listName)))
+			if (listName.Length > 0)
 			{
-				wl.RemoveFromList(w.Symbol, w.ListName);
-			}
+				List<WatchListItem> items = wl.items.Where(x => x.ListName.Equals(listName)).ToList();
+				foreach (WatchListItem w in items)
+				{
+					wl.RemoveFromList(w.Symbol, w.ListName);
+				}
 
-			success = wlm.DeleteWatchList(listName);
-
-			if (success)
-			{
-				setStatus(String.Format("List {0} deleted successfully.", listName), true);
+				success = wlm.DeleteWatchList(listName);
+				if (success)
+				{
+					setStatus(String.Format("List {0} deleted successfully.", listName), true);
+				}
+				else
+				{
+					setStatus(String.Format("List {0} could not be deleted.", listName), false);
+				}
+				listWatchLists();
+				updateList();
 			}
-			else
-			{
-				setStatus(String.Format("List {0} could not be deleted.", listName), false);
-			}
-			listWatchLists();
-			radioLists.SelectedIndex = 0;
-			updateList();
 		}
 
 		protected void btnAddList_Click(object sender, EventArgs e)
 		{
 			bool success = false;
-			string listName = tbAddList.Text;
-			success = wlm.AddWatchList(listName);
+			string listName = tbAddList.Text.Trim();
+			if (listName.Length > 0)
+			{
+				if (!listName.ToLower().Equals(portfolioName.ToLower()))
+				{
+					success = wlm.AddWatchList(listName);
 
-			if (success)
-			{
-				setStatus(String.Format("Added list '{0}'", listName), true);
+					if (success)
+					{
+						setStatus(String.Format("Added list '{0}'", listName), true);
+					}
+					else
+					{
+						setStatus(String.Format("'{0}' already exists.", listName), false);
+					}
+					listWatchLists();
+				}
+				else
+				{
+					setStatus("Sorry! You can't have a custom list with that name.", false);
+				}
 			}
-			else
-			{
-				setStatus(String.Format("'{0}' could not be added.", listName), false);
-			}
-			listWatchLists();
 		}
 
 		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
