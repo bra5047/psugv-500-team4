@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTraderSite.Portfolio.Client;
@@ -16,12 +17,16 @@ namespace AlgoTraderSite
 		private PortfolioManagerClient portfolio;
 		private string[] pheaders = { "", "Company", "Shares", "Price", "Status", "Actions" };
 		private string[] theaders = { "", "Date", "Shares", "Price", "Type", "" };
-		private string[] widths = { "5%", "41%", "11%", "11%", "11%", "11%" };
+		private string[] widths = { "50px", "", "13%", "13%", "13%", "13%" };
 		private int columns = 6;
 		private int tcolumns = 6;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			//if (!IsPostBack)
+			//{
+			//	radioLists.SelectedIndex = 0;
+			//}
 			showPositions();
 		}
 
@@ -80,20 +85,24 @@ namespace AlgoTraderSite
 				row.Cells.Add(cell);
 			}
 
-			row.Cells[0].Text = "+";// TODO replace with expander image or text;
-			row.Cells[1].Text += new HtmlString(pm.SymbolName + " <span class='subtext'>(" + fullName + ")</span>");
+			row.Cells[1].Text += new HtmlString(String.Format("{0} <span class'subtext'>({1})</span>", pm.SymbolName, fullName));
 			row.Cells[2].Text = String.Format("{0:N0}", pm.Quantity);
 			row.Cells[3].Text = String.Format("{0:C}", pm.Price);
 			row.Cells[4].Text = pm.Status.ToString();
 			row.Cells[4].CssClass = getCssClass(pm.Status.ToString());
 
 			// BUTTONS
-			Button btnToggle = new Button();
-			btnToggle.Text = "+";
-			btnToggle.OnClientClick = "return false";
-			
-			btnToggle.UseSubmitBehavior = false;
+			HtmlGenericControl btnToggle = new HtmlGenericControl("div");
+			btnToggle.Attributes.Add("class", "toggle icon-plus-sign");
+			//btnToggle.Attributes["data-icon"] = HttpUtility.HtmlDecode("&#xe008;");
 			row.Cells[0].Controls.Add(btnToggle);
+
+			//Button btnToggle = new Button();
+			//btnToggle.Text = "+";
+			//btnToggle.OnClientClick = "return false";
+			
+			//btnToggle.UseSubmitBehavior = false;
+			//row.Cells[0].Controls.Add(btnToggle);
 
 			Button btnAction = new Button();
 			btnAction.Text = "Buy / Sell";
@@ -108,7 +117,7 @@ namespace AlgoTraderSite
 			// css stuff
 			tbl.CssClass = "main";
 			row.CssClass = "main";
-			btnToggle.CssClass = "toggle";
+			//btnToggle.CssClass = "toggle";
 
 			return tbl;
 		}
@@ -203,6 +212,11 @@ namespace AlgoTraderSite
 		{
 			Button btn = (Button)sender;
 			Response.Redirect("BuySell.aspx?s=" + btn.Attributes["SymbolName"] + "&p=" + btn.Attributes["LastPrice"]);
+		}
+
+		protected void btnExpand_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

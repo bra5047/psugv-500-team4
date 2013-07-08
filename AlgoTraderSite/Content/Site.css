@@ -355,7 +355,7 @@ label {
 		display: inline;
 	}
 
-input, textarea, select {
+input, textarea, select, div.toggle-all {
 	border: 1px solid #999;
 	color: #333;
 	border-radius: 3px;
@@ -381,7 +381,7 @@ input, textarea, select {
 
 	input[type="submit"],
 	input[type="button"],
-	button {
+	button, div.toggle-all {
 		background-color: #eee;
 		cursor: pointer;
 		font-weight: 700;
@@ -402,7 +402,7 @@ input, textarea, select {
 			border-color: #aaa;
 		}
 
-		input[type="submit"]:hover {
+		input[type="submit"]:hover, div.toggle-all:hover {
 			background-color: #999;
 			-webkit-box-shadow: 0px -0px 1px rgba(255,255,255,.7) inset;
 			box-shadow: 0px -0px 1px rgba(255,255,255,.7) inset;
@@ -410,6 +410,7 @@ input, textarea, select {
 
 		input[type="submit"].symbol-button {
 			font-family: algotrader;
+			font-size: 1.25em;
 			font-weight: normal;
 			font-variant: normal;
 			text-transform: none;
@@ -425,20 +426,24 @@ input, textarea, select {
 			background: darkred;
 		}
 
-	input[type="button"].toggle {
-		height: 38px;
-		width: 38px;
-		vertical-align: central;
-		border-radius: 50px;
+div.toggle {
+	font-size: 2em;
+	-moz-transition: all .15s ease;
+	-o-transition: all .15s ease;
+	-webkit-transition: all .15s ease;
+	transition: all .15s ease;
+	text-align:center;
+}
+
+	div.toggle:hover {
+		color: deepskyblue;
 	}
 
-		input[type="button"].toggle:hover {
-			background-color: #999;
-		}
 
-	input[type="checkbox"].onoffswitch-checkbox {
-		display: none;
-	}
+
+input[type="checkbox"].onoffswitch-checkbox {
+	display: none;
+}
 
 .onoffswitch {
 	position: relative;
@@ -608,7 +613,6 @@ th {
 	text-align: left;
 	border: none 0px;
 	text-transform: uppercase;
-	padding-left: 10px;
 }
 
 	th a {
@@ -656,7 +660,8 @@ tr {
 	}
 
 	tr.main:first-child td {
-		padding: 10px;
+		padding-top: 10px;
+		padding-bottom: 10px;
 	}
 
 @-moz-keyframes fadeIn {

@@ -143,12 +143,13 @@
     <Content Include="Alerts.aspx" />
     <Content Include="BuySell.aspx" />
     <Content Include="Contact.aspx" />
-    <Content Include="Content\FontGallery.html" />
-    <Content Include="Content\Fonts.css" />
     <Content Include="Content\fonts\algotrader.dev.svg" />
     <Content Include="Content\fonts\algotrader.svg" />
+    <Content Include="Content\index.html" />
+    <Content Include="Content\license.txt" />
     <Content Include="Content\site-orig.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Fonts.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />

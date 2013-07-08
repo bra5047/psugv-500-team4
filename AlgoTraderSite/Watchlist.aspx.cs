@@ -13,9 +13,7 @@ using System.IO;
 
 namespace AlgoTraderSite
 {
-	// TODO disable delete button on portfolio
-	// TODO switch images on sort buttons
-	// TODO would be better to get all the watchlists and then filter their visibility
+	// TODO implement strategy signal into watchlist
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();

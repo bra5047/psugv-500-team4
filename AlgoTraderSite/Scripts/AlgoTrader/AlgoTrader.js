@@ -11,10 +11,12 @@
 		if ($traderow.css("visibility") === "hidden") {
 			$traderow.css("visibility", "visible");
 		}
-		if ($toggle.prop("value") === "+") {
-			$toggle.prop("value", "-");
+		if ($toggle.hasClass("icon-plus-sign")) {
+			$toggle.removeClass("icon-plus-sign");
+			$toggle.addClass("icon-minus-sign");
 		} else {
-			$toggle.prop("value", "+");
+			$toggle.removeClass("icon-minus-sign");
+			$toggle.addClass("icon-plus-sign");
 		}
 		$traderow.stop(true, true).animate({ height: "toggle", opacity: "toggle" }, 250);
 	});
@@ -25,13 +27,27 @@
 
 		if ($target.prop("value") === "Expand All") {
 			value = "Collapse All";
-			$(".toggle[value='+']").trigger('click');
+			$(".toggle.icon-plus-sign").trigger('click');
 		} else {
 			value = "Expand All";
-			$(".toggle[value='-']").trigger('click');
+			$(".toggle.icon-minus-sign").trigger('click');
 		}
 		$target.prop("value", value);
 	});
+
+	//$("div.toggle-all").click(function (e) {
+	//	$target = $("div.toggle-all");
+	//	var value = "";
+	//	if ($target.text("Expand All")) {
+	//		alert('asdfad');
+	//		$target.text("Collapse All");
+	//		$(".toggle.icon-plus-sign").trigger('click');
+	//	} else {
+	//		$target.text("Expand All");
+	//		$(".toggle.icon-minus-sign").trigger('click');
+	//	}
+		
+	//});
 });
 
 function setNavCss() {
