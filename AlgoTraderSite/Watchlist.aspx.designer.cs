@@ -49,6 +49,15 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.WebControls.RadioButtonList radioLists;
         
         /// <summary>
+        /// inputGroupLeft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl inputGroupLeft;
+        
+        /// <summary>
         /// tbAddToWatchList control.
         /// </summary>
         /// <remarks>
@@ -76,31 +85,13 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.WebControls.Button btnDeleteList;
         
         /// <summary>
-        /// btnSortName control.
+        /// radioSortType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSortName;
-        
-        /// <summary>
-        /// btnSortPrice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSortPrice;
-        
-        /// <summary>
-        /// btnSortGain control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSortGain;
+        protected global::System.Web.UI.WebControls.RadioButtonList radioSortType;
         
         /// <summary>
         /// statusMessage control.
@@ -110,6 +101,15 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusMessage;
+        
+        /// <summary>
+        /// emptyDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl emptyDiv;
         
         /// <summary>
         /// WatchlistDiv control.

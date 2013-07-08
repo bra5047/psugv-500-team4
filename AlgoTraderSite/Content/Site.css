@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Fauna+One); /* serif */
 @import url(http://fonts.googleapis.com/css?family=Righteous); /* cursive */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300); /* sans-serif */
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,700); /* sans-serif */
+@import url(http://fonts.googleapis.com/css?family=Lato:400,300,700); /* sans-serif */
 
 @font-face {
 	font-family: 'algotrader';
@@ -161,6 +161,7 @@ footer {
 		cursor: pointer;
 		display: block;
 		font-size: 1.2em;
+		border: 1px solid rgba(0,0,0,0);
 	}
 
 		.panel-watchlist input[type="radio"] + label:hover {
@@ -168,13 +169,16 @@ footer {
 		}
 
 	.panel-watchlist input[type="radio"]:checked + label {
-		background-color: deepskyblue;
+		background-color: lightskyblue;
+		border: 1px solid deepskyblue;
 		font-weight: 700;
 	}
 
 .panel-watchlist label.header {
 	text-transform: uppercase;
 	padding-left: 10px;
+	font-weight: 700;
+	font-size: 2em;
 }
 
 .panel-wrapper > .maincontent {
@@ -190,6 +194,36 @@ footer {
 	text-align: center;
 	padding-bottom: 20px;
 }
+
+	.input-group input[type="radio"] {
+		display: none;
+	}
+
+		.input-group input[type="radio"] + label {
+			background-color: #eeeeee;
+			font-family: algotrader;
+			cursor: pointer;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+			padding: 9px 20px 9px 20px;
+			position: relative;
+			top: 10px;
+			-webkit-font-smoothing: antialiased;
+			-webkit-text-shadow: 0px 1px 0px rgba(255,255,255,.5);
+			text-shadow: 0px 1px 0px rgba(255,255,255,.5);
+			-webkit-box-shadow: 0px 0px 1px rgba(0,0,0,.5);
+			box-shadow: 0px 0px 1px rgba(0,0,0,.5);
+			-moz-transition: all .15s ease;
+			-o-transition: all .15s ease;
+			-webkit-transition: all .15s ease;
+			transition: all .15s ease;
+		}
+
+			.input-group input[type="radio"] + label:hover, .input-group input[type="radio"]:checked + label {
+				background-color: #ccc;
+			}
 
 /* site title
 ----------------------------------------------------------*/
@@ -219,40 +253,6 @@ footer {
 			text-shadow: 0px 0px 10px #444;
 		}
 
-
-/* login
-----------------------------------------------------------*/
-#login {
-	display: block;
-	font-size: .85em;
-	margin: 0 0 10px;
-	text-align: right;
-}
-
-	#login a {
-		background-color: #d3dce0;
-		margin-left: 10px;
-		margin-right: 3px;
-		padding: 2px 3px;
-		text-decoration: none;
-	}
-
-		#login a.username {
-			background: none;
-			margin-left: 0px;
-			text-decoration: underline;
-		}
-
-	#login ul {
-		margin: 0;
-	}
-
-	#login li {
-		display: inline;
-		list-style: none;
-	}
-
-
 /* nav
 ----------------------------------------------------------*/
 ul#menu {
@@ -274,6 +274,7 @@ ul#menu {
 			text-decoration: none;
 			padding-left: 20px;
 			padding-right: 20px;
+			color: #999;
 			-moz-transition: all .15s ease;
 			-o-transition: all .15s ease;
 			-webkit-transition: all .15s ease;
@@ -281,8 +282,7 @@ ul#menu {
 		}
 
 			ul#menu li a:hover {
-				color: white;
-				background-color: lightsteelblue;
+				background-color: #efefef;
 			}
 
 			ul#menu li a.selected {
@@ -290,8 +290,8 @@ ul#menu {
 				-o-transition: none;
 				-webkit-transition: none;
 				transition: none;
-				color: white;
-				background-color: #CCC;
+				color: #444;
+				background-color: #ddd;
 			}
 
 /* page elements
@@ -301,7 +301,7 @@ ul#menu {
 }
 
 	.featured .content-wrapper {
-		background-color: #eee;
+		background-color: #ddd;
 		padding: 5px 20px 5px 20px;
 	}
 
@@ -332,36 +332,6 @@ hgroup.title {
 	font-weight: 700;
 }
 
-/* login page */
-#loginForm {
-	border-right: solid 2px #c8c8c8;
-	float: left;
-	width: 55%;
-}
-
-	#loginForm .validation-error {
-		display: block;
-		margin-left: 15px;
-	}
-
-#socialLoginForm {
-	margin-left: 40px;
-	float: left;
-	width: 40%;
-}
-
-	#socialLoginForm h2 {
-		margin-bottom: 5px;
-	}
-
-fieldset.open-auth-providers {
-	margin-top: 15px;
-}
-
-	fieldset.open-auth-providers button {
-		margin-bottom: 12px;
-	}
-
 /* contact */
 .contact h3 {
 	font-size: 1.2em;
@@ -389,6 +359,8 @@ input, textarea, select {
 	border: 1px solid #999;
 	color: #333;
 	border-radius: 3px;
+	margin: 0;
+	padding: 0;
 	-moz-transition: all .15s ease;
 	-o-transition: all .15s ease;
 	-webkit-transition: all .15s ease;
@@ -425,6 +397,11 @@ input, textarea, select {
 		transition: all .15s ease;
 	}
 
+		input[type="submit"]:disabled {
+			color: #999;
+			border-color: #aaa;
+		}
+
 		input[type="submit"]:hover {
 			background-color: #999;
 			-webkit-box-shadow: 0px -0px 1px rgba(255,255,255,.7) inset;
@@ -432,13 +409,11 @@ input, textarea, select {
 		}
 
 		input[type="submit"].symbol-button {
-			font-family: 'Open Sans', sans-serif;
 			font-family: algotrader;
 			font-weight: normal;
 			font-variant: normal;
 			text-transform: none;
 			line-height: 1;
-			padding: 9px 15px 9px 15px;
 			-webkit-font-smoothing: antialiased;
 		}
 
@@ -577,8 +552,9 @@ input, textarea, select {
 	margin-left: 50%;
 	top: 120px;
 	left: -262px;
-	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.5);
-	box-shadow: 0px 1px 2px rgba(0,0,0,.5);
+	font-size: 1.4em;
+	-webkit-box-shadow: 0px 1px 5px rgba(0,0,0,.5);
+	box-shadow: 0px 1px 5px rgba(0,0,0,.5);
 	-moz-animation: messageFadeOut 5s ease;
 	-o-animation: messageFadeOut 5s ease;
 	-webkit-animation: messageFadeOut 5s ease;
@@ -598,6 +574,11 @@ input, textarea, select {
 	background: salmon;
 }
 
+.watchlist-empty {
+	clear: right;
+	text-align: center;
+}
+
 /* tables
 ----------------------------------------------------------*/
 table {
@@ -607,12 +588,12 @@ table {
 }
 
 	table.main {
-		border: 1px solid #E4E4E4;
+		border: 1px solid #eee;
 		font-size: 1.4em;
 		margin-bottom: 10px;
-		border-radius: 5px;
-		-webkit-box-shadow: 0px 1px 1px rgba(0,0,0,.2);
-		box-shadow: 0px 1px 1px rgba(0,0,0,.2);
+		border-radius: 3px;
+		-webkit-box-shadow: 0px 1px 0px rgba(0,0,0,.1);
+		box-shadow: 0px 1px 0px rgba(0,0,0,.1);
 	}
 
 		table.main input {
@@ -624,10 +605,10 @@ table {
 	}
 
 th {
-	color: dimgray;
 	text-align: left;
 	border: none 0px;
 	text-transform: uppercase;
+	padding-left: 10px;
 }
 
 	th a {
@@ -670,8 +651,12 @@ tr {
 	background-color: none;
 }
 
-	tr.main:hover, tr.main:active {
-		background-color: #eee;
+	tr.main:hover:first-child, tr.main:active:first-child {
+		background-color: #fafafa;
+	}
+
+	tr.main:first-child td {
+		padding: 10px;
 	}
 
 @-moz-keyframes fadeIn {

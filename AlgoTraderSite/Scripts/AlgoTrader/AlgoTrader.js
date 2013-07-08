@@ -37,7 +37,7 @@
 function setNavCss() {
 	var page = $("hgroup").children().text();
 	var tab = 0;
-	if (page === "Welcome") {
+	if (page === "Home") {
 		tab = 1;
 	} else if (page === "Watchlist") {
 		tab = 2;

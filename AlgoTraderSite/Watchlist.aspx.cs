@@ -14,13 +14,14 @@ using System.IO;
 namespace AlgoTraderSite
 {
 	// TODO disable delete button on portfolio
-	// TODO populate portfolio watchlist
 	// TODO switch images on sort buttons
+	// TODO would be better to get all the watchlists and then filter their visibility
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();
-		private static IWatchList wl = new WatchList();
-		private static List<Quote> quotes = new List<Quote>();
+		List<WatchList> watchlists = new List<WatchList>();
+		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
+
 		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
 		string[] widths = { "40%", "20%", "15%", "15%", "10%" };
@@ -30,14 +31,16 @@ namespace AlgoTraderSite
 			if (!IsPostBack)
 			{
 				listWatchLists();
+				generateWatchLists();
+				radioSortType.SelectedIndex = 0;
 			}
-			updateList();		
+			showWatchList();
 		}
 
+		#region List Management Stuff
 		public void listWatchLists()
 		{
 			string value = radioLists.SelectedValue;
-			List<WatchList> watchlists = new List<WatchList>();
 			watchlists.Add(new WatchList(portfolioName));
 			watchlists.AddRange(wlm.GetAllWatchLists().OrderBy(x => x.ListName).ToList());
 			radioLists.DataSource = watchlists;
@@ -62,30 +65,74 @@ namespace AlgoTraderSite
 			radioLists.Items[0].Text += new HtmlString(" <span class='icon-lock float-right' style='opacity:.5; line-height: 1.5em'></span>");
 		}
 
-		public void showWatchList(string listName)
+		public void generateWatchLists() // gets all the data ready
 		{
-			string lName = listName;
-			WatchlistDiv.Controls.Clear();
+			IWatchList wl = new WatchList();
+			PortfolioManager pm = new PortfolioManager();
+			allitems.Clear();
 
-			wl = wlm.GetWatchList(lName);
-			if (wl.items.Count > 0)
+			foreach (WatchList w in watchlists) // add all the real watchlist items
 			{
-				wl.items.OrderBy(x => x.SymbolName);
+				wl.items.AddRange(wlm.GetWatchList(w.ListName).items);
+			}
+			foreach (PositionMessage msg in pm.GetOpenPositions()) // add the portfolio items
+			{
+				wl.items.Add(new WatchListItem(new Symbol(msg.SymbolName), portfolioName));
+			}
+			foreach (WatchListItem item in wl.items) // join all the items together into a list of WatchlistPlusQuote objects
+			{
+				var quotes = wlm.GetQuotes(item.SymbolName).OrderBy(x => x.timestamp).Take(2).ToList();
+				double price1 = quotes.Select(x => x.price).FirstOrDefault();
+				double price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
+				DateTime date = quotes.Select(x => x.timestamp).FirstOrDefault();
+				allitems.Add(new WatchlistPlusQuote(item.SymbolName, item.ListName, date, price1, price2));
+			}
+		}
 
-				Table htbl = createHeader();
-				WatchlistDiv.Controls.Add(htbl);
+		public void showWatchList()
+		{
+			string listName = radioLists.SelectedValue;
+			WatchlistDiv.Controls.Clear();
+			emptyDiv.Controls.Clear();
 
-				foreach (WatchListItem item in wl.items)
+			if (isPortfolio())
+			{
+				inputGroupLeft.Visible = false;	
+			}
+			else
+			{
+				inputGroupLeft.Visible = true;
+			}
+
+			if (allitems.Where(x=>x.ListName.Equals(listName)).Count() >0)
+			{
+				WatchlistDiv.Controls.Add(createHeader());
+				List<WatchlistPlusQuote> subitems = allitems.Where(x => x.ListName.Equals(listName)).ToList();
+				subitems = sortList(subitems);
+				foreach (WatchlistPlusQuote w in subitems)
 				{
-					Table wltbl = createWatchlistTable(item);
-					WatchlistDiv.Controls.Add(wltbl);
+					WatchlistDiv.Controls.Add(createWatchlistTable(w));
 				}
 			}
 			else
 			{
-				HtmlGenericControl empty = new HtmlGenericControl("h2");
-				empty.InnerText = "This list is empty. Why not add a symbol to watch?";
-				WatchlistDiv.Controls.Add(empty);
+				emptyDiv.InnerHtml = new HtmlString("<h1>This list is empty :(</h1><h2>Why not add a symbol to watch?</h2>").ToString();
+			}
+		}
+
+		private List<WatchlistPlusQuote> sortList(List<WatchlistPlusQuote> unsorted)
+		{
+			switch (radioSortType.SelectedIndex)
+			{
+				case 0: return unsorted.OrderBy(x => x.SymbolName).ToList(); // name asc
+				case 1: return unsorted.OrderByDescending(x => x.SymbolName).ToList(); // name desc
+				case 2: return unsorted.OrderBy(x => x.CurrentPrice).ToList(); // price asc
+				case 3: return unsorted.OrderByDescending(x => x.CurrentPrice).ToList(); // price desc
+				case 4: return unsorted.OrderByDescending(x => x.PriceChange).ToList(); // highest change
+				case 5: return unsorted.OrderBy(x => x.PriceChange).ToList(); // lowest change
+				case 6: return unsorted.OrderByDescending(x => x.ChangePercent).ToList(); // highest % change
+				case 7: return unsorted.OrderBy(x => x.ChangePercent).ToList(); // lowest % change
+				default: return unsorted;
 			}
 		}
 
@@ -106,83 +153,69 @@ namespace AlgoTraderSite
 			{
 				header.Cells[i].Width = new Unit(widths[i]);
 			}
-
 			return tbl;
 		}
 
-		private Table createWatchlistTable(WatchListItem item)
+		private Table createWatchlistTable(WatchlistPlusQuote item)
 		{
 			Table tbl = new Table();
-			double currentPrice = 0;
-			double previousPrice = 0;
-			double priceChange = 0;
-			DateTime date = new DateTime();
-
-			quotes = wlm.GetQuotes(item.SymbolName);
-			quotes.OrderBy(x => x.timestamp);
-
-			foreach (Quote q in quotes)
-			{
-				date = quotes.Select(x => x.timestamp).FirstOrDefault();
-				currentPrice = quotes.Select(x => x.price).FirstOrDefault();
-				previousPrice = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
-			}
-
 			TableRow row = new TableRow();
+			// TODO get long name info from quote manager - should it be stored in the database?
+			string fullName = item.SymbolName + "'s long name goes here";
+			string currentPrice = item.CurrentPrice.ToString("N2");
+			double priceChange = item.PriceChange;
+			double changePercentage = item.ChangePercent;
+			DateTime date = item.Timestamp;
+			string prefix = string.Empty;
+
 			for (int i = 0; i < headers.Length; i++)
 			{
 				TableCell cell = new TableCell();
 				row.Cells.Add(cell);
 			}
 
-			// TODO get long name info from quote manager - should it be stored in the database?
-			string fullName = "long name goes here";
-			row.Cells[0].Text = item.SymbolName;
-			row.Cells[0].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
-			row.Cells[1].Text = currentPrice.ToString("N2") + " as of " + date.ToShortDateString();
-			priceChange = currentPrice - previousPrice;
-
 			if (priceChange > 0)
 			{
-				string prefix = "+ ";
-				row.Cells[2].Text = prefix;
+				prefix = "+";
 				row.Cells[2].CssClass = "green";
-				row.Cells[3].Text = prefix;
 				row.Cells[3].CssClass = "green";
 			}
 			if (priceChange < 0)
 			{
-				string prefix = "- ";
-				row.Cells[2].Text = prefix;
+				prefix = "-";
 				row.Cells[2].CssClass = "red";
-				row.Cells[3].Text = prefix;
 				row.Cells[3].CssClass = "red";
 			}
+			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
+			row.Cells[1].Text = currentPrice + " as of " + date.ToShortDateString();
+			row.Cells[2].Text = String.Format("{0}{1:N2}", prefix, Math.Abs(priceChange));
+			row.Cells[3].Text = String.Format("{0}{1:N2}%", prefix, Math.Abs(changePercentage));
 
-			row.Cells[2].Text += Math.Abs(priceChange).ToString("N2");
-			row.Cells[3].Text += Math.Abs(priceChange / previousPrice * 100).ToString("N2") + "%";
-
-			// create Remove button for each row
-			Button btnRemove = new Button();
-			btnRemove.Attributes.Add("Symbol", item.SymbolName);
-			btnRemove.Attributes.Add("ListName", item.ListName);
-			btnRemove.ID = "btnRemove" + item.SymbolName;
-			btnRemove.Text = "Remove";
-			btnRemove.Click += btnRemove_Click;
-			row.Cells[headers.Length - 1].Controls.Add(btnRemove);
+			if (isPortfolio()) // create Remove button for each row or a lock for portfolio
+			{
+				row.Cells[headers.Length - 1].Text = new HtmlString("<span class='icon-lock' title='This item is locked.'></span>").ToString();
+			}
+			// TODO add a button for strategy buy/sell
+			else // otherwise create a remove button
+			{
+				Button btnRemove = new Button();
+				btnRemove.Attributes.Add("Symbol", item.SymbolName);
+				btnRemove.Attributes.Add("ListName", item.ListName);
+				btnRemove.ID = "btnRemove" + item.SymbolName;
+				btnRemove.Text = "Remove";
+				btnRemove.Click += btnRemove_Click;
+				row.Cells[headers.Length - 1].Controls.Add(btnRemove);
+			}
 
 			// set widths
 			for (int i = 0; i < widths.Length - 1; i++)
 			{
 				row.Cells[i].Width = new Unit(widths[i]);
 			}
-
 			//css stuff
 			tbl.CssClass = "main";
 			row.CssClass = "main";
-
 			tbl.Rows.Add(row);
-
 			return tbl;
 		}
 
@@ -204,10 +237,25 @@ namespace AlgoTraderSite
 			statusMessage.Controls.Add(message);
 		}
 
-		private void updateList()
+		private void updateList(bool fullUpdate)
 		{
-			showWatchList(radioLists.SelectedValue);
+			if (fullUpdate)
+			{
+				listWatchLists();
+				generateWatchLists();
+				showWatchList();
+			}
+			else
+			{
+				showWatchList();
+			}
 		}
+
+		private bool isPortfolio()
+		{
+			return radioLists.SelectedIndex == 0;
+		}
+		#endregion
 
 		#region Controls
 		protected void btnRemove_Click(object sender, EventArgs e)
@@ -218,15 +266,15 @@ namespace AlgoTraderSite
 
 			if (symbol.Length > 0 && listName.Length > 0)
 			{
+				IWatchList wl = new WatchList();
 				success = wl.RemoveFromList(new Symbol(symbol), listName);
 
 				if (success)
 				{
 					setStatus(String.Format("{0} removed from list {1}.", symbol, listName), true);
 				}
-				
 			}
-			updateList();
+			updateList(true);
 		}
 
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
@@ -237,6 +285,7 @@ namespace AlgoTraderSite
 
 			if (symbol.Length > 0)
 			{
+				IWatchList wl = new WatchList();
 				success = wl.AddToList(new Symbol(symbol), listName);
 				if (success)
 				{
@@ -263,7 +312,7 @@ namespace AlgoTraderSite
 				context.Quotes.Add(q2);
 
 				context.SaveChanges();
-				updateList();
+				updateList(true);
 			}
 			else
 			{
@@ -275,7 +324,7 @@ namespace AlgoTraderSite
 		{
 			bool success = false;
 			string listName = radioLists.SelectedValue;
-
+			IWatchList wl = new WatchList();
 			if (listName.Length > 0)
 			{
 				List<WatchListItem> items = wl.items.Where(x => x.ListName.Equals(listName)).ToList();
@@ -293,8 +342,7 @@ namespace AlgoTraderSite
 				{
 					setStatus(String.Format("List {0} could not be deleted.", listName), false);
 				}
-				listWatchLists();
-				updateList();
+				updateList(true);
 			}
 		}
 
@@ -323,12 +371,38 @@ namespace AlgoTraderSite
 					setStatus("Sorry! You can't have a custom list with that name.", false);
 				}
 			}
+			
 		}
 
 		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			updateList();
+			updateList(false);
+		}
+
+		protected void radioSortType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			updateList(false);
 		}
 		#endregion
+	}
+
+	class WatchlistPlusQuote // joined list for watchlist only
+	{
+		public string SymbolName { get; set; }
+		public string ListName { get; set; }
+		public DateTime Timestamp { get; set; }
+		public double CurrentPrice { get; set; }
+		public double PriceChange { get; set; }
+		public double ChangePercent { get; set; }
+
+		public WatchlistPlusQuote(string symbol, string list, DateTime time, double pricenow, double pricebefore)
+		{
+			SymbolName = symbol;
+			ListName = list;
+			Timestamp = time;
+			CurrentPrice = pricenow;
+			PriceChange = pricenow - pricebefore;
+			ChangePercent = pricenow / pricebefore * 100;
+		}
 	}
 }
