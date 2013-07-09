@@ -94,15 +94,7 @@ namespace AlgoTraderSite
 			// BUTTONS
 			HtmlGenericControl btnToggle = new HtmlGenericControl("div");
 			btnToggle.Attributes.Add("class", "toggle icon-plus-sign");
-			//btnToggle.Attributes["data-icon"] = HttpUtility.HtmlDecode("&#xe008;");
 			row.Cells[0].Controls.Add(btnToggle);
-
-			//Button btnToggle = new Button();
-			//btnToggle.Text = "+";
-			//btnToggle.OnClientClick = "return false";
-			
-			//btnToggle.UseSubmitBehavior = false;
-			//row.Cells[0].Controls.Add(btnToggle);
 
 			Button btnAction = new Button();
 			btnAction.CssClass = "symbol-button";
@@ -118,7 +110,6 @@ namespace AlgoTraderSite
 			// css stuff
 			tbl.CssClass = "main";
 			row.CssClass = "main";
-			//btnToggle.CssClass = "toggle";
 
 			return tbl;
 		}

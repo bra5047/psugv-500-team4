@@ -165,6 +165,7 @@ namespace AlgoTraderSite
 			double changePercentage = item.ChangePercent;
 			DateTime date = item.Timestamp;
 			string prefix = string.Empty;
+			string classname = string.Empty;
 
 			for (int i = 0; i < headers.Length; i++)
 			{
@@ -175,19 +176,17 @@ namespace AlgoTraderSite
 			if (priceChange > 0)
 			{
 				prefix = "+";
-				row.Cells[2].CssClass = "green";
-				row.Cells[3].CssClass = "green";
+				classname = "green";
 			}
 			if (priceChange < 0)
 			{
 				prefix = "-";
-				row.Cells[2].CssClass = "red";
-				row.Cells[3].CssClass = "red";
+				classname = "red";
 			}
 			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
 			row.Cells[1].Text = currentPrice + " as of " + date.ToShortDateString();
-			row.Cells[2].Text = String.Format("{0}{1:N2}", prefix, Math.Abs(priceChange));
-			row.Cells[3].Text = String.Format("{0}{1:N2}%", prefix, Math.Abs(changePercentage));
+			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}</span>", classname, prefix, Math.Abs(priceChange))).ToString();
+			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}%</span>", classname, prefix, Math.Abs(changePercentage))).ToString();
 
 			if (isPortfolio()) // create Remove button for each row or a lock for portfolio
 			{
@@ -216,6 +215,9 @@ namespace AlgoTraderSite
 			tbl.CssClass = "main";
 			row.CssClass = "main";
 			tbl.Rows.Add(row);
+
+			row.Cells[radioSortType.SelectedIndex / 2].CssClass = "bold";
+
 			return tbl;
 		}
 
