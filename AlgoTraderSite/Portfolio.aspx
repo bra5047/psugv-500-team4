@@ -39,10 +39,5 @@
 				</div>
 			</div>
 		</ContentTemplate>
-	</asp:UpdatePanel>
-	
-	
-	
-	
-	
+	</asp:UpdatePanel>	
 </asp:Content>

@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿function pageLoad(sender, args) {
 	// NAV
 	setNavCss();
 
@@ -34,21 +34,7 @@
 		}
 		$target.prop("value", value);
 	});
-
-	//$("div.toggle-all").click(function (e) {
-	//	$target = $("div.toggle-all");
-	//	var value = "";
-	//	if ($target.text("Expand All")) {
-	//		alert('asdfad');
-	//		$target.text("Collapse All");
-	//		$(".toggle.icon-plus-sign").trigger('click');
-	//	} else {
-	//		$target.text("Expand All");
-	//		$(".toggle.icon-minus-sign").trigger('click');
-	//	}
-		
-	//});
-});
+};
 
 function setNavCss() {
 	var page = $("hgroup").children().text();

@@ -95,14 +95,14 @@ namespace AlgoTraderSite
 
 			if (isPortfolio())
 			{
-				inputGroupLeft.Visible = false;	
+				inputGroupLeft.Visible = false;
 			}
 			else
 			{
 				inputGroupLeft.Visible = true;
 			}
 
-			if (allitems.Where(x=>x.ListName.Equals(listName)).Count() >0)
+			if (allitems.Where(x => x.ListName.Equals(listName)).Count() > 0)
 			{
 				WatchlistDiv.Controls.Add(createHeader());
 				List<WatchlistPlusQuote> subitems = allitems.Where(x => x.ListName.Equals(listName)).ToList();
@@ -197,10 +197,12 @@ namespace AlgoTraderSite
 			else // otherwise create a remove button
 			{
 				Button btnRemove = new Button();
+				btnRemove.CssClass = "delete symbol-button";
 				btnRemove.Attributes.Add("Symbol", item.SymbolName);
 				btnRemove.Attributes.Add("ListName", item.ListName);
 				btnRemove.ID = "btnRemove" + item.SymbolName;
-				btnRemove.Text = "Remove";
+				btnRemove.Text = HttpUtility.HtmlDecode("&#xe007;");
+				btnRemove.ToolTip = "Remove from list";
 				btnRemove.Click += btnRemove_Click;
 				row.Cells[headers.Length - 1].Controls.Add(btnRemove);
 			}
@@ -269,7 +271,7 @@ namespace AlgoTraderSite
 
 				if (success)
 				{
-					setStatus(String.Format("{0} removed from list {1}.", symbol, listName), true);
+					setStatus(String.Format("{0} removed from list \"{1}.\"", symbol, listName), true);
 				}
 			}
 			updateList(true);
@@ -287,11 +289,11 @@ namespace AlgoTraderSite
 				success = wl.AddToList(new Symbol(symbol), listName);
 				if (success)
 				{
-					setStatus(String.Format("{0} added to list {1}.", symbol, listName), true);
+					setStatus(String.Format("{0} added to list \"{1}.\"", symbol, listName), true);
 				}
 				else
 				{
-					setStatus(String.Format("{0} could not be added to {1}.", symbol, listName), false);
+					setStatus(String.Format("{0} could not be added to \"{1}.\"", symbol, listName), false);
 				}
 
 				TraderContext context = new TraderContext();
@@ -314,7 +316,7 @@ namespace AlgoTraderSite
 			}
 			else
 			{
-				setStatus("Stock symbol cannot be blank", false);
+				setStatus("Stock symbol cannot be blank.", false);
 			}
 		}
 
@@ -334,11 +336,11 @@ namespace AlgoTraderSite
 				success = wlm.DeleteWatchList(listName);
 				if (success)
 				{
-					setStatus(String.Format("List {0} deleted successfully.", listName), true);
+					setStatus(String.Format("List \"{0}\" deleted successfully.", listName), true);
 				}
 				else
 				{
-					setStatus(String.Format("List {0} could not be deleted.", listName), false);
+					setStatus(String.Format("List \"{0}\" could not be deleted.", listName), false);
 				}
 				updateList(true);
 			}
@@ -356,11 +358,11 @@ namespace AlgoTraderSite
 
 					if (success)
 					{
-						setStatus(String.Format("Added list '{0}'", listName), true);
+						setStatus(String.Format("List \"{0}\" added successfully.", listName), true);
 					}
 					else
 					{
-						setStatus(String.Format("'{0}' already exists.", listName), false);
+						setStatus(String.Format("List \"{0}\" already exists.", listName), false);
 					}
 					listWatchLists();
 				}
@@ -369,7 +371,10 @@ namespace AlgoTraderSite
 					setStatus("Sorry! You can't have a custom list with that name.", false);
 				}
 			}
-			
+			else
+			{
+				setStatus(String.Format("List name cannot be blank."), false);
+			}
 		}
 
 		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)

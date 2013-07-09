@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Fauna+One); /* serif */
 @import url(http://fonts.googleapis.com/css?family=Righteous); /* cursive */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,300); /* sans-serif */
-@import url(http://fonts.googleapis.com/css?family=Lato:400,300,700); /* sans-serif */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,700); /* sans-serif */
 
 @font-face {
 	font-family: 'algotrader';
@@ -23,7 +23,7 @@ html {
 body {
 	font-family: 'Open Sans', sans-serif;
 	background-color: #fff;
-	color: #444;
+	color: #363636;
 	font-size: 1.2em;
 	margin: 0;
 	padding: 0;
@@ -36,7 +36,7 @@ a {
 }
 
 	a:link, a:visited, a:active, a:hover {
-		color: #444;
+		color: #363636;
 	}
 
 header, footer, hgroup,
@@ -67,7 +67,6 @@ nav, section {
 
 h1, h2, h3,
 h4, h5, h6 {
-	color: #000;
 }
 
 h1 {
@@ -85,16 +84,16 @@ h5 a:link, h5 a:visited, h5 a:active {
 }
 
 .green {
-	color: green;
+	color: #99cc00;
 }
 
 .red {
-	color: red;
+	color: #ff4444;
 }
 
 .subtext {
 	font-weight: 300;
-	color: gray;
+	color: #b6b6b6;
 }
 
 /* main layout
@@ -112,14 +111,9 @@ h5 a:link, h5 a:visited, h5 a:active {
 }
 
 .main-content {
-	/*background: url("../Images/accent.png") no-repeat;*/
 	padding: 0px;
 	height: 100%;
 	min-height: 70vh;
-}
-
-.featured + .main-content {
-	/*background: url("../Images/heroAccent.png") no-repeat;*/
 }
 
 header .content-wrapper {
@@ -140,38 +134,13 @@ footer {
 }
 
 	.panel-wrapper > .panel-watchlist {
-		background-color: aliceblue;
+		background-color: #E2F4FB;
 		width: 250px;
 		float: left;
 		padding: 10px 0px 10px 0px;
 		padding-bottom: 100000px;
 		margin-bottom: -100000px;
 		margin-right: 10px;
-	}
-
-.panel-watchlist input[type="radio"] {
-	margin: 0;
-	padding: 0;
-	display: none;
-}
-
-	.panel-watchlist input[type="radio"] + label {
-		padding: 5px 10px 5px 8px;
-		margin: 0px;
-		cursor: pointer;
-		display: block;
-		font-size: 1.2em;
-		border: 1px solid rgba(0,0,0,0);
-	}
-
-		.panel-watchlist input[type="radio"] + label:hover {
-			background-color: rgba(0, 191, 255, 0.1);
-		}
-
-	.panel-watchlist input[type="radio"]:checked + label {
-		background-color: lightskyblue;
-		border: 1px solid deepskyblue;
-		font-weight: 700;
 	}
 
 .panel-watchlist label.header {
@@ -190,48 +159,12 @@ footer {
 	min-height: 70vh;
 }
 
-.input-group {
-	text-align: center;
-	padding-bottom: 20px;
-}
-
-	.input-group input[type="radio"] {
-		display: none;
-	}
-
-		.input-group input[type="radio"] + label {
-			background-color: #eeeeee;
-			font-family: algotrader;
-			cursor: pointer;
-			font-weight: normal;
-			font-variant: normal;
-			text-transform: none;
-			line-height: 1;
-			padding: 9px 20px 9px 20px;
-			position: relative;
-			top: 10px;
-			-webkit-font-smoothing: antialiased;
-			-webkit-text-shadow: 0px 1px 0px rgba(255,255,255,.5);
-			text-shadow: 0px 1px 0px rgba(255,255,255,.5);
-			-webkit-box-shadow: 0px 0px 1px rgba(0,0,0,.5);
-			box-shadow: 0px 0px 1px rgba(0,0,0,.5);
-			-moz-transition: all .15s ease;
-			-o-transition: all .15s ease;
-			-webkit-transition: all .15s ease;
-			transition: all .15s ease;
-		}
-
-			.input-group input[type="radio"] + label:hover, .input-group input[type="radio"]:checked + label {
-				background-color: #ccc;
-			}
-
 /* site title
 ----------------------------------------------------------*/
 .site-title {
 	font-family: 'Righteous', cursive;
 	font-size: 6.5em;
 	line-height: 50px;
-	font-weight: bold;
 	position: relative;
 	text-transform: uppercase;
 }
@@ -249,8 +182,8 @@ footer {
 	}
 
 		.site-title a:hover, .site-title a:active {
-			-webkit-text-shadow: 0px 0px 10px #444;
-			text-shadow: 0px 0px 10px #444;
+			-webkit-text-shadow: 0px 0px 10px #363636;
+			text-shadow: 0px 0px 10px #363636;
 		}
 
 /* nav
@@ -282,7 +215,7 @@ ul#menu {
 		}
 
 			ul#menu li a:hover {
-				background-color: #efefef;
+				background-color: #f4f4f4;
 			}
 
 			ul#menu li a.selected {
@@ -290,8 +223,8 @@ ul#menu {
 				-o-transition: none;
 				-webkit-transition: none;
 				transition: none;
-				color: #444;
-				background-color: #ddd;
+				color: #363636;
+				background-color: #ececec;
 			}
 
 /* page elements
@@ -301,12 +234,12 @@ ul#menu {
 }
 
 	.featured .content-wrapper {
-		background-color: #ddd;
+		background-color: #ececec;
 		padding: 5px 20px 5px 20px;
 	}
 
 	.featured hgroup.title h1, .featured hgroup.title h2 {
-		color: #444;
+		color: #5B5B5B;
 		-moz-animation: fadeIn .5s ease;
 		-o-animation: fadeIn .5s ease;
 		-webkit-animation: fadeIn .5s ease;
@@ -328,10 +261,6 @@ hgroup.title {
 		display: inline;
 	}
 
-.label {
-	font-weight: 700;
-}
-
 /* contact */
 .contact h3 {
 	font-size: 1.2em;
@@ -351,13 +280,9 @@ label {
 	display: inline;
 }
 
-	label.checkbox {
-		display: inline;
-	}
-
-input, textarea, select, div.toggle-all {
-	border: 1px solid #999;
-	color: #333;
+input, textarea, select {
+	border: 1px solid #ccc;
+	color: #3e4d5e;
 	border-radius: 3px;
 	margin: 0;
 	padding: 0;
@@ -368,20 +293,21 @@ input, textarea, select, div.toggle-all {
 }
 
 	input[type="text"] {
+		font-size: 1.2em;
 		padding: 8px;
-		-webkit-box-shadow: 0px 0px 2px rgba(0,0,0,.5) inset;
-		box-shadow: 0px 0px 2px rgba(0,0,0,.5) inset;
+		-webkit-box-shadow: 0px 0px 1px rgba(0,0,0,.25) inset;
+		box-shadow: 0px 0px 1px rgba(0,0,0,.25) inset;
 	}
 
 	input:focus, textarea:focus {
-		outline-color: deepskyblue;
-		-webkit-box-shadow: 0px 0px 5px deepskyblue;
-		box-shadow: 0px 0px 5px deepskyblue;
+		outline-color: #33B5E5;
+		-webkit-box-shadow: 0px 0px 5px #33b5d5;
+		box-shadow: 0px 0px 5px #33b5d5;
 	}
 
 	input[type="submit"],
 	input[type="button"],
-	button, div.toggle-all {
+	button {
 		background-color: #eee;
 		cursor: pointer;
 		font-weight: 700;
@@ -389,23 +315,14 @@ input, textarea, select, div.toggle-all {
 		padding: 8px 15px 8px 15px;
 		-webkit-text-shadow: 0px 1px 0px rgba(255,255,255,.5);
 		text-shadow: 0px 1px 0px rgba(255,255,255,.5);
-		-webkit-box-shadow: 0px 0px 1px rgba(0,0,0,.5);
-		box-shadow: 0px 0px 1px rgba(0,0,0,.5);
 		-moz-transition: all .15s ease;
 		-o-transition: all .15s ease;
 		-webkit-transition: all .15s ease;
 		transition: all .15s ease;
 	}
 
-		input[type="submit"]:disabled {
-			color: #999;
-			border-color: #aaa;
-		}
-
-		input[type="submit"]:hover, div.toggle-all:hover {
-			background-color: #999;
-			-webkit-box-shadow: 0px -0px 1px rgba(255,255,255,.7) inset;
-			box-shadow: 0px -0px 1px rgba(255,255,255,.7) inset;
+		input[type="submit"]:hover {
+			background-color: #ddd;
 		}
 
 		input[type="submit"].symbol-button {
@@ -419,28 +336,90 @@ input, textarea, select, div.toggle-all {
 		}
 
 	input.delete {
-		background-color: rgba(255,0,0,.5);
+		color: none;
 	}
 
 		input.delete:hover {
-			background: darkred;
+			color: #E92727;
 		}
 
 div.toggle {
 	font-size: 2em;
+	cursor: pointer;
+	color: #0099CC;
 	-moz-transition: all .15s ease;
 	-o-transition: all .15s ease;
 	-webkit-transition: all .15s ease;
 	transition: all .15s ease;
-	text-align:center;
+	text-align: center;
 }
 
 	div.toggle:hover {
-		color: deepskyblue;
+		color: #33B5E5;
 	}
 
+.panel-watchlist input[type="radio"] {
+	margin: 0;
+	padding: 0;
+	display: none;
+}
 
+	.panel-watchlist input[type="radio"] + label {
+		padding: 5px 10px 5px 8px;
+		margin: 0px;
+		cursor: pointer;
+		display: block;
+		font-size: 1.2em;
+		border: 1px solid rgba(0,0,0,0);
+	}
 
+		.panel-watchlist input[type="radio"] + label:hover {
+			background-color: #C5EAFB;
+		}
+
+	.panel-watchlist input[type="radio"]:checked + label {
+		background-color: #8AD5F0;
+		border: 1px solid #33B5E5;
+		color: #444;
+		font-weight: 700;
+	}
+
+.input-group {
+	text-align: center;
+	padding-bottom: 20px;
+}
+
+	.input-group input[type="radio"] {
+		display: none;
+	}
+
+		.input-group input[type="radio"] + label {
+			background-color: #f3f3f3;
+			font-family: algotrader;
+			cursor: pointer;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			line-height: 1;
+			padding: 9px 20px 9px 20px;
+			position: relative;
+			top: 10px;
+			-webkit-font-smoothing: antialiased;
+			-webkit-text-shadow: 0px 1px 0px rgba(255,255,255,.5);
+			text-shadow: 0px 1px 0px rgba(255,255,255,.5);
+			-webkit-box-shadow: 0px 0px 1px rgba(0,0,0,.5);
+			box-shadow: 0px 0px 1px rgba(0,0,0,.5);
+			-moz-transition: all .15s ease;
+			-o-transition: all .15s ease;
+			-webkit-transition: all .15s ease;
+			transition: all .15s ease;
+		}
+
+			.input-group input[type="radio"] + label:hover, .input-group input[type="radio"]:checked + label {
+				background-color: #ddd;
+			}
+
+/* sliding switch */
 input[type="checkbox"].onoffswitch-checkbox {
 	display: none;
 }
@@ -530,22 +509,6 @@ input[type="checkbox"].onoffswitch-checkbox {
 }
 
 /* info and errors */
-.message-wrapper {
-	position: absolute;
-	width: 500px;
-	top: 150px;
-	margin-left: 50%;
-	left: -262px;
-	-webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.5);
-	box-shadow: 0px 1px 2px rgba(0,0,0,.5);
-	-moz-animation: messageFadeOut 5s ease;
-	-o-animation: messageFadeOut 5s ease;
-	-webkit-animation: messageFadeOut 5s ease;
-	animation: messageFadeOut 5s ease;
-	-o-animation-fill-mode: both;
-	-webkit-animation-fill-mode: both;
-	animation-fill-mode: both;
-}
 
 .message-success, .message-fail {
 	border: 1px solid;
@@ -557,7 +520,7 @@ input[type="checkbox"].onoffswitch-checkbox {
 	margin-left: 50%;
 	top: 120px;
 	left: -262px;
-	font-size: 1.4em;
+	font-size: 1.3em;
 	-webkit-box-shadow: 0px 1px 5px rgba(0,0,0,.5);
 	box-shadow: 0px 1px 5px rgba(0,0,0,.5);
 	-moz-animation: messageFadeOut 5s ease;
@@ -570,13 +533,13 @@ input[type="checkbox"].onoffswitch-checkbox {
 }
 
 .message-success {
-	border-color: darkgreen;
-	background: lightgreen;
+	border-color: #669900;
+	background: #E2F0B6;
 }
 
 .message-fail {
-	border-color: darkred;
-	background: salmon;
+	border-color: #CC0000;
+	background: #FFCACA;
 }
 
 .watchlist-empty {
@@ -593,26 +556,44 @@ table {
 }
 
 	table.main {
-		border: 1px solid #eee;
+		background-color: #fcfcfc;
 		font-size: 1.4em;
-		margin-bottom: 10px;
-		border-radius: 3px;
-		-webkit-box-shadow: 0px 1px 0px rgba(0,0,0,.1);
-		box-shadow: 0px 1px 0px rgba(0,0,0,.1);
+		margin-bottom: 15px;
+		-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.25);
+		box-shadow: 0px 1px 3px rgba(0,0,0,.25);
 	}
 
-		table.main input {
-			font-size: .71em;
+		table.main input[type="submit"] {
+			font-size: 1em;
 		}
 
-	table.sub {
+	table tr.main td:nth-child(2) {
+		font-weight: 700;
+	}
+
+	table tr.main:hover:first-child, table tr.main:active:first-child {
+		background-color: #e2f4fb;
+	}
+
+	table.main tr:first-child td {
+		padding-top: 10px;
+		padding-left: 10px;
+		padding-bottom: 10px;
+	}
+
+	table.sub td {
 		font-size: .9em;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
 
 th {
 	text-align: left;
 	border: none 0px;
 	text-transform: uppercase;
+	color: #c8c8c8;
+	font-weight: 300;
+	padding-left: 10px;
 }
 
 	th a {
@@ -621,8 +602,6 @@ th {
 	}
 
 		th a:link, th a:visited, th a:active, th a:hover {
-			color: #333;
-			font-weight: 600;
 			text-decoration: none;
 			padding: 0;
 		}
@@ -650,19 +629,6 @@ th {
 		th.desc a:after {
 			content: '▼';
 		}
-
-tr {
-	background-color: none;
-}
-
-	tr.main:hover:first-child, tr.main:active:first-child {
-		background-color: #fafafa;
-	}
-
-	tr.main:first-child td {
-		padding-top: 10px;
-		padding-bottom: 10px;
-	}
 
 @-moz-keyframes fadeIn {
 	from {

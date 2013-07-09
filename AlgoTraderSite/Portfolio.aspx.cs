@@ -17,16 +17,16 @@ namespace AlgoTraderSite
 		private PortfolioManagerClient portfolio;
 		private string[] pheaders = { "", "Company", "Shares", "Price", "Status", "Actions" };
 		private string[] theaders = { "", "Date", "Shares", "Price", "Type", "" };
-		private string[] widths = { "50px", "", "13%", "13%", "13%", "13%" };
+		private string[] widths = { "40px", "", "13%", "13%", "13%", "13%" };
 		private int columns = 6;
 		private int tcolumns = 6;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			//if (!IsPostBack)
-			//{
-			//	radioLists.SelectedIndex = 0;
-			//}
+			if (!IsPostBack)
+			{
+				radioLists.SelectedIndex = 0;
+			}
 			showPositions();
 		}
 
@@ -85,7 +85,7 @@ namespace AlgoTraderSite
 				row.Cells.Add(cell);
 			}
 
-			row.Cells[1].Text += new HtmlString(String.Format("{0} <span class'subtext'>({1})</span>", pm.SymbolName, fullName));
+			row.Cells[1].Text += new HtmlString(String.Format("{0} <span class='subtext'>({1})</span>", pm.SymbolName, fullName));
 			row.Cells[2].Text = String.Format("{0:N0}", pm.Quantity);
 			row.Cells[3].Text = String.Format("{0:C}", pm.Price);
 			row.Cells[4].Text = pm.Status.ToString();
@@ -105,10 +105,11 @@ namespace AlgoTraderSite
 			//row.Cells[0].Controls.Add(btnToggle);
 
 			Button btnAction = new Button();
-			btnAction.Text = "Buy / Sell";
+			btnAction.CssClass = "symbol-button";
+			btnAction.ToolTip = "Buy/sell";
+			btnAction.Text = HttpUtility.HtmlDecode("&#xe015;");
 			btnAction.Attributes["SymbolName"] = pm.SymbolName;
 			btnAction.Attributes["LastPrice"] = lastPrice.ToString();
-			btnAction.UseSubmitBehavior = false;
 			btnAction.Click += new EventHandler(btnClick);
 			row.Cells[columns - 1].Controls.Add(btnAction);
 
