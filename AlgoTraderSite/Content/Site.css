@@ -532,12 +532,12 @@ input[type="checkbox"].onoffswitch-checkbox {
 
 .message-success {
 	border-color: #669900;
-	background: #E2F0B6;
+	background-color: #c7ffaa;
 }
 
 .message-fail {
 	border-color: #CC0000;
-	background: #FFCACA;
+	background: #ffa7a7;
 }
 
 .watchlist-empty {
