@@ -26,9 +26,12 @@ namespace ATEmailReader
                     string eml = map.GetMessageByUID(uid);
                     IMail mail = new MailBuilder().CreateFromEml(eml);
 
-                    
-                    string title= mail.Subject;
+
+                    string title = mail.Subject;
                     string message = mail.Text;
+
+                    string[] Symbolsplit = title.Split(new char[0]);
+                    string symbol = Symbolsplit[1].ToString();
 
                     message = message.ToLower();
                     title = title.ToLower();
