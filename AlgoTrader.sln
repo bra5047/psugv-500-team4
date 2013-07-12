@@ -31,6 +31,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATQouteMngrUpdate", "ATQouteMngrUpdate\ATQouteMngrUpdate.csproj", "{CBC7B1B4-D92B-4DA4-8C01-293B32DBCF3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATEmailReader", "ATEmailReader\ATEmailReader.csproj", "{79F5924D-F714-4B24-B149-2125773AC5D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D1A0C6E0-D6B9-4E6D-B0B3-392EBDC3C89F} = {D1A0C6E0-D6B9-4E6D-B0B3-392EBDC3C89F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
