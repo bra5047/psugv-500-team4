@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Limilabs.Client.IMAP;
 using Limilabs.Mail;
 using System.Xml;
+using AlgoTrader.portfolio;
 
 
 namespace ATEmailReader
@@ -37,14 +38,14 @@ namespace ATEmailReader
                     message = message.ToLower();
                     title = title.ToLower();
 
-                    EmailProcessorClient EClient = new EmailProcessorClient();
+                    PortfolioManager Manage = new PortfolioManager();
                     if (message.Contains("yes") && title.Contains("sell"))
                     {
-                        EClient.EmailSell(symbol,5);
+                        Manage.sell(symbol, 5);
                     }
                     else if (message.Contains("yes") && title.Contains("buy"))
                     {
-                        EClient.EmailBuy(symbol, 5);
+                        Manage.buy(symbol, 5);
                     }
                     else
                     {

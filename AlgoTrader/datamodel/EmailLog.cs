@@ -14,9 +14,9 @@ namespace AlgoTrader.datamodel
         [Key]
         public int EmailID { get; set; }
         public string UserEmail{ get; set; }
-        public int Quantity { get; set; }
+        public int quantity { get; set; }
         public string Symbol { get; set; }
-        public DateTime timestamp { get; set; }
+        public DateTime TimeStamp { get; set; }
         public tradeTypes TradeType { get; set; }
         public string Approved { get; set; }
 

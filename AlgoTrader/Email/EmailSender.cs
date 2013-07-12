@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Net;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
+using System.Linq;
 
 namespace AlgoTrader.Email
 {
@@ -38,6 +39,7 @@ namespace AlgoTrader.Email
                 mail.IsBodyHtml = true;
                 client.EnableSsl = true;
                 client.Send(mail);
+  
             }
         }
 

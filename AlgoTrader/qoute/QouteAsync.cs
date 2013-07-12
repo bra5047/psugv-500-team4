@@ -25,7 +25,7 @@ namespace AlgoTrader.quote
             StockQt.price = Convert.ToDouble(doc.DocumentElement.SelectSingleNode("//Stock/Last").InnerText);
             StockQt.SymbolName = doc.DocumentElement.SelectSingleNode("//Stock/Name").InnerText;
             StockQt.timestamp = Convert.ToDateTime(doc.DocumentElement.SelectSingleNode("//Stock/Date").InnerText + " " + doc.DocumentElement.SelectSingleNode("//Stock/Time").InnerText);
-            StockQt.Symbol = symbol;
+            StockQt.Symbol = symbol; 
             return StockQt;
         }
     }

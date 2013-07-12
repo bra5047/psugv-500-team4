@@ -29,6 +29,7 @@ namespace AlgoTrader.datamodel
         public DbSet<SystemSetting> SystemSettings { get; set; }
         public DbSet<Alert> Alerts { get; set; }
 
+
         public Quote FindLastQuoteFor(Symbol symbol)
         {
             if (symbol == null) throw new ArgumentNullException("symbol");

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlgoTrader">
+      <HintPath>..\AlgoTrader\bin\Debug\AlgoTrader.dll</HintPath>
+    </Reference>
     <Reference Include="Mail">
       <HintPath>.\Mail.dll</HintPath>
     </Reference>
