@@ -220,6 +220,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="services\email\EmailProcessor.svc" />
     <Content Include="Settings.aspx" />
     <Content Include="Portfolio.aspx" />
     <Content Include="Scripts\AlgoTrader\AlgoTrader.js" />
@@ -398,6 +399,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="services\email\EmailProcessor.svc.cs">
+      <DependentUpon>EmailProcessor.svc</DependentUpon>
+    </Compile>
+    <Compile Include="services\email\IEmailProcessor.cs" />
     <Compile Include="Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

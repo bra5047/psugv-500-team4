@@ -7,6 +7,7 @@ using Limilabs.Client.IMAP;
 using Limilabs.Mail;
 using System.Xml;
 
+
 namespace ATEmailReader
 {
     class Program
@@ -36,13 +37,14 @@ namespace ATEmailReader
                     message = message.ToLower();
                     title = title.ToLower();
 
+                    EmailProcessorClient EClient = new EmailProcessorClient();
                     if (message.Contains("yes") && title.Contains("sell"))
                     {
-                        //sell stocks try and use brians sell methods
+                        EClient.EmailSell(symbol,5);
                     }
                     else if (message.Contains("yes") && title.Contains("buy"))
                     {
-                        //buy stocks
+                        EClient.EmailBuy(symbol, 5);
                     }
                     else
                     {
