@@ -180,13 +180,12 @@ namespace AlgoTraderSite
 			}
 			if (priceChange < 0)
 			{
-				prefix = "-";
 				classname = "red";
 			}
 			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
 			row.Cells[1].Text = currentPrice + " as of " + date.ToShortDateString();
-			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}</span>", classname, prefix, Math.Abs(priceChange))).ToString();
-			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}%</span>", classname, prefix, Math.Abs(changePercentage))).ToString();
+			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}</span>", classname, prefix, priceChange)).ToString();
+			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}%</span>", classname, prefix, changePercentage)).ToString();
 
 			if (isPortfolio()) // create Remove button for each row or a lock for portfolio
 			{

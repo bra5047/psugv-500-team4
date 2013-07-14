@@ -28,8 +28,8 @@
 					</div>
 					<div class="input-group float-right">
 						<asp:RadioButtonList runat="server" ID="radioSortType" RepeatDirection="Horizontal" RepeatLayout="Flow" OnSelectedIndexChanged="radioSortType_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true">
-							<asp:ListItem Value="namea" Text="&#xe00d;" title="Sort by name (ascending)"></asp:ListItem>
-							<asp:ListItem Value="named" Text="&#xe00e;" title="Sort by name (descending)"></asp:ListItem>
+							<asp:ListItem Value="namea" Text="&#xe00d;" title="Sort by name (a-z)"></asp:ListItem>
+							<asp:ListItem Value="named" Text="&#xe00e;" title="Sort by name (z-a)"></asp:ListItem>
 							<asp:ListItem Value="pricea" Text="&#xe011;" title="Sort by price (lowest)"></asp:ListItem>
 							<asp:ListItem Value="priced" Text="&#xe012;" title="Sort by price (highest)"></asp:ListItem>
 							<asp:ListItem Value="gaina" Text="&#xe00f;" title="Sort by highest gain"></asp:ListItem>

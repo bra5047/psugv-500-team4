@@ -6,7 +6,7 @@
 	$(".toggle").click(function (e) {
 		var $target = $(e.target).parents("table:first"); // target = button -> cell -> row -> table
 		var $toggle = $target.find(".toggle");
-		var $traderow = $target.find(".TradeRow");
+		var $traderow = $target.find(".TradeDiv");
 
 		if ($traderow.css("visibility") === "hidden") {
 			$traderow.css("visibility", "visible");

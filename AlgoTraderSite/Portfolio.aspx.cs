@@ -14,28 +14,41 @@ namespace AlgoTraderSite
 {
 	public partial class MyPortfolio : Page
 	{
-		private PortfolioManagerClient portfolio;
-		private string[] pheaders = { "", "Company", "Shares", "Price", "Status", "Actions" };
-		private string[] theaders = { "", "Date", "Shares", "Price", "Type", "" };
+		private PortfolioManagerClient portfolio = new PortfolioManagerClient();
+		private static List<PositionMessage> positions = new List<PositionMessage>();
+		private string[] transheaders = { "Date", "Company", "Shares", "Price", "Type" };
 		private string[] widths = { "40px", "", "13%", "13%", "13%", "13%" };
+		private string[] transwidths = { "20%", "20%", "20", "20%", "20%" };
 		private int columns = 6;
 		private int tcolumns = 6;
+		private int transcolumns = 5;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!IsPostBack)
 			{
-				radioLists.SelectedIndex = 0;
+				generatePositions();
+				radioSortType.SelectedIndex = 0;
 			}
-			showPositions();
+			update();
+		}
+
+		private void generatePositions()
+		{
+			positions = portfolio.GetOpenPositions().ToList();
+		}
+
+		private void showTransactions()
+		{
+			PortfolioDiv.Controls.Clear();
 		}
 
 		private void showPositions()
 		{
-			portfolio = new PortfolioManagerClient();
-			PortfolioDiv.Controls.Add(createHeader());
-
-			foreach (PositionMessage p in portfolio.GetOpenPositions().OrderBy(x => x.SymbolName))
+			PortfolioDiv.Controls.Clear();
+			PortfolioDiv.Controls.Add(createPositionHeader());
+			positions = sortList();
+			foreach (PositionMessage p in positions)
 			{
 				Table ptbl = createPositionTable(p);
 				Table ttbl = createTradeTable(p);
@@ -44,17 +57,22 @@ namespace AlgoTraderSite
 				TableCell containerCell = new TableCell(); // create container cell for trade table
 				containerCell.ColumnSpan = columns; // make the cell span the width of the positions table
 				containerRow.CssClass = "TradeRow";
-				containerRow.Attributes["style"] = "visibility:hidden; display:none";
+				//containerRow.Attributes["style"] = "visibility:hidden; display:none";
 
-				containerCell.Controls.Add(ttbl); // add trade table to cell
+				HtmlGenericControl div = new HtmlGenericControl("div");
+				div.Attributes.Add("class", "TradeDiv");
+				div.Attributes.Add("style", "visibility: hidden; display: none");
+				div.Controls.Add(ttbl);
+				containerCell.Controls.Add(div); // add trade table to cell
 				containerRow.Cells.Add(containerCell); // add cell to row
 				ptbl.Rows.Add(containerRow); // add row to position table
 				PortfolioDiv.Controls.Add(ptbl); // add position table to div
 			}
 		}
 
-		private Table createHeader()
+		private Table createPositionHeader()
 		{
+			string[] pheaders = { "", "Company", "Shares", "Price", "Status", "Actions" };
 			Table tbl = new Table();
 			tbl.Width = new Unit("100%");
 			TableHeaderRow header = new TableHeaderRow();
@@ -111,11 +129,14 @@ namespace AlgoTraderSite
 			tbl.CssClass = "main";
 			row.CssClass = "main";
 
+			row.Cells[(radioSortType.SelectedIndex / 2) + 1].CssClass = "bold";
+
 			return tbl;
 		}
 
 		private Table createTradeTable(PositionMessage pm)
 		{
+			string[] theaders = { "", "Date", "Shares", "Price", "Type", "" };
 			Table tbl = new Table();
 
 			TableHeaderRow header = new TableHeaderRow();
@@ -150,6 +171,20 @@ namespace AlgoTraderSite
 			tbl.CssClass = "sub";
 
 			return tbl;
+		}
+
+		private List<PositionMessage> sortList()
+		{
+			switch (radioSortType.SelectedIndex)
+			{
+				case 0: return positions.OrderBy(x => x.SymbolName).ToList(); // name asc
+				case 1: return positions.OrderByDescending(x => x.SymbolName).ToList(); // name desc
+				case 2: return positions.OrderByDescending(x => x.Quantity).ToList(); // shares desc
+				case 3: return positions.OrderBy(x => x.Quantity).ToList(); // shares asc
+				case 4: return positions.OrderByDescending(x => x.Price).ToList(); // value desc
+				case 5: return positions.OrderBy(x => x.Price).ToList(); // value asc
+				default: return positions;
+			}
 		}
 
 		private string getTimeSpan(DateTime timestamp)
@@ -200,6 +235,17 @@ namespace AlgoTraderSite
 			}
 		}
 
+		private void update()
+		{
+			switch (radioLists.SelectedIndex)
+			{
+				case 0: showPositions(); break;
+				case 1: showTransactions(); break;
+				default: break;
+			}
+		}
+
+		#region Controls
 		protected void btnClick(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
@@ -210,5 +256,16 @@ namespace AlgoTraderSite
 		{
 
 		}
+
+		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			update();
+		}
+	
+		protected void radioSortType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			update();
+		}
+		#endregion
 	}
 }
