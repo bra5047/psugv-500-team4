@@ -9,10 +9,39 @@
 	<title><%: Page.Title %> - AlgoTrader</title>
 	<asp:PlaceHolder runat="server">
 		<%: Scripts.Render("~/bundles/modernizr") %>
-    </asp:PlaceHolder>
+	</asp:PlaceHolder>
 	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<meta name="viewport" content="width=device-width" />
 	<asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			var name = "NAME";
+			$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
+				// Create the chart
+				$('#container').highcharts('StockChart', {
+
+					rangeSelector: {
+						selected: 1
+					},
+
+					title: {
+						text: name
+					},
+
+					series: [{
+						name: 'AAPL',
+						data: data,
+						tooltip: {
+							valueDecimals: 2
+						}
+					}]
+				});
+			});
+
+		});
+
+	</script>
 </head>
 <body>
 	<form runat="server">
@@ -20,7 +49,6 @@
 			<Scripts>
 				<%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=272931&clcid=0x409 --%>
 				<%--Framework Scripts--%>
-				<asp:ScriptReference Path="~/Scripts/AlgoTrader/AlgoTrader.js" />
 				<asp:ScriptReference Name="MsAjaxBundle" />
 				<asp:ScriptReference Name="jquery" Path="~/Scripts/jquery-1.8.2.min.js" />
 				<asp:ScriptReference Name="jquery.ui.combined" />
@@ -33,8 +61,11 @@
 				<asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
 				<asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
 				<asp:ScriptReference Name="WebFormsBundle" />
-				
+
 				<%--Site Scripts--%>
+				<asp:ScriptReference Path="~/Scripts/highstock/highstock.js" />
+				<asp:ScriptReference Path="~/Scripts/highstock/modules/exporting.js" />
+				<asp:ScriptReference Path="~/Scripts/AlgoTrader/AlgoTrader.js" />
 			</Scripts>
 		</asp:ScriptManager>
 		<header>
@@ -64,10 +95,10 @@
                 </section>-->
 					<nav>
 						<ul id="menu">
-							<li><a runat="server" href="~/"><span class="icon-home"></span> Home</a></li>
-							<li><a runat="server" href="~/WatchList"><span class="icon-eye-open"></span> Watchlist</a></li>
-							<li><a runat="server" href="~/Portfolio"><span class="icon-briefcase"></span> My Portfolio</a></li>
-							<li><a runat="server" href="~/Settings"><span class="icon-cogs"></span> Settings</a></li>
+							<li><a runat="server" href="~/"><span class="icon-home"></span>Home</a></li>
+							<li><a runat="server" href="~/WatchList"><span class="icon-eye-open"></span>Watchlist</a></li>
+							<li><a runat="server" href="~/Portfolio"><span class="icon-briefcase"></span>My Portfolio</a></li>
+							<li><a runat="server" href="~/Settings"><span class="icon-cogs"></span>Settings</a></li>
 						</ul>
 					</nav>
 				</div>

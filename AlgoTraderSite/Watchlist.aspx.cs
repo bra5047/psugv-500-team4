@@ -19,7 +19,6 @@ namespace AlgoTraderSite
 		private static IWatchListManager wlm = new WatchListManager();
 		List<WatchList> watchlists = new List<WatchList>();
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
-
 		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
 		string[] widths = { "40%", "20%", "15%", "15%", "10%" };
@@ -238,6 +237,17 @@ namespace AlgoTraderSite
 			statusMessage.Controls.Add(message);
 		}
 
+		private void createChartJson(string symbol)
+		{
+			//datapoints.Clear();
+			//var query = quotes.Where(x => x.SymbolName.Equals(symbol)).OrderBy(x => x.timestamp);
+			//foreach (var quote in query)
+			//{
+			//	DataPoint point = new DataPoint(quote.timestamp, quote.price);
+			//	datapoints.Add(point);
+			//}
+		}
+
 		private void updateList(bool fullUpdate)
 		{
 			if (fullUpdate)
@@ -387,9 +397,18 @@ namespace AlgoTraderSite
 		{
 			updateList(false);
 		}
+
+		protected void btnClick_generateChart(object sender, EventArgs e)
+		{
+			Button Sender = (Button)sender;
+			string symbol = Sender.Attributes["SymbolName"];
+			//quotes = wlm.GetQuotes(symbol);
+			//createChartJson(symbol);
+		}
 		#endregion
 	}
 
+	#region extra classes
 	class WatchlistPlusQuote // joined list for watchlist only
 	{
 		public string SymbolName { get; set; }
@@ -409,4 +428,17 @@ namespace AlgoTraderSite
 			ChangePercent = pricenow / pricebefore * 100;
 		}
 	}
+
+	class DataPoint
+	{
+		DateTime Date { get; set; }
+		double Value { get; set; }
+
+		public DataPoint(DateTime date, double value)
+		{
+			Date = date;
+			Value = value;
+		}
+	}
+	#endregion
 }

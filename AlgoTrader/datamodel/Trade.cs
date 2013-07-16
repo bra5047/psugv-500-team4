@@ -50,8 +50,8 @@ namespace AlgoTrader.datamodel
         public Trade sell(int sellQuantity)
         {
             if (sellQuantity < 1 || sellQuantity > this.quantity) throw new ArgumentException("sellQuantity");
-            if (this.type == tradeTypes.Sell) throw new NotImplementedException();
-            if (this.Status == tradeStatus.Closed) throw new NotImplementedException();
+            //if (this.type == tradeTypes.Sell) throw new NotImplementedException();
+            //if (this.Status == tradeStatus.Closed) throw new NotImplementedException();
 
             Trade t = new Trade();
             t.Symbol = Symbol;

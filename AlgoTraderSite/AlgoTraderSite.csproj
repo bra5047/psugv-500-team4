@@ -204,6 +204,29 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Scripts\highstock\adapters\mootools-adapter.js" />
+    <Content Include="Scripts\highstock\adapters\mootools-adapter.src.js" />
+    <Content Include="Scripts\highstock\adapters\prototype-adapter.js" />
+    <Content Include="Scripts\highstock\adapters\prototype-adapter.src.js" />
+    <Content Include="Scripts\highstock\highcharts-more.js" />
+    <Content Include="Scripts\highstock\highcharts-more.src.js" />
+    <Content Include="Scripts\highstock\highstock.js" />
+    <Content Include="Scripts\highstock\highstock.src.js" />
+    <Content Include="Scripts\highstock\modules\annotations.js" />
+    <Content Include="Scripts\highstock\modules\annotations.src.js" />
+    <Content Include="Scripts\highstock\modules\canvas-tools.js" />
+    <Content Include="Scripts\highstock\modules\canvas-tools.src.js" />
+    <Content Include="Scripts\highstock\modules\data.js" />
+    <Content Include="Scripts\highstock\modules\data.src.js" />
+    <Content Include="Scripts\highstock\modules\exporting.js" />
+    <Content Include="Scripts\highstock\modules\exporting.src.js" />
+    <Content Include="Scripts\highstock\modules\funnel.js" />
+    <Content Include="Scripts\highstock\modules\funnel.src.js" />
+    <Content Include="Scripts\highstock\themes\dark-blue.js" />
+    <Content Include="Scripts\highstock\themes\dark-green.js" />
+    <Content Include="Scripts\highstock\themes\gray.js" />
+    <Content Include="Scripts\highstock\themes\grid.js" />
+    <Content Include="Scripts\highstock\themes\skies.js" />
     <Content Include="Service References\Strategy.Client\AlgoTraderSite.Strategy.Client.StrategySummary.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>

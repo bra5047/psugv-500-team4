@@ -31,6 +31,15 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.WebControls.RadioButtonList radioLists;
         
         /// <summary>
+        /// inputGroupLeft control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl inputGroupLeft;
+        
+        /// <summary>
         /// btnExpand control.
         /// </summary>
         /// <remarks>
@@ -38,6 +47,15 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExpand;
+        
+        /// <summary>
+        /// inputGroupRight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl inputGroupRight;
         
         /// <summary>
         /// radioSortType control.
