@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Limilabs.Client.IMAP;
 using Limilabs.Mail;
 using System.Xml;
+using System.Text.RegularExpressions;
 using AlgoTrader.portfolio;
 
 
@@ -20,6 +21,7 @@ namespace ATEmailReader
                 map.ConnectSSL("imap.gmail.com");
                 map.Login("AlgTrader500@gmail.com", "algSweng500");
 
+                //select only the inbox to search and only show unread messages
                 map.SelectInbox();
                 List<long> uids = map.Search(Flag.Unseen);
 
@@ -32,20 +34,26 @@ namespace ATEmailReader
                     string title = mail.Subject;
                     string message = mail.Text;
 
+                    //get the stock symbol
                     string[] Symbolsplit = title.Split(new char[0]);
                     string symbol = Symbolsplit[1].ToString();
 
+                    //get the amount to sell or buy
+                    string AmountExtract = Regex.Match(message, @"\d+").Value;
+                    int quantity = Int32.Parse(AmountExtract);
+                    
+                    //convert the message and title to lowercase so the if statement will have no errors
                     message = message.ToLower();
                     title = title.ToLower();
 
                     PortfolioManager Manage = new PortfolioManager();
                     if (message.Contains("yes") && title.Contains("sell"))
                     {
-                        Manage.sell(symbol, 5);
+                        Manage.sell(symbol, quantity);
                     }
                     else if (message.Contains("yes") && title.Contains("buy"))
                     {
-                        Manage.buy(symbol, 5);
+                        Manage.buy(symbol, quantity);
                     }
                     else
                     {
