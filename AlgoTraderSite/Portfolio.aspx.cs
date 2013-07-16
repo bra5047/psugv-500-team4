@@ -40,7 +40,7 @@ namespace AlgoTraderSite
 			openpositions = portfolio.GetOpenPositions().ToList();
 
 			TraderContext db = new TraderContext();
-			var query = db.Positions.Where(x=>!x.SymbolName.Equals(null)).Select(x => x.SymbolName);
+			var query = db.Positions.Select(x => x.SymbolName);
 			foreach (string s in query)
 			{
 				PositionMessage msg = portfolio.GetPosition(s);

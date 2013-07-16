@@ -69,7 +69,7 @@ namespace AlgoTrader.datamodel
 
 
 			// Adam's stuff to fill in db tables
-			string[] symbols = { "AAPL", "VZ", "INTC", "MSFT", "HP", "PANL", "NVDA", "QCOM", "AMD", "FB", "LNKD", "ZNGA" };
+			string[] symbols = { "AAPL", "VZ", "INTC", "MSFT", "HP", "PANL", "NVDA", "QCOM", "AMD", "FB", "LNKD", "ZNGA"};
 			string[] watchlists = { "", "Other", "Test List", "Future Purchases" };
 			Random rand = new Random();
 
@@ -88,17 +88,19 @@ namespace AlgoTrader.datamodel
 				WatchListItem wli = new WatchListItem(symbol, watchlists[rand.Next(0, watchlists.Length)]);
 				context.WatchListItems.Add(wli);
 
-				Quote quote1 = new Quote();
-				quote1.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
-				quote1.timestamp = DateTime.Now;
-				quote1.SymbolName = symbol.name;
-				context.Quotes.Add(quote1);
-
-				Quote quote2 = new Quote();
-				quote2.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
-				quote2.timestamp = DateTime.Now.AddMinutes(-15);
-				quote2.SymbolName = symbol.name;
-				context.Quotes.Add(quote2);
+				for (int k = 0; k < 100; k++)
+				{
+					Quote quote1 = new Quote();
+					quote1.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
+					quote1.timestamp = DateTime.Now.AddDays(-k);
+					quote1.SymbolName = symbol.name;
+					context.Quotes.Add(quote1);
+				}
+				//Quote quote2 = new Quote();
+				//quote2.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
+				//quote2.timestamp = DateTime.Now.AddMinutes(-15);
+				//quote2.SymbolName = symbol.name;
+				//context.Quotes.Add(quote2);
 
 				Position p = new Position();
 				p.status = positionStatus.Open;

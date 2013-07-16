@@ -204,6 +204,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Graph.aspx" />
     <Content Include="Scripts\highstock\adapters\mootools-adapter.js" />
     <Content Include="Scripts\highstock\adapters\mootools-adapter.src.js" />
     <Content Include="Scripts\highstock\adapters\prototype-adapter.js" />
@@ -415,6 +416,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Graph.aspx.cs">
+      <DependentUpon>Graph.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Graph.aspx.designer.cs">
+      <DependentUpon>Graph.aspx</DependentUpon>
     </Compile>
     <Compile Include="Service References\Strategy.Client\Reference.cs">
       <AutoGen>True</AutoGen>

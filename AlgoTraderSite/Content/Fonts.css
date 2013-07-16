@@ -27,7 +27,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-home, .icon-eye-open, .icon-briefcase, .icon-cogs, .icon-plus-sign, .icon-minus-sign, .icon-ok-sign, .icon-remove-sign, .icon-exclamation-sign, .icon-question-sign, .icon-info-sign, .icon-plus, .icon-minus, .icon-sort-by-alphabet, .icon-sort-by-alphabet-alt, .icon-sort-by-attributes-alt, .icon-sort-by-attributes, .icon-sort-by-order, .icon-sort-by-order-alt, .icon-dollar, .icon-remove, .icon-shopping-cart, .icon-lock, .icon-book, .icon-bookmark {
+.icon-home, .icon-eye-open, .icon-briefcase, .icon-cogs, .icon-plus-sign, .icon-minus-sign, .icon-ok-sign, .icon-remove-sign, .icon-exclamation-sign, .icon-question-sign, .icon-info-sign, .icon-plus, .icon-minus, .icon-sort-by-alphabet, .icon-sort-by-alphabet-alt, .icon-sort-by-attributes-alt, .icon-sort-by-attributes, .icon-sort-by-order, .icon-sort-by-order-alt, .icon-dollar, .icon-remove, .icon-shopping-cart, .icon-lock, .icon-book, .icon-bookmark, .icon-stats {
 	font-family: 'algotrader';
 	speak: none;
 	font-style: normal;
@@ -111,4 +111,7 @@ you can use the generic selector below, but it's slower:
 }
 .icon-bookmark:before {
 	content: "\e018";
+}
+.icon-stats:before {
+	content: "\e019";
 }

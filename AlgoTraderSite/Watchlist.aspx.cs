@@ -9,6 +9,7 @@ using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
 using AlgoTrader.portfolio;
+using AlgoTrader.strategy;
 using System.IO;
 
 namespace AlgoTraderSite
@@ -17,11 +18,12 @@ namespace AlgoTraderSite
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();
+		private static IStrategy strategy = new ThreeDucksStrategy();
 		List<WatchList> watchlists = new List<WatchList>();
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
 		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
-		string[] widths = { "40%", "20%", "15%", "15%", "10%" };
+		string[] widths = { "40%", "20%", "10%", "10%", "20%" };
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -78,6 +80,7 @@ namespace AlgoTraderSite
 			}
 			foreach (WatchListItem item in wl.items) // join all the items together into a list of WatchlistPlusQuote objects
 			{
+				strategy.startWatching(item.SymbolName);
 				var quotes = wlm.GetQuotes(item.SymbolName).OrderBy(x => x.timestamp).Take(2).ToList();
 				double price1 = quotes.Select(x => x.price).FirstOrDefault();
 				double price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
@@ -188,7 +191,12 @@ namespace AlgoTraderSite
 
 			if (isPortfolio()) // create Remove button for each row or a lock for portfolio
 			{
-				row.Cells[headers.Length - 1].Text = new HtmlString("<span class='icon-lock' title='This item is locked.'></span>").ToString();
+				Button btnLocked = new Button();
+				btnLocked.CssClass = "symbol-button";
+				btnLocked.Text = HttpUtility.HtmlDecode("&#xe016;");
+				btnLocked.ToolTip = "This item is locked";
+				btnLocked.Enabled = false;
+				row.Cells[headers.Length - 1].Controls.Add(btnLocked);
 			}
 			// TODO add a button for strategy buy/sell
 			else // otherwise create a remove button
@@ -203,6 +211,23 @@ namespace AlgoTraderSite
 				btnRemove.Click += btnRemove_Click;
 				row.Cells[headers.Length - 1].Controls.Add(btnRemove);
 			}
+			// graph button
+			Button btnGraph = new Button();
+			btnGraph.CssClass = "symbol-button";
+			btnGraph.Attributes.Add("Symbol", item.SymbolName);
+			btnGraph.ID = "btnGraph" + item.SymbolName;
+			btnGraph.Text = HttpUtility.HtmlDecode("&#xe019;");
+			btnGraph.ToolTip = "View graph";
+			btnGraph.Click += new EventHandler(btnClick_generateChart);
+			row.Cells[headers.Length - 1].Controls.Add(btnGraph);
+
+			StrategySummary summary = strategy.getSummary(item.SymbolName);
+			Button btnSignal = new Button();
+			btnSignal.Attributes.Add("Symbol", item.SymbolName);
+			btnSignal.ID = "btnSignal" + item.SymbolName;
+			btnSignal.Text = summary.CurrentSignal.ToString();
+			btnSignal.Click += new EventHandler(btnClick_BuySell);
+			row.Cells[headers.Length - 1].Controls.Add(btnSignal);
 
 			// set widths
 			for (int i = 0; i < widths.Length - 1; i++)
@@ -235,17 +260,6 @@ namespace AlgoTraderSite
 				message.InnerHtml = new HtmlString("<span class='icon-remove-sign'></span> " + msg).ToString();
 			}
 			statusMessage.Controls.Add(message);
-		}
-
-		private void createChartJson(string symbol)
-		{
-			//datapoints.Clear();
-			//var query = quotes.Where(x => x.SymbolName.Equals(symbol)).OrderBy(x => x.timestamp);
-			//foreach (var quote in query)
-			//{
-			//	DataPoint point = new DataPoint(quote.timestamp, quote.price);
-			//	datapoints.Add(point);
-			//}
 		}
 
 		private void updateList(bool fullUpdate)
@@ -401,9 +415,15 @@ namespace AlgoTraderSite
 		protected void btnClick_generateChart(object sender, EventArgs e)
 		{
 			Button Sender = (Button)sender;
-			string symbol = Sender.Attributes["SymbolName"];
-			//quotes = wlm.GetQuotes(symbol);
-			//createChartJson(symbol);
+			string symbol = Sender.Attributes["Symbol"];
+			Response.Redirect("Graph?s=" + symbol);
+		}
+
+		protected void btnClick_BuySell(object sender, EventArgs e)
+		{
+			Button Sender = (Button)sender;
+			string symbol = Sender.Attributes["Symbol"];
+			Response.Redirect("Graph?s=" + symbol);
 		}
 		#endregion
 	}
@@ -426,18 +446,6 @@ namespace AlgoTraderSite
 			CurrentPrice = pricenow;
 			PriceChange = pricenow - pricebefore;
 			ChangePercent = pricenow / pricebefore * 100;
-		}
-	}
-
-	class DataPoint
-	{
-		DateTime Date { get; set; }
-		double Value { get; set; }
-
-		public DataPoint(DateTime date, double value)
-		{
-			Date = date;
-			Value = value;
 		}
 	}
 	#endregion

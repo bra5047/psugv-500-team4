@@ -13,35 +13,6 @@
 	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<meta name="viewport" content="width=device-width" />
 	<asp:ContentPlaceHolder runat="server" ID="HeadContent" />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(function () {
-			var name = "NAME";
-			$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=aapl-c.json&callback=?', function (data) {
-				// Create the chart
-				$('#container').highcharts('StockChart', {
-
-					rangeSelector: {
-						selected: 1
-					},
-
-					title: {
-						text: name
-					},
-
-					series: [{
-						name: 'AAPL',
-						data: data,
-						tooltip: {
-							valueDecimals: 2
-						}
-					}]
-				});
-			});
-
-		});
-
-	</script>
 </head>
 <body>
 	<form runat="server">
