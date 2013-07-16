@@ -100,5 +100,5 @@
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<asp:Button runat="server" Text="Back" OnClick="btnClick_Back" />
-	<div id="container" style="min-width: 500px; height: 100%"></div>
+	<div id="container" style="min-width: 500px; height: 70vh"></div>
 </asp:Content>
