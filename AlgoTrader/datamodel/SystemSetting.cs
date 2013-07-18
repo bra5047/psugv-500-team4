@@ -17,5 +17,19 @@ namespace AlgoTrader.datamodel
         [Column(Order=1), Key]
         public string Name { get; set; }
         public string Value { get; set; }
+
+        public SystemSetting()
+        {
+            Module = string.Empty;
+            Name = string.Empty;
+            Value = string.Empty;
+        }
+
+        public SystemSetting(string module, string name, string val)
+        {
+            Module = module;
+            Name = name;
+            Value = val;
+        }
     }
 }

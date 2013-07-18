@@ -101,4 +101,5 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<asp:Button runat="server" Text="Back" OnClick="btnClick_Back" />
 	<div id="container" style="min-width: 500px; height: 70vh"></div>
+    <div id="debug">M1:<%: metrics[0] %><br />M2:<%: metrics[1] %><br />M3:<%: metrics[2] %></div>
 </asp:Content>

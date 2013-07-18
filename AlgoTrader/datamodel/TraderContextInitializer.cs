@@ -67,6 +67,12 @@ namespace AlgoTrader.datamodel
             context.SystemSettings.Add(emailaddress);
             context.SaveChanges();
 
+            //ThreeDuckStrategy
+            context.SystemSettings.Add(new SystemSetting("ThreeDuckStrategy", "FIRST_DUCK_SECONDS", "604800"));
+            context.SystemSettings.Add(new SystemSetting("ThreeDuckStrategy", "SECOND_DUCK_SECONDS", "86400"));
+            context.SystemSettings.Add(new SystemSetting("ThreeDuckStrategy", "THIRD_DUCK_SECONDS", "43200"));
+            context.SystemSettings.Add(new SystemSetting("ThreeDuckStrategy", "MOVING_AVERAGE_WINDOW", "10"));
+            context.SaveChanges();
 
 			// Adam's stuff to fill in db tables
 			string[] symbols = { "AAPL", "VZ", "INTC", "MSFT", "HP", "PANL", "NVDA", "QCOM", "AMD", "FB", "LNKD", "ZNGA"};
