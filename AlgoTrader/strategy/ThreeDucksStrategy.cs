@@ -194,7 +194,11 @@ namespace AlgoTrader.strategy
 
             StrategyDetail s = new StrategyDetail();
             s.SymbolName = symbolName;
-            if (!_metrics.ContainsKey(symbolName)) return s;
+            if (!_metrics.ContainsKey(symbolName))
+            {
+                log.DebugFormat("Symbol not found in metrics list: {0}", symbolName);
+                return s;
+            }
 
             lock (_init_lock)
             {

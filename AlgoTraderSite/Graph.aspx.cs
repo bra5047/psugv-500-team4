@@ -15,16 +15,24 @@ namespace AlgoTraderSite
 {
 	public partial class Graph : Page
 	{
-		StrategyClient strategy = new StrategyClient();
-		AlgoTraderSite.Strategy.Client.StrategyDetail detail = new AlgoTraderSite.Strategy.Client.StrategyDetail();
-		public static double[] metrics = new double[] { 0, 0, 0 };
-		public static string symbolName = string.Empty;
-		public static double[,] datapoints;
-		public static List<PlotPoint> plot = new List<PlotPoint>();
-		public JavaScriptSerializer javaSerial = new JavaScriptSerializer();
+        public string symbolName;
+        public double[] metrics;
+		public double[,] datapoints;
+        public List<PlotPoint> plot;
+        public JavaScriptSerializer javaSerial;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+            symbolName = string.Empty;
+            metrics = new double[3] { 0, 0, 0 };
+            datapoints = new double[1, 1];
+            plot = new List<PlotPoint>();
+            javaSerial = new JavaScriptSerializer();
+
+            StrategyClient strategy = new StrategyClient();
+            AlgoTraderSite.Strategy.Client.StrategyDetail detail;
+
+            // TODO: fail gracefully (EndpointNotFoundException)
 			if (Request.QueryString.AllKeys.Contains("s"))
 			{
 				symbolName = Request.QueryString["s"].ToUpper();
@@ -34,6 +42,7 @@ namespace AlgoTraderSite
 
 				getDataPoints();
 			}
+            strategy.Close();
 		}
 
 		protected void getDataPoints()
