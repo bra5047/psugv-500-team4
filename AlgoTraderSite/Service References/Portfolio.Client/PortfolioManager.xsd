@@ -27,6 +27,7 @@
   <xs:complexType name="TradeMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="InitialQuantity" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="PaidCommission" type="xs:double" />
       <xs:element minOccurs="0" name="Price" type="xs:double" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
       <xs:element minOccurs="0" name="RelatedTradeId" nillable="true" type="xs:int" />
