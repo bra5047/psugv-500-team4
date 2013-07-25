@@ -34,6 +34,7 @@ namespace AlgoTrader.Interfaces
         DateTime timestamp { get; set; }
         tradeTypes type { get; set; }
         tradeStatus Status { get; set; }
+        double PaidCommission { get; set; }
         string TransactionId { get; set; }
         int? RelatedTradeId { get; set; }
         double value { get; }

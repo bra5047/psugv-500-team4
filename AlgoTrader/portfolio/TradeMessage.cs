@@ -28,6 +28,8 @@ namespace AlgoTrader.portfolio
         [DataMember]
         public tradeStatus Status;
         [DataMember]
+        public double PaidCommission;
+        [DataMember]
         public string TransactionId;
         [DataMember]
         public int? RelatedTradeId;
@@ -48,6 +50,7 @@ namespace AlgoTrader.portfolio
             Timestamp = trade.timestamp;
             Type = trade.type;
             Status = trade.Status;
+            PaidCommission = trade.PaidCommission;
             TransactionId = trade.TransactionId;
             RelatedTradeId = trade.RelatedTradeId;
         }
