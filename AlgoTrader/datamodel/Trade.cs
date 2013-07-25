@@ -34,6 +34,7 @@ namespace AlgoTrader.datamodel
         public tradeTypes type { get; set; }
         public string TransactionId { get; set; }
         public tradeStatus Status { get; set; }
+        public double PaidCommission { get; set; }
 
         public string SymbolName { get; set; }
         [ForeignKey("SymbolName")]
@@ -65,6 +66,11 @@ namespace AlgoTrader.datamodel
             this.quantity -= sellQuantity;
             if (this.quantity == 0) this.Status = tradeStatus.Closed;
             return t;
+        }
+
+        public Trade()
+        {
+            PaidCommission = 4.75;
         }
 
         // ITrade stuff

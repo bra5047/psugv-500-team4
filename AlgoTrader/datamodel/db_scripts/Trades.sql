@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[Trades](
 	[type] [int] NOT NULL,
 	[TransactionId] [nvarchar](max) NULL,
 	[Status] [int] NOT NULL,
+	[PaidCommission] [float] NOT NULL,
 	[SymbolName] [nvarchar](128) NULL,
 	[PositionId] [int] NULL,
 	[RelatedTradeId] [int] NULL,
