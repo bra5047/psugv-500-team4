@@ -23,15 +23,21 @@ namespace ATQouteMngrUpdate
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
             {
                 conn.Open();
-                SqlCommand comm = new SqlCommand("SELECT DISTINCT SymbolName FROM Positions",conn);
+                SqlCommand comm = new SqlCommand("SELECT DISTINCT SymbolName FROM Positions UNION ALL SELECT DISTINCT SymbolName from WatchListItems",conn);
                 SqlDataReader dr = comm.ExecuteReader();
 
                 while (dr.Read())
                 {
-                    symbols.Add(dr.GetString(0));
+                    string symbol = dr.GetString(0);
+                    if (!symbols.Contains(symbol))
+                    {
+                        symbols.Add(symbol);
+                    }
+                    
                 }
 
             }
+
 
             if (symbols.Count > 0)
             {
