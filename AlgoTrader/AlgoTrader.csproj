@@ -103,6 +103,7 @@
     <Compile Include="strategy\QuoteProvider.cs" />
     <Compile Include="strategy\SignalAlerter.cs" />
     <Compile Include="strategy\SmaMetric.cs" />
+    <Compile Include="strategy\SymbolProvider.cs" />
     <Compile Include="strategy\ThreeDucksStrategy.cs" />
     <Compile Include="useragent\UserAgent.cs" />
     <Compile Include="watchlist\WatchListManager.cs" />

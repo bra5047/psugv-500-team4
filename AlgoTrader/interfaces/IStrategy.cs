@@ -25,6 +25,9 @@ namespace AlgoTrader.Interfaces
 
         [OperationContract]
         StrategyDetail getDetailedAnalysis(string symbolName);
+
+        List<string> WatchForBuy { set; }
+        List<string> WatchForSell { set; }
     }
 
     [DataContract]

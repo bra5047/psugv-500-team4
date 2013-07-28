@@ -22,7 +22,11 @@ namespace AlgoTrader.strategy
         private Dictionary<string, List<SmaMetric>> _metrics;
         private Dictionary<string, StrategySignal> _signals;
 
+        private List<string> _watchForBuy;
+        private List<string> _watchForSell;
+
         private QuoteProvider _quoteProvider;
+        private SymbolProvider _symbolProvider;
         private ISignalAlerter _alerter;
 
         private Object _init_lock;
@@ -33,6 +37,9 @@ namespace AlgoTrader.strategy
             _signals = new Dictionary<string, StrategySignal>();
             _alerter = new SignalAlerter();
             _init_lock = new Object();
+
+            _watchForBuy = new List<string>();
+            _watchForSell = new List<string>();
 
             FIRST_DUCK_SECONDS = 300;
             SECOND_DUCK_SECONDS = 3600;
@@ -65,6 +72,8 @@ namespace AlgoTrader.strategy
 
             _quoteProvider = new QuoteProvider(this);
             _quoteProvider.Start();
+            _symbolProvider = new SymbolProvider(this);
+            _symbolProvider.Start();
         }
 
         public int First_Duck_Seconds { get { return FIRST_DUCK_SECONDS; } }
@@ -129,16 +138,38 @@ namespace AlgoTrader.strategy
             if (buy_ducks == 3)
             {
                 _signals[quote.SymbolName] = StrategySignal.Buy;
-                _alerter.BuyAlert(quote.SymbolName, DEFAULT_BUY_SIZE, quote.Price);
+                if (_watchForBuy.Contains(quote.SymbolName))
+                {
+                    _alerter.BuyAlert(quote.SymbolName, DEFAULT_BUY_SIZE, quote.Price);
+                }
             }
             else if (sell_ducks == 3)
             {
                 _signals[quote.SymbolName] = StrategySignal.Sell;
-                _alerter.SellAlert(quote.SymbolName, quote.Price);
+                if (_watchForSell.Contains(quote.SymbolName))
+                {
+                    _alerter.SellAlert(quote.SymbolName, quote.Price);
+                }
             }
             else
             {
                 _signals[quote.SymbolName] = StrategySignal.None;
+            }
+        }
+
+        public List<string> WatchForBuy
+        {
+            set
+            {
+                _watchForBuy = value;
+            }
+        }
+
+        public List<string> WatchForSell
+        {
+            set
+            {
+                _watchForSell = value;
             }
         }
 
