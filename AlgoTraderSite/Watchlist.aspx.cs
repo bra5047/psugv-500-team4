@@ -430,7 +430,8 @@ namespace AlgoTraderSite
 		{
 			Button Sender = (Button)sender;
 			string symbol = Sender.Attributes["Symbol"];
-			Response.Redirect("Graph?s=" + symbol);
+			// TODO get the last price 
+			Response.Redirect("BuySell?s=" + symbol + "&t="+Sender.Text);
 		}
 		#endregion
 	}

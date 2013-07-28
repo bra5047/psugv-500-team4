@@ -26,10 +26,21 @@ namespace AlgoTraderSite
             {
                 PriceLabel.Text = Request.QueryString["p"];
             }
-            else
-            {
-                PriceLabel.Text = "$1.25";
-            }
+			if (Request.QueryString.AllKeys.Contains("t"))
+			{
+				if (Request.QueryString["t"].Equals("Buy"))
+				{
+					BuySellPicker.SelectedIndex = 0;
+				}
+				if (Request.QueryString["t"].Equals("Sell"))
+				{
+					BuySellPicker.SelectedIndex = 1;
+				}
+			}
+			else
+			{
+				PriceLabel.Text = "$1.25";
+			}
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
