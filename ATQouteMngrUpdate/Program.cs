@@ -19,7 +19,7 @@ namespace ATQouteMngrUpdate
             XmlDocument doc = new XmlDocument();
             XmlNode SelectName, SelectTotal, SelectTime, SelectDate;
             List<string> symbols = new List<string>();
-
+            /*
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
             {
                 conn.Open();
@@ -38,31 +38,34 @@ namespace ATQouteMngrUpdate
 
             }
 
-
+            */
+            symbols.Add("aapl");
+            symbols.Add("Goog");
             if (symbols.Count > 0)
             {
                 
                 using (SqlConnection connUpdate = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
                 {
                     connUpdate.Open();
-                    SqlCommand SymUpdate = new SqlCommand("INSERT INTO Qoutes (Price, TimeStamp, Symbol) VALUES (@Price, @Time, @Symbol)", connUpdate);
                     foreach (string sym in symbols)
                     {
+                        SqlCommand SymUpdate = new SqlCommand("INSERT INTO Quotes (Price, TimeStamp, SymbolName) VALUES (@Price, @Time, @Symbol)", connUpdate);
+                    
                         String QouteUpdate = Qoute.GetQuote(sym);
                         if (QouteUpdate != string.Empty)
                         {
                             doc.LoadXml(QouteUpdate);
                             SelectTotal = doc.DocumentElement.SelectSingleNode("//Stock/Last");
-                            SelectName = doc.DocumentElement.SelectSingleNode("//Stock/Name");
+                            SelectName = doc.DocumentElement.SelectSingleNode("//Stock/Symbol");
                             SelectTime = doc.DocumentElement.SelectSingleNode("//Stock/Time");
                             SelectDate = doc.DocumentElement.SelectSingleNode("//Stock/Date");
                             Price = SelectTotal.InnerText;
                             Symbol = SelectName.InnerText;
                             Time = SelectDate.InnerText + " " + SelectTime.InnerText;
 
-                            SymUpdate.Parameters.Add("@Price", Price);
-                            SymUpdate.Parameters.Add("@Time", Time);
-                            SymUpdate.Parameters.Add("@Symbol", Symbol);
+                            SymUpdate.Parameters.AddWithValue("@Price", Price);
+                            SymUpdate.Parameters.AddWithValue("@Time", Time);
+                            SymUpdate.Parameters.AddWithValue("@Symbol", Symbol);
                             SymUpdate.ExecuteNonQuery();
                         }
                     }
