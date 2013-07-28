@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
+using log4net;
 
 namespace AlgoTrader.portfolio
 {
@@ -26,10 +27,21 @@ namespace AlgoTrader.portfolio
 
         public PositionMessage GetPosition(string SymbolName)
         {
-            TraderContext db = DbContext;
-            Portfolio pf = db.Portfolios.FirstOrDefault();
-            var q = pf.Positions.Where(p => p.status == positionStatus.Open && p.SymbolName == SymbolName).Select(p => p).FirstOrDefault();            
-            return new PositionMessage(q);
+            ILog log = LogManager.GetLogger(typeof(PortfolioManager));
+            log.DebugFormat("GetPosition() called for {0}", SymbolName);
+            try
+            {
+                TraderContext db = DbContext;
+                Portfolio pf = db.Portfolios.FirstOrDefault();
+                var q = pf.Positions.Where(p => p.status == positionStatus.Open && p.SymbolName == SymbolName).Select(p => p).FirstOrDefault();
+                return new PositionMessage(q);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("Exception: {0}", ex.Message);
+                log.ErrorFormat("Stack Trace: {0}", ex.StackTrace);
+            }
+            return new PositionMessage();
         }
 
         public void sell(string symbolName, int quantity)
