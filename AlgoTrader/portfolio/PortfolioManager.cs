@@ -66,7 +66,7 @@ namespace AlgoTrader.portfolio
             }
             pos.Trades.AddRange(toSell);
             pos.Recalculate();
-            portfolio.Cash += toSell.Sum(x => x.price * x.quantity);
+            portfolio.Cash += toSell.Sum(x => (x.price * x.quantity) - x.PaidCommission);
             db.SaveChanges();
             db.Dispose();
         }
@@ -114,7 +114,7 @@ namespace AlgoTrader.portfolio
             t.PositionId = pos.PositionId;
             pos.quantity += t.quantity;
             pos.price += t.price * t.quantity;
-            port.Cash -= t.price * t.quantity;
+            port.Cash -= (t.price * t.quantity) - t.PaidCommission;
         }
 
         public double getAvailableCash()
