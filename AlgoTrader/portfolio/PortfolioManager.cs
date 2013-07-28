@@ -33,7 +33,7 @@ namespace AlgoTrader.portfolio
             {
                 TraderContext db = DbContext;
                 Portfolio pf = db.Portfolios.FirstOrDefault();
-                var q = pf.Positions.Where(p => p.status == positionStatus.Open && p.SymbolName == SymbolName).Select(p => p).FirstOrDefault();
+                var q = pf.Positions.Where(p => p.status == positionStatus.Open && p.SymbolName == SymbolName.ToUpper()).Select(p => p).FirstOrDefault();
                 return new PositionMessage(q);
             }
             catch (Exception ex)

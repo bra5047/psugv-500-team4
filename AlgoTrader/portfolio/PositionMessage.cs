@@ -31,15 +31,21 @@ namespace AlgoTrader.portfolio
 
         public PositionMessage(IPosition position) : this()
         {
-            this.SymbolName = position.symbol.name;
-            this.Price = position.price;
-            this.Quantity = position.quantity;
-            this.Status = position.status;
-            this.Basis = position.basis;
-
-            foreach (ITrade t in position.trades)
+            if (position != null)
             {
-                Trades.Add(new TradeMessage(t));
+                this.SymbolName = position.symbol.name;
+                this.Price = position.price;
+                this.Quantity = position.quantity;
+                this.Status = position.status;
+                this.Basis = position.basis;
+
+                if (position.trades != null)
+                {
+                    foreach (ITrade t in position.trades)
+                    {
+                        Trades.Add(new TradeMessage(t));
+                    }
+                }
             }
         }
     }
