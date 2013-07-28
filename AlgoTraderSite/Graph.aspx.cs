@@ -47,9 +47,9 @@ namespace AlgoTraderSite
 					m1 = detail.Metric_1;
 					m2 = detail.Metric_2;
 					m3 = detail.Metric_3;
-					m1Label = detail.Metric_1_Label;
-					m2Label = detail.Metric_2_Label;
-					m3Label = detail.Metric_3_Label;
+					m1Label = "     " + detail.Metric_1_Label;
+					m2Label = "     " + detail.Metric_2_Label;
+					m3Label = "     " + detail.Metric_3_Label;
 
 					getDataPoints();
 				}

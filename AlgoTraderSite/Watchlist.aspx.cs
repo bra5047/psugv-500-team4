@@ -8,7 +8,7 @@ using System.Web.UI.HtmlControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
-using AlgoTrader.portfolio;
+using AlgoTraderSite.Portfolio.Client;
 using AlgoTraderSite.Strategy.Client;
 using System.IO;
 
@@ -67,7 +67,7 @@ namespace AlgoTraderSite
 		public void generateWatchLists() // gets all the data ready
 		{
 			IWatchList wl = new WatchList();
-			PortfolioManager pm = new PortfolioManager();
+			PortfolioManagerClient pm = new PortfolioManagerClient();
 			allitems.Clear();
 
 			foreach (WatchList w in watchlists) // add all the real watchlist items

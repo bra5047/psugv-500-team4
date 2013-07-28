@@ -306,7 +306,7 @@ namespace AlgoTraderSite
 		protected void btnClick(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
-			Response.Redirect("BuySell.aspx?s=" + btn.Attributes["SymbolName"] + "&p=" + btn.Attributes["LastPrice"]);
+			Response.Redirect("BuySell.aspx?s=" + btn.Attributes["SymbolName"]);
 		}
 
 		protected void btnExpand_Click(object sender, EventArgs e)

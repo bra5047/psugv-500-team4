@@ -37,7 +37,8 @@ namespace AlgoTraderSite
 
 			if (Request.QueryString.AllKeys.Contains("s"))
 			{
-				PriceLabel.Text = Request.QueryString["p"];
+				portfolio = new PortfolioManagerClient();
+				PriceLabel.Text = portfolio.GetPosition(Request.QueryString["s"]).Trades.OrderByDescending(x => x.Timestamp).Select(x => x.Price).FirstOrDefault().ToString();
 			}
 			else
 			{
