@@ -19,7 +19,7 @@ namespace ATQouteMngrUpdate
             XmlDocument doc = new XmlDocument();
             XmlNode SelectName, SelectTotal, SelectTime, SelectDate;
             List<string> symbols = new List<string>();
-            /*
+            
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
             {
                 conn.Open();
@@ -38,9 +38,6 @@ namespace ATQouteMngrUpdate
 
             }
 
-            */
-            symbols.Add("aapl");
-            symbols.Add("Goog");
             if (symbols.Count > 0)
             {
                 
