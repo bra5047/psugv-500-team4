@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Xml;
+using System.IO;
 using SQ = ATQouteMngrUpdate.StockWebService;
 
 namespace ATQouteMngrUpdate
@@ -19,11 +20,12 @@ namespace ATQouteMngrUpdate
             XmlDocument doc = new XmlDocument();
             XmlNode SelectName, SelectTotal, SelectTime, SelectDate;
             List<string> symbols = new List<string>();
-            
+            StreamWriter write = new StreamWriter(ConfigurationManager.AppSettings.Get("ErrorPath"));
+
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
             {
                 conn.Open();
-                SqlCommand comm = new SqlCommand("SELECT DISTINCT SymbolName FROM Positions UNION ALL SELECT DISTINCT SymbolName from WatchListItems",conn);
+                SqlCommand comm = new SqlCommand("SELECT DISTINCT SymbolName FROM Positions UNION ALL SELECT DISTINCT SymbolName from WatchListItems", conn);
                 SqlDataReader dr = comm.ExecuteReader();
 
                 while (dr.Read())
@@ -33,42 +35,53 @@ namespace ATQouteMngrUpdate
                     {
                         symbols.Add(symbol);
                     }
-                    
+
                 }
 
             }
 
             if (symbols.Count > 0)
             {
-                
+
                 using (SqlConnection connUpdate = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
                 {
                     connUpdate.Open();
                     foreach (string sym in symbols)
                     {
                         SqlCommand SymUpdate = new SqlCommand("INSERT INTO Quotes (Price, TimeStamp, SymbolName) VALUES (@Price, @Time, @Symbol)", connUpdate);
-                    
-                        String QouteUpdate = Qoute.GetQuote(sym);
-                        if (QouteUpdate != string.Empty)
+                        try
                         {
-                            doc.LoadXml(QouteUpdate);
-                            SelectTotal = doc.DocumentElement.SelectSingleNode("//Stock/Last");
-                            SelectName = doc.DocumentElement.SelectSingleNode("//Stock/Symbol");
-                            SelectTime = doc.DocumentElement.SelectSingleNode("//Stock/Time");
-                            SelectDate = doc.DocumentElement.SelectSingleNode("//Stock/Date");
-                            Price = SelectTotal.InnerText;
-                            Symbol = SelectName.InnerText;
-                            Time = SelectDate.InnerText + " " + SelectTime.InnerText;
+                            String QouteUpdate = Qoute.GetQuote(sym);
+                            if (QouteUpdate != string.Empty)
+                            {
 
-                            SymUpdate.Parameters.AddWithValue("@Price", Price);
-                            SymUpdate.Parameters.AddWithValue("@Time", Time);
-                            SymUpdate.Parameters.AddWithValue("@Symbol", Symbol);
-                            SymUpdate.ExecuteNonQuery();
+                                doc.LoadXml(QouteUpdate);
+                                SelectTotal = doc.DocumentElement.SelectSingleNode("//Stock/Last");
+                                SelectName = doc.DocumentElement.SelectSingleNode("//Stock/Symbol");
+                                SelectTime = doc.DocumentElement.SelectSingleNode("//Stock/Time");
+                                SelectDate = doc.DocumentElement.SelectSingleNode("//Stock/Date");
+                                Price = SelectTotal.InnerText;
+                                Symbol = SelectName.InnerText;
+                                Time = SelectDate.InnerText + " " + SelectTime.InnerText;
+
+                                SymUpdate.Parameters.AddWithValue("@Price", Price);
+                                SymUpdate.Parameters.AddWithValue("@Time", Time);
+                                SymUpdate.Parameters.AddWithValue("@Symbol", Symbol);
+                                SymUpdate.ExecuteNonQuery();
+
+
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            write.WriteLine("An error occured with symbol: " + sym);
+                            write.WriteLine("Exception: " + e.ToString());
                         }
                     }
 
                 }
             }
+            write.Close();
         }
     }
 }
