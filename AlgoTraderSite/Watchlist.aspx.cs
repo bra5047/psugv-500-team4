@@ -9,7 +9,7 @@ using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
 using AlgoTrader.portfolio;
-using AlgoTrader.strategy;
+using AlgoTraderSite.Strategy.Client;
 using System.IO;
 
 namespace AlgoTraderSite
@@ -18,7 +18,7 @@ namespace AlgoTraderSite
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();
-		private static IStrategy strategy = new ThreeDucksStrategy();
+		private static StrategyClient strategy = new StrategyClient();
 		List<WatchList> watchlists = new List<WatchList>();
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
 		private string portfolioName = "My Portfolio";
@@ -80,7 +80,6 @@ namespace AlgoTraderSite
 			}
 			foreach (WatchListItem item in wl.items) // join all the items together into a list of WatchlistPlusQuote objects
 			{
-				strategy.startWatching(item.SymbolName);
 				var quotes = wlm.GetQuotes(item.SymbolName).OrderBy(x => x.timestamp).Take(2).ToList();
 				double price1 = quotes.Select(x => x.price).FirstOrDefault();
 				double price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
@@ -221,13 +220,20 @@ namespace AlgoTraderSite
 			btnGraph.Click += new EventHandler(btnClick_generateChart);
 			row.Cells[headers.Length - 1].Controls.Add(btnGraph);
 
-			StrategySummary summary = strategy.getSummary(item.SymbolName);
-			Button btnSignal = new Button();
-			btnSignal.Attributes.Add("Symbol", item.SymbolName);
-			btnSignal.ID = "btnSignal" + item.SymbolName;
-			btnSignal.Text = summary.CurrentSignal.ToString();
-			btnSignal.Click += new EventHandler(btnClick_BuySell);
-			row.Cells[headers.Length - 1].Controls.Add(btnSignal);
+			try
+			{
+				string summary = strategy.getSummary(item.SymbolName).CurrentSignal.ToString();
+				Button btnSignal = new Button();
+				btnSignal.Attributes.Add("Symbol", item.SymbolName);
+				btnSignal.ID = "btnSignal" + item.SymbolName;
+				btnSignal.Text = summary;
+				btnSignal.Click += new EventHandler(btnClick_BuySell);
+				row.Cells[headers.Length - 1].Controls.Add(btnSignal);
+			}
+			catch (Exception ex)
+			{
+				// meh
+			}
 
 			// set widths
 			for (int i = 0; i < widths.Length - 1; i++)
@@ -337,6 +343,7 @@ namespace AlgoTraderSite
 				context.Quotes.Add(q2);
 
 				context.SaveChanges();
+				strategy.startWatching(symbol);
 				updateList(true);
 			}
 			else

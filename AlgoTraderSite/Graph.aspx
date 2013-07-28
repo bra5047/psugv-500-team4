@@ -5,10 +5,9 @@
 	<script type="text/javascript">
 		$(function () {
 			var name = '<%=symbolName%>'
-			var namelower = '<%=symbolName.ToLower()%>'
-			var m1 = '<%=metrics[0]%>'
-			var m2 = '<%=metrics[1]%>'
-			var m3 = '<%=metrics[2]%>'
+			var m1 = '<%=m1%>'
+			var m2 = '<%=m2%>'
+			var m3 = '<%=m3%>'
 
 			//var data = '<%=plot.Select(x => new object[] { x.DateMilliseconds, x.Price })%>'
 			//var json = <%=this.javaSerial.Serialize(plot)%>
@@ -31,7 +30,7 @@
 			//[1154044800000, 65.59],
 			//[1154304000000, 67.96]];
 
-			$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=' + namelower + '-c.json&callback=?', function (data) {
+			$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?', function (data) {
 				// Create the chart
 				$('#container').highcharts('StockChart', {
 
@@ -53,7 +52,7 @@
 							dashStyle: 'shortdash',
 							width: 2,
 							label: {
-								text: 'M1'
+								text: '<%=m1Label%>'
 							}
 						}, {
 							value: m2,
@@ -61,7 +60,7 @@
 							dashStyle: 'shortdash',
 							width: 2,
 							label: {
-								text: 'M2'
+								text: '<%=m2Label%>'
 							}
 						}, {
 							value: m3,
@@ -69,7 +68,7 @@
 							dashStyle: 'shortdash',
 							width: 2,
 							label: {
-								text: 'M3'
+								text: '<%=m3Label%>'
 							}
 						}]
 					},
@@ -101,5 +100,5 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<asp:Button runat="server" Text="Back" OnClick="btnClick_Back" />
 	<div id="container" style="min-width: 500px; height: 70vh"></div>
-    <div id="debug">M1:<%: metrics[0] %><br />M2:<%: metrics[1] %><br />M3:<%: metrics[2] %></div>
+    <div id="debug">M1:<%: m1 %><br />M2:<%: m2 %><br />M3:<%: m3 %></div>
 </asp:Content>

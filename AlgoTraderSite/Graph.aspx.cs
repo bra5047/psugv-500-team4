@@ -16,7 +16,12 @@ namespace AlgoTraderSite
 	public partial class Graph : Page
 	{
         public string symbolName;
-        public double[] metrics;
+		public string m1Label;
+		public string m2Label;
+		public string m3Label;
+		public double m1;
+		public double m2;
+		public double m3;
 		public double[,] datapoints;
         public List<PlotPoint> plot;
         public JavaScriptSerializer javaSerial;
@@ -24,7 +29,7 @@ namespace AlgoTraderSite
 		protected void Page_Load(object sender, EventArgs e)
 		{
             symbolName = string.Empty;
-            metrics = new double[3] { 0, 0, 0 };
+			
             datapoints = new double[1, 1];
             plot = new List<PlotPoint>();
             javaSerial = new JavaScriptSerializer();
@@ -36,11 +41,21 @@ namespace AlgoTraderSite
 			if (Request.QueryString.AllKeys.Contains("s"))
 			{
 				symbolName = Request.QueryString["s"].ToUpper();
-				detail = strategy.getDetailedAnalysis(symbolName);
-				metrics = new double[3] { detail.Metric_1, detail.Metric_2, detail.Metric_3 };
-				//metrics = new double[3] { 450.43, 500.66, 522.63 };
+				try
+				{
+					detail = strategy.getDetailedAnalysis(symbolName);
+					m1 = detail.Metric_1;
+					m2 = detail.Metric_2;
+					m3 = detail.Metric_3;
+					m1Label = detail.Metric_1_Label;
+					m2Label = detail.Metric_2_Label;
+					m3Label = detail.Metric_3_Label;
 
-				getDataPoints();
+					getDataPoints();
+				}
+				catch (Exception ex)
+				{
+				}
 			}
             strategy.Close();
 		}
