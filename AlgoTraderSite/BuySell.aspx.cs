@@ -22,10 +22,7 @@ namespace AlgoTraderSite
             {
                 SymbolLabel.Text = Request.QueryString["s"];
             }
-            if (Request.QueryString.AllKeys.Contains("s"))
-            {
-                PriceLabel.Text = Request.QueryString["p"];
-            }
+            
 			if (Request.QueryString.AllKeys.Contains("t"))
 			{
 				if (Request.QueryString["t"].Equals("Buy"))
@@ -36,6 +33,11 @@ namespace AlgoTraderSite
 				{
 					BuySellPicker.SelectedIndex = 1;
 				}
+			}
+
+			if (Request.QueryString.AllKeys.Contains("s"))
+			{
+				PriceLabel.Text = Request.QueryString["p"];
 			}
 			else
 			{
