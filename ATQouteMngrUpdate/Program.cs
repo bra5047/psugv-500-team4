@@ -60,9 +60,9 @@ namespace ATQouteMngrUpdate
                             Symbol = SelectName.InnerText;
                             Time = SelectDate.InnerText + " " + SelectTime.InnerText;
 
-                            SymUpdate.Parameters.Add("@Price", Price);
-                            SymUpdate.Parameters.Add("@Time", Time);
-                            SymUpdate.Parameters.Add("@Symbol", Symbol);
+                            SymUpdate.Parameters.AddWithValue("@Price", Price);
+                            SymUpdate.Parameters.AddWithValue("@Time", Time);
+                            SymUpdate.Parameters.AddWithValue("@Symbol", Symbol);
                             SymUpdate.ExecuteNonQuery();
                         }
                     }
