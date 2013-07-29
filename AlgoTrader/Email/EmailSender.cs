@@ -25,7 +25,7 @@ namespace AlgoTrader.Email
                 {
                     mail.Subject = SymbolName + " request to sell";
                     mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has dropped below the required parameters. <br/>" +
-                        "We recommend selling " + Quantity.ToString() + "shares.</br>" +
+                        "We recommend selling " + Quantity.ToString() + " shares.<br/><br/>" +
                         "Do you wish to sell? <br/>" +
                         "Please respond with either YES or NO";
                 }
@@ -33,7 +33,7 @@ namespace AlgoTrader.Email
                 {
                     mail.Subject = SymbolName + " request to buy";
                     mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has risen above the required parameters. <br/>" +
-                        "We recommend selling " + Quantity.ToString() + "shares</br>" +
+                        "We recommend buying " + Quantity.ToString() + " shares<br/><br/>" +
                         "Do you wish to sell? <br/>" +
                         "Please respond with either YES or NO";
                 }
