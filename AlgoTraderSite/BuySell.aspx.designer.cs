@@ -19,16 +19,7 @@ namespace AlgoTraderSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList BuySellPicker;
-        
-        /// <summary>
-        /// SymbolLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal SymbolLabel;
+        protected global::System.Web.UI.WebControls.RadioButtonList BuySellPicker;
         
         /// <summary>
         /// QuantityBox control.
@@ -37,7 +28,16 @@ namespace AlgoTraderSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox QuantityBox;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl QuantityBox;
+        
+        /// <summary>
+        /// SymbolLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label SymbolLabel;
         
         /// <summary>
         /// FillerLabel control.
@@ -46,7 +46,7 @@ namespace AlgoTraderSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal FillerLabel;
+        protected global::System.Web.UI.WebControls.Label FillerLabel;
         
         /// <summary>
         /// PriceLabel control.
@@ -55,7 +55,16 @@ namespace AlgoTraderSite {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PriceLabel;
+        protected global::System.Web.UI.WebControls.Label PriceLabel;
+        
+        /// <summary>
+        /// EachLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EachLabel;
         
         /// <summary>
         /// ExecuteTrade control.

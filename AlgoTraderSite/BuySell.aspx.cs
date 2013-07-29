@@ -61,7 +61,7 @@ namespace AlgoTraderSite
             {
                 try
                 {
-                    portfolio.buy(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
+                    portfolio.buy(SymbolLabel.Text, Int32.Parse(QuantityBox.Value));
                 }
                 catch (FaultException<AlgoTraderSite.Portfolio.Client.InsufficientFundsFault> ex)
                 {
@@ -80,7 +80,7 @@ namespace AlgoTraderSite
             {
                 try
                 {
-                    portfolio.sell(SymbolLabel.Text, Int32.Parse(QuantityBox.Text));
+                    portfolio.sell(SymbolLabel.Text, Int32.Parse(QuantityBox.Value));
                 }
                 catch (FaultException<AlgoTraderSite.Portfolio.Client.InsufficientQuantityFault> ex)
                 {

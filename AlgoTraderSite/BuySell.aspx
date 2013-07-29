@@ -13,16 +13,21 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
 	<div class="buysell-wrapper">
-		<asp:DropDownList ID="BuySellPicker" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
-			<asp:ListItem Selected="True">Buy</asp:ListItem>
-			<asp:ListItem>Sell</asp:ListItem>
-		</asp:DropDownList>
-		<asp:Literal ID="SymbolLabel" runat="server"></asp:Literal>
-		<asp:TextBox ID="QuantityBox" runat="server" Width="60px"></asp:TextBox>
-		<asp:Literal ID="FillerLabel" runat="server" Text=" @ "></asp:Literal>
-		<asp:Literal ID="PriceLabel" runat="server" Text="$0.00"></asp:Literal>
-		<asp:Button ID="ExecuteTrade" runat="server" Text="Execute" OnClick="ExecuteTrade_Click" />
+		<div class="input-group">
+			<asp:RadioButtonList ID="BuySellPicker" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal">
+				<asp:ListItem Selected="True">Buy</asp:ListItem>
+				<asp:ListItem>Sell</asp:ListItem>
+			</asp:RadioButtonList>
+		</div>
+		<input id="QuantityBox" runat="server" style="width: 70px" type="number" min="0" required />
+		<asp:Label ID="SymbolLabel" runat="server"></asp:Label>
+		<asp:Label ID="FillerLabel" runat="server" Text="shares @ "></asp:Label>
+		<asp:Label ID="PriceLabel" runat="server" Text="$0.00"></asp:Label>
+		<asp:Label ID="EachLabel" runat="server" Text=" each"></asp:Label>
+		<br />
+		<asp:Button ID="ExecuteTrade" runat="server" Text="Confirm" OnClick="ExecuteTrade_Click" />
 		<div>
-			<asp:Label ID="ErrorMsg" runat="server" BackColor="#FF3300" ForeColor="White" Visible="False" Width="100%"></asp:Label></div>
+			<asp:Label ID="ErrorMsg" runat="server" BackColor="#FF3300" ForeColor="White" Visible="False" Width="100%"></asp:Label>
+		</div>
 	</div>
 </asp:Content>
