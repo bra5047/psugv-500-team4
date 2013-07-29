@@ -22,7 +22,7 @@ namespace AlgoTraderSite
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
 		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
-		string[] widths = { "35%", "25%", "10%", "10%", "20%" };
+		string[] widths = { "40%", "15%", "15%", "15%", "15%" };
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -188,7 +188,9 @@ namespace AlgoTraderSite
 				classname = "red";
 			}
 			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
-			row.Cells[1].Text = new HtmlString(String.Format("{0:C} <span class='subtext'>as of {1}</span>", item.CurrentPrice, item.Timestamp)).ToString();
+			//row.Cells[1].Text = new HtmlString(String.Format("{0:C} <span class='subtext'>as of {1}</span>", item.CurrentPrice, item.Timestamp)).ToString();
+			row.Cells[1].Text = String.Format("{0:C}", item.CurrentPrice);
+			row.Cells[1].ToolTip = String.Format("as of {0}", item.Timestamp);
 			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1:C}</span>", classname, item.PriceChange)).ToString();
 			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1:P}</span>", classname, item.ChangePercent)).ToString();
 

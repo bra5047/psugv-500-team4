@@ -18,7 +18,7 @@ namespace AlgoTraderSite
 		private static List<PositionMessage> openpositions = new List<PositionMessage>();
 		private static List<PositionMessage> allpositions = new List<PositionMessage>();
 		private static List<TradeMessage> transactions = new List<TradeMessage>();
-		private string[] widths = { "40px", "", "13%", "13%", "13%", "13%", "13%" };
+		private string[] widths = { "40px", "", "10%", "25%", "10%", "10%", "10%" };
 		private int columns = 7;
 		private int tcolumns = 7;
 
@@ -127,7 +127,7 @@ namespace AlgoTraderSite
 
 		private Table createPositionHeader()
 		{
-			string[] pheaders = { "", "Company", "Shares", "Price", "Fees", "Status", "Actions" };
+			string[] pheaders = { "", "Company", "Shares", "Price / Gain / Gain %", "Fees", "Status", "Actions" };
 			Table tbl = new Table();
 			tbl.Width = new Unit("100%");
 			TableHeaderRow header = new TableHeaderRow();
@@ -145,8 +145,24 @@ namespace AlgoTraderSite
 
 		private Table createPositionTable(PositionMessage pm)
 		{
-			double lastPrice = pm.Trades.OrderByDescending(x => x.Timestamp).Select(x => x.Price).FirstOrDefault();
 			string fullName = "Full name"; // TODO replace with real company name
+			double gain = 0;
+			double gainPercent = 0;
+			string classname = string.Empty;
+
+			TraderContext db = new TraderContext();
+			double latestQuote = db.Quotes.Where(x => x.SymbolName.Equals(pm.SymbolName)).OrderByDescending(x => x.timestamp).Select(x => x.price).FirstOrDefault();
+			gain = (latestQuote * pm.Quantity) - pm.Price;
+			gainPercent = gain / (pm.Price);
+
+			if (gain > 0)
+			{
+				classname = "green";
+			}
+			if (gain < 0)
+			{
+				classname = "red";
+			}
 
 			Table tbl = new Table();
 			TableRow row = new TableRow();
@@ -160,7 +176,7 @@ namespace AlgoTraderSite
 
 			row.Cells[1].Text += new HtmlString(String.Format("{0} <span class='subtext'>({1})</span>", pm.SymbolName, fullName));
 			row.Cells[2].Text = String.Format("{0:N0}", pm.Quantity);
-			row.Cells[3].Text = String.Format("{0:C}", pm.Price);
+			row.Cells[3].Text = new HtmlString(String.Format("{0:C} / <span class='{3}'>{1:C}</span> / <span class='{3}'>{2:P2}</span>", pm.Price, gain, gainPercent, classname)).ToString();
 			row.Cells[4].Text = String.Format("{0:C}", pm.Trades.Sum(x => x.PaidCommission));
 			row.Cells[5].Text = pm.Status.ToString();
 			row.Cells[5].CssClass = getCssClass(pm.Status.ToString());
@@ -175,7 +191,6 @@ namespace AlgoTraderSite
 			btnAction.ToolTip = "Buy/sell";
 			btnAction.Text = HttpUtility.HtmlDecode("&#xe015;");
 			btnAction.Attributes["SymbolName"] = pm.SymbolName;
-			btnAction.Attributes["LastPrice"] = lastPrice.ToString();
 			btnAction.Click += new EventHandler(btnClick);
 			row.Cells[columns - 1].Controls.Add(btnAction);
 
@@ -190,7 +205,7 @@ namespace AlgoTraderSite
 
 		private Table createTradeTable(PositionMessage pm)
 		{
-			string[] theaders = { "", "Date", "Shares", "Price", "Fees", "Type", "" };
+			string[] theaders = { "", "Date", "Shares", "Price / Gain / Gain %", "Fees", "Type", "" };
 			Table tbl = new Table();
 
 			TableHeaderRow header = new TableHeaderRow();
@@ -203,18 +218,36 @@ namespace AlgoTraderSite
 			}
 			tbl.Rows.Add(header);
 
+			TraderContext db = new TraderContext();
+			double latestQuote = db.Quotes.Where(x => x.SymbolName.Equals(pm.SymbolName)).OrderByDescending(x => x.timestamp).Select(x => x.price).FirstOrDefault();
 			foreach (TradeMessage t in pm.Trades.OrderByDescending(x => x.Timestamp).Where(x => x.Quantity > 0))
 			{
+				double gain = 0;
+				double gainPercent = 0;
+				string classname = string.Empty;
+
 				TableRow trow = new TableRow();
 				for (int i = 0; i < tcolumns; i++)
 				{
 					TableCell cell = new TableCell();
 					trow.Cells.Add(cell);
 				}
+
+				gain = latestQuote - t.Price;
+				gainPercent = gain / t.Price;
+				if (gain > 0)
+				{
+					classname = "green";
+				}
+				if (gain < 0)
+				{
+					classname = "red";
+				}
+
 				trow.Cells[1].Text = String.Format("{0:d} at {0:T}", t.Timestamp); // symbol name
 				trow.Cells[1].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", getTimeSpan(t.Timestamp))); // date
 				trow.Cells[2].Text = String.Format("{0:N0}", t.Quantity); // quantity
-				trow.Cells[3].Text = String.Format("{0:C}", t.Price); // price
+				trow.Cells[3].Text = new HtmlString(String.Format("{0:C} / <span class='{3}'>{1:C}</span> / <span class='{3}'>{2:P2}</span>", t.Price, gain, gainPercent, classname)).ToString();
 				trow.Cells[4].Text = String.Format("{0:C}", t.PaidCommission); // broker fee
 				trow.Cells[5].Text = t.Type.ToString();
 				trow.Cells[5].CssClass = getCssClass(t.Type.ToString());

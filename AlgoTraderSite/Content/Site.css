@@ -179,12 +179,12 @@ footer {
 		background-color: #99CC00;
 		color: #000;
 	}
-	
+
 	.buysell-wrapper .input-group input[type="radio"]:nth-child(1):hover:not(:checked) + label {
 		background-color: #D3E992;
 		color: #7f7f7f;
 	}
-	
+
 	.buysell-wrapper .input-group input[type="radio"]:nth-child(3):checked + label {
 		background-color: #FF4444;
 		color: #000;
@@ -196,7 +196,7 @@ footer {
 	}
 
 	.buysell-wrapper span {
-		font-size: 2em;	
+		font-size: 2em;
 	}
 
 	.buysell-wrapper input[type="submit"] {

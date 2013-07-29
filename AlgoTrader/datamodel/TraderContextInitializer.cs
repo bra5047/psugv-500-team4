@@ -97,29 +97,24 @@ namespace AlgoTrader.datamodel
 				for (int k = 0; k < 10; k++)
 				{
 					Quote quote1 = new Quote();
-					quote1.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
+					quote1.price = Math.Round((rand.NextDouble() * (200 - 5) + 5), 2);
 					quote1.timestamp = DateTime.Now.AddDays(-k);
 					quote1.SymbolName = symbol.name;
 					context.Quotes.Add(quote1);
 				}
-				//Quote quote2 = new Quote();
-				//quote2.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);
-				//quote2.timestamp = DateTime.Now.AddMinutes(-15);
-				//quote2.SymbolName = symbol.name;
-				//context.Quotes.Add(quote2);
 
 				Position p = new Position();
 				p.status = positionStatus.Open;
 				p.Symbol = symbol;
 				p.Portfolio = portfolio;
 
-				for (int j = 0; j < new Random().Next(5, 10); j++)
+				for (int j = 0; j < new Random().Next(1, 10); j++)
 				{
 					Trade t = new Trade();
 					t.Symbol = symbol;
 					t.Position = p;
-					t.price = rand.Next(10, 100);
-					t.quantity = rand.Next(1, 50);
+					t.price = Math.Round((rand.NextDouble() * (200 - 5) + 5), 2);
+					t.quantity = rand.Next(1, 20);
 					t.type = tradeTypes.Buy;
 					t.TransactionId = Guid.NewGuid().ToString();
 					t.timestamp = DateTime.Now.AddSeconds(rand.Next(1, (60 * 60 * 24 * 60) + 1) * -1); // any time between 60 days ago
