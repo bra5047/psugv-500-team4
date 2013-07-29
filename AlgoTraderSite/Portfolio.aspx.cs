@@ -18,9 +18,9 @@ namespace AlgoTraderSite
 		private static List<PositionMessage> openpositions = new List<PositionMessage>();
 		private static List<PositionMessage> allpositions = new List<PositionMessage>();
 		private static List<TradeMessage> transactions = new List<TradeMessage>();
-		private string[] widths = { "40px", "", "13%", "13%", "13%", "13%" };
-		private int columns = 6;
-		private int tcolumns = 6;
+		private string[] widths = { "40px", "", "13%", "13%", "13%", "13%", "13%" };
+		private int columns = 7;
+		private int tcolumns = 7;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -59,9 +59,9 @@ namespace AlgoTraderSite
 		private void showTransactions()
 		{
 			transactions = transactions.OrderByDescending(x => x.Timestamp).ToList();
-			string[] transheaders = { "Date", "Company", "Shares", "Price", "Type" };
-			string[] transwidths = { "20%", "20%", "20", "20%", "20%" };
-			int transcolumns = 5;
+			string[] transheaders = { "Date", "Company", "Shares", "Price", "Fees", "Type" };
+			string[] transwidths = { "20%", "16%", "16%", "16%", "16%", "16%" };
+			int transcolumns = 6;
 
 			PortfolioDiv.Controls.Clear();
 			Table htbl = new Table();
@@ -89,8 +89,9 @@ namespace AlgoTraderSite
 				tr.Cells[0].Text = t.Timestamp.ToString();
 				tr.Cells[1].Text = t.SymbolName;
 				tr.Cells[2].Text = t.InitialQuantity.ToString();
-				tr.Cells[3].Text = t.Price.ToString();
-				tr.Cells[4].Text = t.Type.ToString();
+				tr.Cells[3].Text = String.Format("{0:C}", t.Price);
+				tr.Cells[4].Text = String.Format("{0:C}", t.PaidCommission);
+				tr.Cells[5].Text = t.Type.ToString();
 				tbl.Rows.Add(tr);
 				tbl.CssClass = "main";
 				PortfolioDiv.Controls.Add(tbl);
@@ -125,7 +126,7 @@ namespace AlgoTraderSite
 
 		private Table createPositionHeader()
 		{
-			string[] pheaders = { "", "Company", "Shares", "Price", "Status", "Actions" };
+			string[] pheaders = { "", "Company", "Shares", "Price", "Fees", "Status", "Actions" };
 			Table tbl = new Table();
 			tbl.Width = new Unit("100%");
 			TableHeaderRow header = new TableHeaderRow();
@@ -159,8 +160,9 @@ namespace AlgoTraderSite
 			row.Cells[1].Text += new HtmlString(String.Format("{0} <span class='subtext'>({1})</span>", pm.SymbolName, fullName));
 			row.Cells[2].Text = String.Format("{0:N0}", pm.Quantity);
 			row.Cells[3].Text = String.Format("{0:C}", pm.Price);
-			row.Cells[4].Text = pm.Status.ToString();
-			row.Cells[4].CssClass = getCssClass(pm.Status.ToString());
+			row.Cells[4].Text = String.Format("{0:C}", pm.Trades.Sum(x => x.PaidCommission));
+			row.Cells[5].Text = pm.Status.ToString();
+			row.Cells[5].CssClass = getCssClass(pm.Status.ToString());
 
 			// BUTTONS
 			HtmlGenericControl btnToggle = new HtmlGenericControl("div");
@@ -187,7 +189,7 @@ namespace AlgoTraderSite
 
 		private Table createTradeTable(PositionMessage pm)
 		{
-			string[] theaders = { "", "Date", "Shares", "Price", "Type", "" };
+			string[] theaders = { "", "Date", "Shares", "Price", "Fees", "Type", "" };
 			Table tbl = new Table();
 
 			TableHeaderRow header = new TableHeaderRow();
@@ -208,12 +210,13 @@ namespace AlgoTraderSite
 					TableCell cell = new TableCell();
 					trow.Cells.Add(cell);
 				}
-				trow.Cells[1].Text = String.Format("{0:d} at {0:T}", t.Timestamp);
-				trow.Cells[1].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", getTimeSpan(t.Timestamp)));
-				trow.Cells[2].Text = String.Format("{0:N0}", t.Quantity);
-				trow.Cells[3].Text = String.Format("{0:C}", t.Price);
-				trow.Cells[4].Text = t.Type.ToString();
-				trow.Cells[4].CssClass = getCssClass(t.Type.ToString());
+				trow.Cells[1].Text = String.Format("{0:d} at {0:T}", t.Timestamp); // symbol name
+				trow.Cells[1].Text += new HtmlString(String.Format(" <span class='subtext'>({0})</span>", getTimeSpan(t.Timestamp))); // date
+				trow.Cells[2].Text = String.Format("{0:N0}", t.Quantity); // quantity
+				trow.Cells[3].Text = String.Format("{0:C}", t.Price); // price
+				trow.Cells[4].Text = String.Format("{0:C}", t.PaidCommission); // broker fee
+				trow.Cells[5].Text = t.Type.ToString();
+				trow.Cells[5].CssClass = getCssClass(t.Type.ToString());
 
 				tbl.Rows.Add(trow);
 			}
@@ -306,7 +309,7 @@ namespace AlgoTraderSite
 		protected void btnClick(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
-			Response.Redirect("BuySell.aspx?s=" + btn.Attributes["SymbolName"] + "&p=" + btn.Attributes["LastPrice"]);
+			Response.Redirect("BuySell.aspx?s=" + btn.Attributes["SymbolName"]);
 		}
 
 		protected void btnExpand_Click(object sender, EventArgs e)

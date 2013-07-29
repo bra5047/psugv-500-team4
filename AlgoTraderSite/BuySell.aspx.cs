@@ -22,14 +22,28 @@ namespace AlgoTraderSite
             {
                 SymbolLabel.Text = Request.QueryString["s"];
             }
-            if (Request.QueryString.AllKeys.Contains("s"))
-            {
-                PriceLabel.Text = Request.QueryString["p"];
-            }
-            else
-            {
-                PriceLabel.Text = "$1.25";
-            }
+            
+			if (Request.QueryString.AllKeys.Contains("t"))
+			{
+				if (Request.QueryString["t"].Equals("Buy"))
+				{
+					BuySellPicker.SelectedIndex = 0;
+				}
+				if (Request.QueryString["t"].Equals("Sell"))
+				{
+					BuySellPicker.SelectedIndex = 1;
+				}
+			}
+
+			if (Request.QueryString.AllKeys.Contains("s"))
+			{
+				portfolio = new PortfolioManagerClient();
+				PriceLabel.Text = portfolio.GetPosition(Request.QueryString["s"]).Trades.OrderByDescending(x => x.Timestamp).Select(x => x.Price).FirstOrDefault().ToString();
+			}
+			else
+			{
+				PriceLabel.Text = "$1.25";
+			}
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)

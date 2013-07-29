@@ -8,7 +8,7 @@ using System.Web.UI.HtmlControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
-using AlgoTrader.portfolio;
+using AlgoTraderSite.Portfolio.Client;
 using AlgoTraderSite.Strategy.Client;
 using System.IO;
 
@@ -23,7 +23,7 @@ namespace AlgoTraderSite
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
 		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
-		string[] widths = { "40%", "20%", "10%", "10%", "20%" };
+		string[] widths = { "35%", "25%", "10%", "10%", "20%" };
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -67,7 +67,7 @@ namespace AlgoTraderSite
 		public void generateWatchLists() // gets all the data ready
 		{
 			IWatchList wl = new WatchList();
-			PortfolioManager pm = new PortfolioManager();
+			PortfolioManagerClient pm = new PortfolioManagerClient();
 			allitems.Clear();
 
 			foreach (WatchList w in watchlists) // add all the real watchlist items
@@ -161,10 +161,6 @@ namespace AlgoTraderSite
 			TableRow row = new TableRow();
 			// TODO get long name info from quote manager - should it be stored in the database?
 			string fullName = item.SymbolName + "'s long name goes here";
-			string currentPrice = item.CurrentPrice.ToString("N2");
-			double priceChange = item.PriceChange;
-			double changePercentage = item.ChangePercent;
-			DateTime date = item.Timestamp;
 			string prefix = string.Empty;
 			string classname = string.Empty;
 
@@ -174,19 +170,19 @@ namespace AlgoTraderSite
 				row.Cells.Add(cell);
 			}
 
-			if (priceChange > 0)
+			if (item.PriceChange > 0)
 			{
 				prefix = "+";
 				classname = "green";
 			}
-			if (priceChange < 0)
+			if (item.PriceChange < 0)
 			{
 				classname = "red";
 			}
 			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
-			row.Cells[1].Text = currentPrice + " as of " + date.ToShortDateString();
-			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}</span>", classname, prefix, priceChange)).ToString();
-			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}%</span>", classname, prefix, changePercentage)).ToString();
+			row.Cells[1].Text = new HtmlString(String.Format("{0} <span class='subtext'>as of {1}</span>", item.CurrentPrice.ToString("N2"), item.Timestamp)).ToString();
+			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}</span>", classname, prefix, item.PriceChange)).ToString();
+			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}%</span>", classname, prefix, item.ChangePercent)).ToString();
 
 			if (isPortfolio()) // create Remove button for each row or a lock for portfolio
 			{
@@ -303,6 +299,13 @@ namespace AlgoTraderSite
 				if (success)
 				{
 					setStatus(String.Format("{0} removed from list \"{1}.\"", symbol, listName), true);
+				}
+
+				//check if all instances of that symbol are removed before strategy stops watching it
+				TraderContext db = new TraderContext();
+				if (db.WatchListItems.Where(x => x.SymbolName.Equals(symbol)).Count() == 0 && db.Positions.Where(x => x.SymbolName.Equals(symbol) && x.status == AlgoTrader.Interfaces.positionStatus.Open).Count() == 0)
+				{
+					strategy.stopWatching(symbol);
 				}
 			}
 			updateList(true);
@@ -430,7 +433,8 @@ namespace AlgoTraderSite
 		{
 			Button Sender = (Button)sender;
 			string symbol = Sender.Attributes["Symbol"];
-			Response.Redirect("Graph?s=" + symbol);
+			// TODO get the last price 
+			Response.Redirect("BuySell?s=" + symbol + "&t="+Sender.Text);
 		}
 		#endregion
 	}
