@@ -13,7 +13,7 @@
 	<asp:UpdatePanel ID="UpdatePanel1" runat="server">
 		<ContentTemplate>
 			<div class="panel-wrapper">
-				<div class="panel-watchlist">
+				<div class="panel-left">
 					<asp:RadioButtonList runat="server" ID="radioLists" OnSelectedIndexChanged="radioLists_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true">
 						<asp:ListItem Text="Portfolio" Selected="True"></asp:ListItem>
 						<asp:ListItem Text="Transaction History"></asp:ListItem>

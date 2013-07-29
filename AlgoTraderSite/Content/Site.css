@@ -129,7 +129,7 @@ footer {
 	overflow: hidden;
 }
 
-	.panel-wrapper > .panel-watchlist {
+	.panel-wrapper > .panel-left {
 		background-color: #E2F4FB;
 		width: 250px;
 		float: left;
@@ -139,18 +139,18 @@ footer {
 		margin-right: 10px;
 	}
 
-.panel-watchlist label.header {
+.panel-left label.header {
 	text-transform: uppercase;
 	padding-left: 10px;
 	font-weight: 700;
 	font-size: 1.5em;
 }
 
-.panel-watchlist div.separator {
+.panel-left div.separator {
 	height: 20px;
 }
 
-.panel-watchlist span.cash {
+.panel-left span.cash {
 	padding-left: 10px;
 	font-size: 1.5em;
 }
@@ -162,6 +162,11 @@ footer {
 	padding-bottom: 100000px;
 	margin-bottom: -100000px;
 	min-height: 70vh;
+}
+
+.panel-wrapper > .maincontent span.setting {
+	font-size: 1.4em;
+	font-weight: 700;
 }
 
 .buysell-wrapper {
@@ -335,7 +340,7 @@ input, textarea, select {
 	transition: all .5s ease;
 }
 
-	input[type="text"] {
+	input[type="text"], input[type="email"], input[type="number"] {
 		font-size: 1.2em;
 		padding: 8px;
 		box-shadow: 0px 0px 1px rgba(0,0,0,.25) inset;
@@ -402,13 +407,13 @@ div.toggle {
 		color: #33B5E5;
 	}
 
-.panel-watchlist input[type="radio"] {
+.panel-left input[type="radio"] {
 	margin: 0;
 	padding: 0;
 	display: none;
 }
 
-	.panel-watchlist input[type="radio"] + label {
+	.panel-left input[type="radio"] + label {
 		padding: 5px 10px 5px 8px;
 		margin: 0px;
 		cursor: pointer;
@@ -417,17 +422,17 @@ div.toggle {
 		border: 1px solid rgba(0,0,0,0);
 	}
 
-		.panel-watchlist input[type="radio"] + label:hover {
+		.panel-left input[type="radio"] + label:hover {
 			background-color: #C5EAFB;
 		}
 
-	.panel-watchlist input[type="radio"]:checked + label {
+	.panel-left input[type="radio"]:checked + label {
 		background-color: #8AD5F0;
 		border: 1px solid #33B5E5;
 		font-weight: 700;
 	}
 
-.panel-watchlist .input-group {
+.panel-left .input-group {
 	text-align: center;
 	padding-bottom: 20px;
 }

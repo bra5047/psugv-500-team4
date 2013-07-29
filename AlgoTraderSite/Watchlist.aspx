@@ -13,7 +13,7 @@
 	<asp:UpdatePanel ID="UpdatePanel1" runat="server">
 		<ContentTemplate>
 			<div class="panel-wrapper">
-				<div class="panel-watchlist">
+				<div class="panel-left">
 					<div class="input-group">
 						<asp:TextBox runat="server" ID="tbAddList" placeholder="Add a new list" CssClass="watchlist-input" Width="60%" MaxLength="20" onfocus="this.select()" onmouseup="return false" onkeydown="return (event.keyCode!=13);"></asp:TextBox>
 						<asp:Button runat="server" ID="btnAddList" Text="&#xe00b;" ToolTip="Add to list" CssClass="symbol-button" OnClick="btnAddList_Click" onkeydown="return (event.keyCode!=13);" /><br />
