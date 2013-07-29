@@ -83,6 +83,12 @@ namespace AlgoTraderSite
 				var quotes = wlm.GetQuotes(item.SymbolName).OrderByDescending(x => x.timestamp).Take(2).ToList();
 				double price1 = quotes.Select(x => x.price).FirstOrDefault();
 				double price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
+
+				if (price2 == 0)
+				{
+					price2 = price1;
+				}
+
 				DateTime date = quotes.Select(x => x.timestamp).FirstOrDefault();
 				allitems.Add(new WatchlistPlusQuote(item.SymbolName, item.ListName, date, price1, price2));
 			}
@@ -177,13 +183,12 @@ namespace AlgoTraderSite
 			}
 			if (item.PriceChange < 0)
 			{
-				prefix = "-";
 				classname = "red";
 			}
 			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
-			row.Cells[1].Text = new HtmlString(String.Format("{0:C} <span class='subtext'>as of {1}</span>", item.CurrentPrice.ToString("N2"), item.Timestamp)).ToString();
-			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0:C}'>{1}{2:N2}</span>", classname, prefix, item.PriceChange)).ToString();
-			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1}{2:N2}%</span>", classname, prefix, item.ChangePercent)).ToString();
+			row.Cells[1].Text = new HtmlString(String.Format("{0:C} <span class='subtext'>as of {1}</span>", item.CurrentPrice, item.Timestamp)).ToString();
+			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1:C}</span>", classname, item.PriceChange)).ToString();
+			row.Cells[3].Text = new HtmlString(String.Format("<span class='{0}'>{1:P}</span>", classname, item.ChangePercent)).ToString();
 
 			if (isPortfolio()) // create Remove button for each row or a lock for portfolio
 			{
@@ -220,12 +225,15 @@ namespace AlgoTraderSite
 			try
 			{
 				string summary = strategy.getSummary(item.SymbolName).CurrentSignal.ToString();
-				Button btnSignal = new Button();
-				btnSignal.Attributes.Add("Symbol", item.SymbolName);
-				btnSignal.ID = "btnSignal" + item.SymbolName;
-				btnSignal.Text = summary;
-				btnSignal.Click += new EventHandler(btnClick_BuySell);
-				row.Cells[headers.Length - 1].Controls.Add(btnSignal);
+				if (summary.Equals("Buy") || summary.Equals("Sell"))
+				{
+					Button btnSignal = new Button();
+					btnSignal.Attributes.Add("Symbol", item.SymbolName);
+					btnSignal.ID = "btnSignal" + item.SymbolName;
+					btnSignal.Text = summary;
+					btnSignal.Click += new EventHandler(btnClick_BuySell);
+					row.Cells[headers.Length - 1].Controls.Add(btnSignal);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -457,7 +465,7 @@ namespace AlgoTraderSite
 			Timestamp = time;
 			CurrentPrice = pricenow;
 			PriceChange = pricenow - pricebefore;
-			ChangePercent = pricenow / pricebefore * 100;
+			ChangePercent = (pricenow - pricebefore) / pricebefore;
 		}
 	}
 	#endregion

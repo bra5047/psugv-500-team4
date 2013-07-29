@@ -100,5 +100,5 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<asp:Button runat="server" Text="Back" OnClick="btnClick_Back" />
 	<div id="container" style="min-width: 500px; height: 70vh"></div>
-    <div id="debug">M1:<%: m1 %><br />M2:<%: m2 %><br />M3:<%: m3 %></div>
+    <div id="debug"><%=m1Label%>: <%=m1%><br /><%=m2Label%>: <%=m2%><br /><%=m3Label%>: <%=m3 %></div>
 </asp:Content>
