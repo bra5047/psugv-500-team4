@@ -79,14 +79,14 @@ namespace AlgoTraderSite
 			}
 			foreach (WatchListItem item in wl.items) // join all the items together into a list of WatchlistPlusQuote objects
 			{
-				var quotes = wlm.GetQuotes(item.SymbolName).OrderByDescending(x => x.timestamp).Take(2).ToList();
+				var quotes = wlm.GetQuotes(item.SymbolName).OrderByDescending(x => x.timestamp).ToList();
 				double price1 = 0;
 				double price2 = 0;
 
 				price1 = quotes.Select(x => x.price).FirstOrDefault();
 				price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
 
-				if (quotes.Count() == 2)
+				if (quotes.Count() == 1)
 				{
 					price2 = price1;
 				}
