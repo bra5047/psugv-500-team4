@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
+using log4net;
 
 namespace AlgoTrader.strategy
 {
@@ -41,12 +42,18 @@ namespace AlgoTrader.strategy
 
         public void Add(DateTime time, double price)
         {
-            if (_quotes.Count < 1 || (time - _quotes.Last<DataPoint>().Timestamp).Seconds >= IntervalSeconds)
+            ILog log = LogManager.GetLogger(typeof(SmaMetric));
+            if (_quotes.Count < 1 || (time - _quotes.Last<DataPoint>().Timestamp).TotalSeconds >= IntervalSeconds)
             {
-                _quotes.Enqueue(new DataPoint(time, price)); 
+                _quotes.Enqueue(new DataPoint(time, price));
+                //log.DebugFormat("Data point added: symbol {0} interval {1} time {2} price {3} count {4} avg {5}", SymbolName, IntervalSeconds, time, price, _quotes.Count, _quotes.Average<DataPoint>(q => q.Value));
                 if (_quotes.Count > WindowSize) _quotes.Dequeue();
                 _datapoints.Add(time, Avg);
                 if (_datapoints.Count > HISTORY_DATAPOINTS) _datapoints.Remove(_datapoints.First().Key);
+            }
+            else
+            {
+                //log.DebugFormat("Data point added: symbol {0} interval {1} time {2} price {3} count {4} elapsed {5}", SymbolName, IntervalSeconds, time, price, _quotes.Count, (time - _quotes.Last<DataPoint>().Timestamp).TotalSeconds);
             }
         }
 
