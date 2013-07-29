@@ -86,6 +86,11 @@ namespace AlgoTraderSite
 				price1 = quotes.Select(x => x.price).FirstOrDefault();
 				price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
 
+				if (quotes.Count() == 2)
+				{
+					price2 = price1;
+				}
+
 				DateTime date = quotes.Select(x => x.timestamp).FirstOrDefault();
 				allitems.Add(new WatchlistPlusQuote(item.SymbolName, item.ListName, date, price1, price2));
 			}

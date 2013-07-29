@@ -295,13 +295,11 @@ namespace AlgoTraderSite
 			switch (radioLists.SelectedIndex)
 			{
 				case 0:
-					inputGroupLeft.Visible = true;
-					inputGroupRight.Visible = true;
+					InputGroup.Visible = true;
 					showPositions(); 
 					break;
 				case 1:
-					inputGroupLeft.Visible = false;
-					inputGroupRight.Visible = false; 
+					InputGroup.Visible = false;
 					showTransactions(); 
 					break;
 				default: break;
