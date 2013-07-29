@@ -38,6 +38,7 @@ namespace AlgoTraderSite
 			allpositions.Clear();
 			transactions.Clear();
 			openpositions = portfolio.GetOpenPositions().ToList();
+			AvailableCash.Text = String.Format("{0:C}", portfolio.getAvailableCash());
 
 			TraderContext db = new TraderContext();
 			var query = db.Positions.Select(x => x.SymbolName);
@@ -293,7 +294,9 @@ namespace AlgoTraderSite
 		{
 			switch (radioLists.SelectedIndex)
 			{
-				case 0: 
+				case 0:
+					inputGroupLeft.Visible = true;
+					inputGroupRight.Visible = true;
 					showPositions(); 
 					break;
 				case 1:

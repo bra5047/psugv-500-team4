@@ -8,6 +8,7 @@ using System.ServiceModel;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTraderSite.Portfolio.Client;
+using AlgoTrader.watchlist;
 
 namespace AlgoTraderSite
 {
@@ -37,8 +38,10 @@ namespace AlgoTraderSite
 
 			if (Request.QueryString.AllKeys.Contains("s"))
 			{
-				portfolio = new PortfolioManagerClient();
-				PriceLabel.Text = portfolio.GetPosition(Request.QueryString["s"]).Trades.OrderByDescending(x => x.Timestamp).Select(x => x.Price).FirstOrDefault().ToString();
+				string symbol = Request.QueryString["s"];
+				TraderContext db = new TraderContext();
+				var query = db.Quotes.Where(x => x.SymbolName.Equals(symbol)).OrderByDescending(x => x.timestamp).Select(x => x.price).FirstOrDefault();
+				PriceLabel.Text = String.Format("{0:C}", query.ToString());
 			}
 			else
 			{

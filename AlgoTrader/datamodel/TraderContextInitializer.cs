@@ -94,7 +94,7 @@ namespace AlgoTrader.datamodel
 				WatchListItem wli = new WatchListItem(symbol, watchlists[rand.Next(0, watchlists.Length)]);
 				context.WatchListItems.Add(wli);
 
-				for (int k = 0; k < 100; k++)
+				for (int k = 0; k < 10; k++)
 				{
 					Quote quote1 = new Quote();
 					quote1.price = Math.Round((rand.NextDouble() * (1000 - 5) + 5), 2);

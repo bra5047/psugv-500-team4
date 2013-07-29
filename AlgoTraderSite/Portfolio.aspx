@@ -18,20 +18,25 @@
 						<asp:ListItem Text="Portfolio" Selected="True"></asp:ListItem>
 						<asp:ListItem Text="Transaction History"></asp:ListItem>
 					</asp:RadioButtonList>
+					<div class="separator"></div>
+					<label class="header">Available cash:</label><br />
+					<asp:Label runat="server" ID="AvailableCash" CssClass="cash"></asp:Label>
 				</div>
 				<div class="maincontent">
-					<div id="inputGroupLeft" class="input-group float-left" runat="server">
-						<asp:Button ID="btnExpand" CssClass="ExpandAll" OnClientClick="return false" Text="Expand All" Width="200" runat="server" />
-					</div>
-					<div id="inputGroupRight" class="input-group float-right" runat="server">
-						<asp:RadioButtonList runat="server" ID="radioSortType" RepeatDirection="Horizontal" RepeatLayout="Flow" OnSelectedIndexChanged="radioSortType_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true">
-							<asp:ListItem Value="namea" Text="&#xe00d;" title="Sort by name (a-z)"></asp:ListItem>
-							<asp:ListItem Value="named" Text="&#xe00e;" title="Sort by name (z-a)"></asp:ListItem>
-							<asp:ListItem Value="sharesd" Text="&#xe011;" title="Sort by total shares (highest)"></asp:ListItem>
-							<asp:ListItem Value="sharesa" Text="&#xe012;" title="Sort by total shares (lowest)"></asp:ListItem>
-							<asp:ListItem Value="valued" Text="&#xe00f;" title="Sort by value (highest)"></asp:ListItem>
-							<asp:ListItem Value="valuea" Text="&#xe010;" title="Sort by value (lowest)"></asp:ListItem>
-						</asp:RadioButtonList>
+					<div id="InputGroup" class="input-group" runat="server">
+						<div id="inputGroupLeft" class="float-left" runat="server">
+							<asp:Button ID="btnExpand" CssClass="ExpandAll" OnClientClick="return false" Text="Expand All" Width="200" runat="server" />
+						</div>
+						<div id="inputGroupRight" class="float-right" runat="server">
+							<asp:RadioButtonList runat="server" ID="radioSortType" RepeatDirection="Horizontal" RepeatLayout="Flow" OnSelectedIndexChanged="radioSortType_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true">
+								<asp:ListItem Value="namea" Text="&#xe00d;" title="Sort by name (a-z)"></asp:ListItem>
+								<asp:ListItem Value="named" Text="&#xe00e;" title="Sort by name (z-a)"></asp:ListItem>
+								<asp:ListItem Value="sharesd" Text="&#xe011;" title="Sort by total shares (highest)"></asp:ListItem>
+								<asp:ListItem Value="sharesa" Text="&#xe012;" title="Sort by total shares (lowest)"></asp:ListItem>
+								<asp:ListItem Value="valued" Text="&#xe00f;" title="Sort by value (highest)"></asp:ListItem>
+								<asp:ListItem Value="valuea" Text="&#xe010;" title="Sort by value (lowest)"></asp:ListItem>
+							</asp:RadioButtonList>
+						</div>
 					</div>
 					<div runat="server" id="statusMessage"></div>
 					<div runat="server" id="emptyDiv" class="watchlist-empty"></div>
