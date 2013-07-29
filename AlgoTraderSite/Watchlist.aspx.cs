@@ -14,7 +14,6 @@ using System.IO;
 
 namespace AlgoTraderSite
 {
-	// TODO implement strategy signal into watchlist
 	public partial class WatchListPage : Page
 	{
 		private static IWatchListManager wlm = new WatchListManager();
@@ -81,13 +80,11 @@ namespace AlgoTraderSite
 			foreach (WatchListItem item in wl.items) // join all the items together into a list of WatchlistPlusQuote objects
 			{
 				var quotes = wlm.GetQuotes(item.SymbolName).OrderByDescending(x => x.timestamp).Take(2).ToList();
-				double price1 = quotes.Select(x => x.price).FirstOrDefault();
-				double price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
+				double price1 = 0;
+				double price2 = 0;
 
-				if (price2 == 0)
-				{
-					price2 = price1;
-				}
+				price1 = quotes.Select(x => x.price).FirstOrDefault();
+				price2 = quotes.Select(x => x.price).Skip(1).FirstOrDefault();
 
 				DateTime date = quotes.Select(x => x.timestamp).FirstOrDefault();
 				allitems.Add(new WatchlistPlusQuote(item.SymbolName, item.ListName, date, price1, price2));
@@ -199,7 +196,6 @@ namespace AlgoTraderSite
 				btnLocked.Enabled = false;
 				row.Cells[headers.Length - 1].Controls.Add(btnLocked);
 			}
-			// TODO add a button for strategy buy/sell
 			else // otherwise create a remove button
 			{
 				Button btnRemove = new Button();
@@ -222,6 +218,7 @@ namespace AlgoTraderSite
 			btnGraph.Click += new EventHandler(btnClick_generateChart);
 			row.Cells[headers.Length - 1].Controls.Add(btnGraph);
 
+			// buy/sell strategy signal button
 			try
 			{
 				string summary = strategy.getSummary(item.SymbolName).CurrentSignal.ToString();
@@ -338,23 +335,6 @@ namespace AlgoTraderSite
 				{
 					setStatus(String.Format("{0} could not be added to \"{1}.\"", symbol, listName), false);
 				}
-
-				TraderContext context = new TraderContext();
-				Random rand = new Random();
-				// TODO remove this later
-				Quote q1 = new Quote();
-				q1.price = rand.NextDouble() * (400 - 100) + 100;
-				q1.SymbolName = symbol;
-				q1.timestamp = DateTime.Now;
-				context.Quotes.Add(q1);
-
-				Quote q2 = new Quote();
-				q2.price = rand.NextDouble() * (400 - 100) + 100;
-				q2.SymbolName = symbol;
-				q2.timestamp = DateTime.Now.AddDays(-1);
-				context.Quotes.Add(q2);
-
-				context.SaveChanges();
 				strategy.startWatching(symbol);
 				updateList(true);
 			}
@@ -442,7 +422,6 @@ namespace AlgoTraderSite
 		{
 			Button Sender = (Button)sender;
 			string symbol = Sender.Attributes["Symbol"];
-			// TODO get the last price 
 			Response.Redirect("BuySell?s=" + symbol + "&t="+Sender.Text);
 		}
 		#endregion
