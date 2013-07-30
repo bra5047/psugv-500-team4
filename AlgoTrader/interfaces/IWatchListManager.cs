@@ -12,7 +12,7 @@ namespace AlgoTrader.Interfaces
 	public interface IWatchListManager
 	{
 		List<Quote> GetQuotes(string symbolName);
-
+		string GetLongName(string SymbolName);
 		IWatchList GetWatchList(string listName);
 		bool AddWatchList(string listName);
 		bool DeleteWatchList(string listName);

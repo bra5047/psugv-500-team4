@@ -8,6 +8,7 @@ using System.Web.UI.HtmlControls;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTraderSite.Portfolio.Client;
+using AlgoTrader.watchlist;
 using System.IO;
 
 namespace AlgoTraderSite
@@ -145,10 +146,14 @@ namespace AlgoTraderSite
 
 		private Table createPositionTable(PositionMessage pm)
 		{
-			string fullName = "Full name"; // TODO replace with real company name
+			//string fullName = "Full name"; // TODO replace with real company name
+			string fullName = string.Empty;
 			double gain = 0;
 			double gainPercent = 0;
 			string classname = string.Empty;
+
+			IWatchListManager wlm = new WatchListManager();
+			fullName = wlm.GetLongName(pm.SymbolName);
 
 			TraderContext db = new TraderContext();
 			double latestQuote = db.Quotes.Where(x => x.SymbolName.Equals(pm.SymbolName)).OrderByDescending(x => x.timestamp).Select(x => x.price).FirstOrDefault();

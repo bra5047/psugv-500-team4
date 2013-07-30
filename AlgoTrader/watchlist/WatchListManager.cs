@@ -41,6 +41,13 @@ namespace AlgoTrader.watchlist
 			return result;
 		}
 
+		string IWatchListManager.GetLongName(string symbolName)
+		{
+			TraderContext db = new TraderContext();
+			string longname = db.Symbols.Where(x => x.name.Equals(symbolName)).Select(x => x.CompanyName).FirstOrDefault();
+			return longname;
+		}
+
 		IWatchList IWatchListManager.GetWatchList(string listName)
 		{
 			TraderContext db = new TraderContext();

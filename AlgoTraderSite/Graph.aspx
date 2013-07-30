@@ -8,27 +8,7 @@
 			var m1 = '<%=m1%>'
 			var m2 = '<%=m2%>'
 			var m3 = '<%=m3%>'
-
-			//var data = '<%=plot.Select(x => new object[] { x.DateMilliseconds, x.Price })%>'
-			//var json = <%=this.javaSerial.Serialize(plot)%>
-
-			//alert(json);
-			//var datagroup = JSON.stringify({myarray: [<%=datapoints%>]});
-			//var datagroup = <%=this.javaSerial.Serialize(plot)%>
-			//var datagroup = JSON.stringify({ myArray: {<%=plot%> } });
-
-			//var d = new Date("July 21, 1983 01:15:00:526")
-			//			var datapoints = [[d.valueOf(), 52.37],
-			//[1153180800000, 52.90],
-			//[1153267200000, 54.10],
-			//[1153353600000, 60.50],
-			//[1153440000000, 60.72],
-			//[1153699200000, 61.42],
-			//[1153785600000, 61.93],
-			//[1153872000000, 63.87],
-			//[1153958400000, 63.40],
-			//[1154044800000, 65.59],
-			//[1154304000000, 67.96]];
+			var datapoints = <%=data%>
 
 			$.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=' + name.toLowerCase() + '-c.json&callback=?', function (data) {
 				// Create the chart
@@ -52,7 +32,7 @@
 							dashStyle: 'shortdash',
 							width: 2,
 							label: {
-								text: '<%=m1Label%>'
+								text: ''
 							}
 						}, {
 							value: m2,
@@ -60,7 +40,7 @@
 							dashStyle: 'shortdash',
 							width: 2,
 							label: {
-								text: '<%=m2Label%>'
+								text: ''
 							}
 						}, {
 							value: m3,
@@ -68,14 +48,14 @@
 							dashStyle: 'shortdash',
 							width: 2,
 							label: {
-								text: '<%=m3Label%>'
+								text: ''
 							}
 						}]
 					},
 
 					series: [{
 						name: name,
-						data: data,
+						data: datapoints,
 						tooltip: {
 							valueDecimals: 2
 						}
@@ -98,7 +78,11 @@
 	</section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-	<asp:Button runat="server" Text="Back" OnClick="btnClick_Back" />
+	<div class="graph-wrapper">
+		<asp:Button runat="server" Text="Back" OnClick="btnClick_Back" />
+		<div class="legend" style="background-color: #99cc00"></div> <span><%=m1Label%> (<%=String.Format("{0:C}", m1)%>)</span>
+		<div class="legend" style="background-color: #ff9494"></div> <span><%=m2Label%> (<%=String.Format("{0:C}", m2)%>)</span>
+		<div class="legend" style="background-color: #f1db7b"></div> <span><%=m3Label%> (<%=String.Format("{0:C}", m3)%>)</span>
+	</div>
 	<div id="container" style="min-width: 500px; height: 70vh"></div>
-    <div id="debug"><%=m1Label%>: <%=m1%><br /><%=m2Label%>: <%=m2%><br /><%=m3Label%>: <%=m3 %></div>
 </asp:Content>
