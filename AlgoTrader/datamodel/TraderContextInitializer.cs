@@ -89,6 +89,7 @@ namespace AlgoTrader.datamodel
 			for (int i = 0; i < symbols.Length; i++)
 			{
 				Symbol symbol = new Symbol(symbols[i]);
+				symbol.CompanyName = "Random Company Name, Inc.";
 				context.Symbols.Add(symbol);
 
 				WatchListItem wli = new WatchListItem(symbol, watchlists[rand.Next(0, watchlists.Length)]);

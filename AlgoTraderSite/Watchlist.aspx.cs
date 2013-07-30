@@ -22,7 +22,7 @@ namespace AlgoTraderSite
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
 		private string portfolioName = "My Portfolio";
 		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
-		string[] widths = { "40%", "15%", "15%", "15%", "15%" };
+		string[] widths = { "32%", "17%", "16%", "15%", "20%" };
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -91,8 +91,10 @@ namespace AlgoTraderSite
 					price2 = price1;
 				}
 
+				string companyName = wlm.GetLongName(item.SymbolName);
+
 				DateTime date = quotes.Select(x => x.timestamp).FirstOrDefault();
-				allitems.Add(new WatchlistPlusQuote(item.SymbolName, item.ListName, date, price1, price2));
+				allitems.Add(new WatchlistPlusQuote(item.SymbolName, companyName, item.ListName, date, price1, price2));
 			}
 		}
 
@@ -167,8 +169,6 @@ namespace AlgoTraderSite
 		{
 			Table tbl = new Table();
 			TableRow row = new TableRow();
-			// TODO get long name info from quote manager - should it be stored in the database?
-			string fullName = item.SymbolName + "'s long name goes here";
 			string prefix = string.Empty;
 			string classname = string.Empty;
 
@@ -187,8 +187,7 @@ namespace AlgoTraderSite
 			{
 				classname = "red";
 			}
-			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", fullName));
-			//row.Cells[1].Text = new HtmlString(String.Format("{0:C} <span class='subtext'>as of {1}</span>", item.CurrentPrice, item.Timestamp)).ToString();
+			row.Cells[0].Text = item.SymbolName + new HtmlString(String.Format(" <span class='subtext'>({0})</span>", item.LongName));
 			row.Cells[1].Text = String.Format("{0:C}", item.CurrentPrice);
 			row.Cells[1].ToolTip = String.Format("as of {0}", item.Timestamp);
 			row.Cells[2].Text = new HtmlString(String.Format("<span class='{0}'>{1:C}</span>", classname, item.PriceChange)).ToString();
@@ -326,6 +325,7 @@ namespace AlgoTraderSite
 
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
+			// TODO add validation for entered symbol
 			bool success = false;
 			string symbol = tbAddToWatchList.Text.Trim().ToUpper();
 			string listName = radioLists.SelectedValue;
@@ -438,15 +438,17 @@ namespace AlgoTraderSite
 	class WatchlistPlusQuote // joined list for watchlist only
 	{
 		public string SymbolName { get; set; }
+		public string LongName { get; set; }
 		public string ListName { get; set; }
 		public DateTime Timestamp { get; set; }
 		public double CurrentPrice { get; set; }
 		public double PriceChange { get; set; }
 		public double ChangePercent { get; set; }
 
-		public WatchlistPlusQuote(string symbol, string list, DateTime time, double pricenow, double pricebefore)
+		public WatchlistPlusQuote(string symbol, string longname, string list, DateTime time, double pricenow, double pricebefore)
 		{
 			SymbolName = symbol;
+			LongName = longname;
 			ListName = list;
 			Timestamp = time;
 			CurrentPrice = pricenow;

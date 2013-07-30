@@ -25,6 +25,7 @@ namespace AlgoTraderSite
 		public double[,] datapoints;
         public List<PlotPoint> plot;
         public JavaScriptSerializer javaSerial;
+		public string data;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -47,9 +48,9 @@ namespace AlgoTraderSite
 					m1 = detail.Metric_1;
 					m2 = detail.Metric_2;
 					m3 = detail.Metric_3;
-					m1Label = "     " + detail.Metric_1_Label;
-					m2Label = "     " + detail.Metric_2_Label;
-					m3Label = "     " + detail.Metric_3_Label;
+					m1Label = detail.Metric_1_Label;
+					m2Label = detail.Metric_2_Label;
+					m3Label = detail.Metric_3_Label;
 
 					getDataPoints();
 				}
@@ -65,22 +66,18 @@ namespace AlgoTraderSite
 			IWatchListManager wlm = new WatchListManager();
 			var query = wlm.GetQuotes(symbolName);
 			DateTime dstart = new DateTime(1970, 1, 1);
-			//datapoints = new double[query.Count, 2];
+			query = query.OrderBy(x => x.timestamp).ToList();
 
+			data = "[";
 			foreach (Quote q in query)
 			{
 				DateTime qdate = q.timestamp;
 				TimeSpan ts = q.timestamp - dstart;
-				plot.Add(new PlotPoint(ts.TotalMilliseconds, q.price));
+				//plot.Add(new PlotPoint(ts.TotalMilliseconds, q.price));
+				data += "[" + ts.TotalMilliseconds + ", " + q.price + "],";
 			}
-
-			//for (int i = 0; i < query.Count; i++)
-			//{
-			//	DateTime qdate = query[i].timestamp;
-			//	TimeSpan ts = query[i].timestamp - dstart;
-			//	datapoints[i, 0] = ts.TotalMilliseconds - ts.Milliseconds;
-			//	datapoints[i, 1] = query[i].price;
-			//}
+			data = data.TrimEnd(',');
+			data += "]";
 		}
 
 		#region Controls
