@@ -16,9 +16,9 @@ namespace ATQouteMngrUpdate
         static void Main(string[] args)
         {
             SQ.StockQuote Qoute = new SQ.StockQuote();
-            String Price, Time, Symbol;
+            String Price, Time, Symbol, Company;
             XmlDocument doc = new XmlDocument();
-            XmlNode SelectName, SelectTotal, SelectTime, SelectDate;
+            XmlNode SelectName, SelectTotal, SelectTime, SelectDate, SelectCompany;
             List<string> symbols = new List<string>();
             StreamWriter write = new StreamWriter(ConfigurationManager.AppSettings.Get("ErrorPath"));
 
@@ -48,7 +48,7 @@ namespace ATQouteMngrUpdate
                     connUpdate.Open();
                     foreach (string sym in symbols)
                     {
-                        SqlCommand SymUpdate = new SqlCommand("INSERT INTO Quotes (Price, TimeStamp, SymbolName) VALUES (@Price, @Time, @Symbol)", connUpdate);
+                        SqlCommand SymUpdate = new SqlCommand("INSERT INTO Quotes (Price, TimeStamp, SymbolName, CompanyName) VALUES (@Price, @Time, @Symbol,@Name)", connUpdate);
                         try
                         {
                             String QouteUpdate = Qoute.GetQuote(sym);
@@ -60,10 +60,12 @@ namespace ATQouteMngrUpdate
                                 SelectName = doc.DocumentElement.SelectSingleNode("//Stock/Symbol");
                                 SelectTime = doc.DocumentElement.SelectSingleNode("//Stock/Time");
                                 SelectDate = doc.DocumentElement.SelectSingleNode("//Stock/Date");
+                                SelectCompany = doc.DocumentElement.SelectSingleNode("//Stock/Name");
+                                Company = SelectCompany.InnerText;
                                 Price = SelectTotal.InnerText;
                                 Symbol = SelectName.InnerText;
                                 Time = SelectDate.InnerText + " " + SelectTime.InnerText;
-
+                                SymUpdate.Parameters.AddWithValue("@Name", Company);
                                 SymUpdate.Parameters.AddWithValue("@Price", Price);
                                 SymUpdate.Parameters.AddWithValue("@Time", Time);
                                 SymUpdate.Parameters.AddWithValue("@Symbol", Symbol);

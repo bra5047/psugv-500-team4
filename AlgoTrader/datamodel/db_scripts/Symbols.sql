@@ -7,6 +7,7 @@ GO
 
 CREATE TABLE [dbo].[Symbols](
 	[name] [nvarchar](128) NOT NULL,
+	[CompanyName] [nvarchar](200) NULL,
  CONSTRAINT [PK_dbo.Symbols] PRIMARY KEY CLUSTERED 
 (
 	[name] ASC

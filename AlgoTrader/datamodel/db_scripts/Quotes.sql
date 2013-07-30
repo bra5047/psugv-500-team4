@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[Quotes](
 	[price] [float] NOT NULL,
 	[timestamp] [datetime] NOT NULL,
 	[SymbolName] [nvarchar](128) NULL,
+	[CompanyName] [nvarchar](200) NULL,
  CONSTRAINT [PK_dbo.Quotes] PRIMARY KEY CLUSTERED 
 (
 	[QuoteId] ASC
