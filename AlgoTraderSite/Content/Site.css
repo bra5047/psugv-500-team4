@@ -274,6 +274,11 @@ footer {
 	float: right;
 	margin: 20px;
 	min-width: 400px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 	.alert-wrapper .heading {

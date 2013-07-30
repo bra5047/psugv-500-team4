@@ -33,6 +33,10 @@ function pageLoad(sender, args) {
 		$actionrow.stop(true, true).animate({ height: "toggle", opacity: "toggle" }, 250);
 	});
 
+	$(".heading").click(function (e) {
+		$(".alert-wrapper .content").stop(true, true).animate({ height: "toggle", opacity: "toggle" }, 250);
+	});
+
 	$(".ExpandAll").click(function (e) {
 		$target = $(".ExpandAll");
 		var value = "";

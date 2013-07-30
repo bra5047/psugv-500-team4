@@ -146,7 +146,6 @@ namespace AlgoTraderSite
 
 		private Table createPositionTable(PositionMessage pm)
 		{
-			//string fullName = "Full name"; // TODO replace with real company name
 			string fullName = string.Empty;
 			double gain = 0;
 			double gainPercent = 0;
@@ -365,6 +364,12 @@ namespace AlgoTraderSite
 		{
 			update();
 		}
+
+		protected void btnAddCash_Click(object sender, EventArgs e)
+		{
+			
+		}
 		#endregion
+
 	}
 }

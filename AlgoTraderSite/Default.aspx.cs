@@ -22,7 +22,7 @@ namespace AlgoTraderSite
 		protected void showAlerts()
 		{
 			AlertBox.Controls.Clear();
-			List<AlertMessage> alerts = new List<AlertMessage>(useragent.getPendingAlerts().OrderBy(x => x.Timestamp));
+			List<AlertMessage> alerts = new List<AlertMessage>(useragent.getPendingAlerts().OrderByDescending(x => x.Timestamp));
 			if (alerts.Count() > 0)
 			{
 				AlertBox.InnerText = string.Empty;
