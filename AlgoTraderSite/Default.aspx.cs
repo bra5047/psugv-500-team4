@@ -10,19 +10,28 @@ using System.Web.UI.HtmlControls;
 
 namespace AlgoTraderSite
 {
-    public partial class _Default : Page
-    {
+	public partial class _Default : Page
+	{
 		UserAgentClient useragent;
-        protected void Page_Load(object sender, EventArgs e)
-        {
+		private static List<AlertMessage> alerts;
+		protected void Page_Load(object sender, EventArgs e)
+		{
 			useragent = new UserAgentClient();
+			if (!IsPostBack)
+			{
+				generateAlerts();
+			}
 			showAlerts();
-        }
+		}
+
+		protected void generateAlerts()
+		{
+			alerts = new List<AlertMessage>(useragent.getPendingAlerts().OrderByDescending(x => x.Timestamp));
+		}
 
 		protected void showAlerts()
 		{
 			AlertBox.Controls.Clear();
-			List<AlertMessage> alerts = new List<AlertMessage>(useragent.getPendingAlerts().OrderByDescending(x => x.Timestamp));
 			if (alerts.Count() > 0)
 			{
 				AlertBox.InnerText = string.Empty;
@@ -63,7 +72,7 @@ namespace AlgoTraderSite
 					TableRow row2 = new TableRow();
 					TableCell cellDetail = new TableCell();
 					cellDetail.ColumnSpan = 2;
-					cellDetail.Text = new HtmlString(String.Format("<span class='{3}'>{0}</span> {1:N} shares at {2:C}", am.Type, am.Quantity, am.Price, classname)).ToString();
+					cellDetail.Text = new HtmlString(String.Format("<span class='{3}'>{0}</span> {1} shares at {2:C}", am.Type, am.Quantity, am.Price, classname)).ToString();
 					cellDetail.CssClass = "alert-detail";
 					row2.Cells.Add(cellDetail);
 					tbl.Rows.Add(row2);
@@ -132,6 +141,7 @@ namespace AlgoTraderSite
 			if (action == "Accept") r = responseCodes.Accept;
 			if (action == "Reject") r = responseCodes.Reject;
 			useragent.processAlertResponse(alertID, r, "updated via web interface");
+			alerts.RemoveAll(x => x.AlertId.Equals(alertID));
 			update();
 		}
 		#endregion
