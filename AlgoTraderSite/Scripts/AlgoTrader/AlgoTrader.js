@@ -23,6 +23,20 @@ function pageLoad(sender, args) {
 		$traderow.stop(true, true).animate({ height: "toggle", opacity: "toggle" }, 250);
 	});
 
+	$(".alert-table").click(function (e) {
+		var $target = $(e.target).parents("table:first");
+		var $actionrow = $target.find(".alert-actiondiv");
+
+		if ($actionrow.css("visibility") === "hidden") {
+			$actionrow.css("visibility", "visible");
+		}
+		$actionrow.stop(true, true).animate({ height: "toggle", opacity: "toggle" }, 250);
+	});
+
+	$(".heading").click(function (e) {
+		$(".alert-wrapper .content").stop(true, true).animate({ height: "toggle", opacity: "toggle" }, 250);
+	});
+
 	$(".ExpandAll").click(function (e) {
 		$target = $(".ExpandAll");
 		var value = "";

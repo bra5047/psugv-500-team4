@@ -7,6 +7,8 @@ using Limilabs.Client.IMAP;
 using Limilabs.Mail;
 using System.Xml;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Configuration;
 using AlgoTrader.portfolio;
 
 
@@ -16,51 +18,63 @@ namespace ATEmailReader
     {
         static void Main(string[] args)
         {
-            using (Imap map = new Imap())
-            {
-                map.ConnectSSL("imap.gmail.com");
-                map.Login("AlgTrader500@gmail.com", "algSweng500");
+            StreamWriter write = new StreamWriter(ConfigurationManager.AppSettings.Get("ErrorsPath"));
 
-                //select only the inbox to search and only show unread messages
-                map.SelectInbox();
-                List<long> uids = map.Search(Flag.Unseen);
-
-                foreach (long uid in uids)
+                using (Imap map = new Imap())
                 {
-                    string eml = map.GetMessageByUID(uid);
-                    IMail mail = new MailBuilder().CreateFromEml(eml);
+                    map.ConnectSSL("imap.gmail.com");
+                    map.Login("AlgTrader500@gmail.com", "algSweng500");
 
+                    //select only the inbox to search and only show unread messages
+                    map.SelectInbox();
+                    List<long> uids = map.Search(Flag.Unseen);
 
-                    string title = mail.Subject;
-                    string message = mail.Text;
-
-                    //get the stock symbol
-                    string[] Symbolsplit = title.Split(new char[0]);
-                    string symbol = Symbolsplit[1].ToString();
-
-                    //get the amount to sell or buy
-                    string AmountExtract = Regex.Match(message, @"\d+").Value;
-                    int quantity = Int32.Parse(AmountExtract);
-                    
-                    //convert the message and title to lowercase so the if statement will have no errors
-                    message = message.ToLower();
-                    title = title.ToLower();
-
-                    PortfolioManager Manage = new PortfolioManager();
-                    if (message.Contains("yes") && title.Contains("sell"))
+                    foreach (long uid in uids)
                     {
-                        Manage.sell(symbol, quantity);
-                    }
-                    else if (message.Contains("yes") && title.Contains("buy"))
-                    {
-                        Manage.buy(symbol, quantity);
-                    }
-                    else
-                    {
-                        //adding just incase we find a need for it
+                        try
+                        {
+                            string eml = map.GetMessageByUID(uid);
+                            IMail mail = new MailBuilder().CreateFromEml(eml);
+
+
+                            string title = mail.Subject;
+                            string message = mail.Text;
+
+                         //get the stock symbol
+                            string[] Symbolsplit = title.Split(new char[0]);
+                            string symbol = Symbolsplit[1].ToString();
+
+                            //get the amount to sell or buy
+                            string AmountExtract = Regex.Match(title, @"\d+").Value;
+                            int quantity = Int32.Parse(AmountExtract);
+
+                            //convert the message and title to lowercase so the if statement will have no errors
+                            message = message.ToLower();
+                            title = title.ToLower();
+
+                            PortfolioManager Manage = new PortfolioManager();
+                            if (message.Contains("yes") && title.Contains("sell"))
+                            {
+                                Manage.sell(symbol, quantity);
+                            }
+                            else if (message.Contains("yes") && title.Contains("buy"))
+                            {
+                                Manage.buy(symbol, quantity);
+                            }
+                            else
+                            {
+                                //adding just incase we find a need for it
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            write.WriteLine("Error Occurred Processing Email");
+                            write.WriteLine("Email UID: " + uid);
+                            write.WriteLine("Exception: " + ex.ToString());
+                        }
                     }
                 }
-            }
+                write.Close();
         }
     }
 }
