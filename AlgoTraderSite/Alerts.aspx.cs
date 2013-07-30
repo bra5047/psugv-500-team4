@@ -16,22 +16,22 @@ namespace AlgoTraderSite
             string alertId;
             string action;
 
-            if (Request.QueryString.AllKeys.Contains("id"))
-            {
-                alertId = Request.QueryString["id"];
-                action = Request.QueryString["s"];
-                responseCodes r = responseCodes.Pending;
-                if (action == "reject") r = responseCodes.Reject;
-                if (action == "accept") r = responseCodes.Accept;
+			if (Request.QueryString.AllKeys.Contains("id"))
+			{
+				alertId = Request.QueryString["id"];
+				action = Request.QueryString["s"];
+				responseCodes r = responseCodes.Pending;
+				if (action == "reject") r = responseCodes.Reject;
+				if (action == "accept") r = responseCodes.Accept;
 
-                useragent.processAlertResponse(alertId, r, "updated via web interface");
-            }
-            
-            List<AlertMessage> alerts = new List<AlertMessage>(useragent.getPendingAlerts());
-            useragent.Close();
+				useragent.processAlertResponse(alertId, r, "updated via web interface");
+			}
 
-            AlertItemList.DataSource = alerts;
-            AlertItemList.DataBind();
+			List<AlertMessage> alerts = new List<AlertMessage>(useragent.getPendingAlerts());
+			useragent.Close();
+
+			AlertItemList.DataSource = alerts;
+			AlertItemList.DataBind();
         }
     }
 }
