@@ -19,8 +19,9 @@ namespace AlgoTrader.strategy
     {
         public void BuyAlert(string symbolName, int quantity, double price)
         {
+            PortfolioManager pm = new PortfolioManager();
             IUserAgent ua = new UserAgent();
-            ua.generateAlert(symbolName, tradeTypes.Buy, quantity, price);
+            ua.generateAlert(symbolName, tradeTypes.Buy, pm.DefaultBuySize(price), price);
         }
 
         public void SellAlert(string symbolName, double price)

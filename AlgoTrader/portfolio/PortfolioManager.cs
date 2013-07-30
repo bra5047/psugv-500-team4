@@ -136,6 +136,12 @@ namespace AlgoTrader.portfolio
             return pf.Cash;
         }
 
+        public int DefaultBuySize(double price)
+        {
+            double max_cost = getAvailableCash() * 0.10;
+            return (int)Math.Floor(max_cost / price);
+        }
+
         public void ApplyRules(Portfolio p, Trade t)
         {
             foreach (PortfolioRule r in Rules)
