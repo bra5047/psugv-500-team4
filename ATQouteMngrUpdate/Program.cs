@@ -16,10 +16,11 @@ namespace ATQouteMngrUpdate
         static void Main(string[] args)
         {
             SQ.StockQuote Qoute = new SQ.StockQuote();
-            String Price, Time, Symbol, Company;
+            String Price, Time, Symbol, Company = "";
             XmlDocument doc = new XmlDocument();
             XmlNode SelectName, SelectTotal, SelectTime, SelectDate, SelectCompany;
             List<string> symbols = new List<string>();
+            List<string> CompanyName = new List<string>();
             StreamWriter write = new StreamWriter(ConfigurationManager.AppSettings.Get("ErrorPath"));
 
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
@@ -39,6 +40,18 @@ namespace ATQouteMngrUpdate
                 }
 
             }
+            using (SqlConnection cnncheck = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnString")))
+            {
+                cnncheck.Open();
+                SqlCommand SymCheck = new SqlCommand("Select name FROM Symbols WHERE CompanyName IS NULL", cnncheck);
+
+                SqlDataReader reader = SymCheck.ExecuteReader();
+                while (reader.Read())
+                {            
+                   CompanyName.Add(reader.GetString(0));   
+                }
+                
+            }
 
             if (symbols.Count > 0)
             {
@@ -48,7 +61,7 @@ namespace ATQouteMngrUpdate
                     connUpdate.Open();
                     foreach (string sym in symbols)
                     {
-                        SqlCommand SymUpdate = new SqlCommand("INSERT INTO Quotes (Price, TimeStamp, SymbolName, CompanyName) VALUES (@Price, @Time, @Symbol,@Name)", connUpdate);
+                        SqlCommand SymUpdate = new SqlCommand("INSERT INTO Quotes (Price, TimeStamp, SymbolName) VALUES (@Price, @Time, @Symbol)", connUpdate);
                         try
                         {
                             String QouteUpdate = Qoute.GetQuote(sym);
@@ -65,7 +78,7 @@ namespace ATQouteMngrUpdate
                                 Price = SelectTotal.InnerText;
                                 Symbol = SelectName.InnerText;
                                 Time = SelectDate.InnerText + " " + SelectTime.InnerText;
-                                SymUpdate.Parameters.AddWithValue("@Name", Company);
+
                                 SymUpdate.Parameters.AddWithValue("@Price", Price);
                                 SymUpdate.Parameters.AddWithValue("@Time", Time);
                                 SymUpdate.Parameters.AddWithValue("@Symbol", Symbol);
@@ -73,12 +86,19 @@ namespace ATQouteMngrUpdate
 
 
                             }
+                            if (CompanyName.Contains(sym))
+                            {
+                                SqlCommand UpdateSym = new SqlCommand("Update Symbols SET CompanyName = '" + Company + "' WHERE name = '" + sym + "'", connUpdate);
+                                UpdateSym.ExecuteNonQuery();
+                            }
                         }
+               
                         catch (Exception e)
                         {
                             write.WriteLine("An error occured with symbol: " + sym);
                             write.WriteLine("Exception: " + e.ToString());
                         }
+
                     }
 
                 }
