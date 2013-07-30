@@ -23,7 +23,7 @@ namespace AlgoTrader.Email
                 mail.From = new MailAddress("AlgTrader500@gmail.com");
                 if (TradeType == tradeTypes.Sell)
                 {
-                    mail.Subject = SymbolName + " request to sell";
+                    mail.Subject = SymbolName + " request to sell " + Quantity.ToString() + " shares";
                     mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has dropped below the required parameters. <br/>" +
                         "We recommend selling " + Quantity.ToString() + " shares.<br/><br/>" +
                         "Do you wish to sell? <br/>" +
@@ -31,7 +31,7 @@ namespace AlgoTrader.Email
                 }
                 else
                 {
-                    mail.Subject = SymbolName + " request to buy";
+                    mail.Subject = SymbolName + " request to buy " + Quantity.ToString() + " shares";
                     mail.Body = "AlgoTrader software is sending this email because the stock " + SymbolName + " has risen above the required parameters. <br/>" +
                         "We recommend buying " + Quantity.ToString() + " shares<br/><br/>" +
                         "Do you wish to sell? <br/>" +
