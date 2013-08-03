@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PositionTest.cs" />
+    <Compile Include="QuoteTest.cs" />
+    <Compile Include="WatchListItemTest.cs" />
     <Compile Include="ParabolicSarMetricTest.cs" />
     <Compile Include="PortfolioRuleTests.cs" />
     <Compile Include="TradeTests.cs" />

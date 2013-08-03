@@ -40,6 +40,24 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.WebControls.Label AvailableCash;
         
         /// <summary>
+        /// InputAddCash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl InputAddCash;
+        
+        /// <summary>
+        /// BtnAddCash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnAddCash;
+        
+        /// <summary>
         /// InputGroup control.
         /// </summary>
         /// <remarks>

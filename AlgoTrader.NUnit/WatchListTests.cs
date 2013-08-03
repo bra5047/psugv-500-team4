@@ -14,23 +14,34 @@ namespace AlgoTrader.NUnit
 	class WatchListTests
 	{
 		[Test]
-		public void AddToList()
+		public void WatchListName()
 		{
-			IWatchList w = new WatchList();
-			w.AddToList(new Symbol("GOOG"), "Default");
-			w.AddToList(new Symbol("GOOG"), "Other");
-			w.AddToList(new Symbol("MSFT"), "Default");
-			w.AddToList(new Symbol("MSFT"), "Default");
-			Assert.AreEqual(w.items[0].SymbolName, "GOOG");
-			Assert.AreEqual(w.items[1].SymbolName, "GOOG");
-			Assert.AreEqual(w.items[2].SymbolName, "MSFT");
-			Assert.IsTrue(w.items.Count == 3);
+			WatchList w = new WatchList();
+			Assert.AreEqual(w.ListName, "Default");
+			w.ListName = "Test";
+			Assert.AreEqual(w.ListName, "Test");
+		}
+
+		[Test]
+		public void WatchListItems()
+		{
+			WatchList w = new WatchList();
+			WatchListItem item = new WatchListItem();
+			item.ListName = "Default";
+			item.Symbol = new Symbol("GOOG");
+			w.Items.Add(item);
+			Assert.IsTrue(w.Items.Count == 1);
+			Assert.AreEqual(w.Items[0], item);
 		}
 
 		[Test]
 		public void RemoveFromList()
 		{
-
+			WatchList w = new WatchList();
+			WatchListItem item = new WatchListItem(new Symbol("GOOG"), "Default");
+			w.Items.Add(item);
+			w.Items.Remove(item);
+			Assert.IsTrue(w.Items.Count == 0);
 		}
 	}
 }

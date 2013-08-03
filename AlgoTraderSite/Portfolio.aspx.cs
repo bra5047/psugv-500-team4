@@ -29,10 +29,14 @@ namespace AlgoTraderSite
 			{
 				generatePositions();
 				radioSortType.SelectedIndex = 0;
+				update();
 			}
 			update();
 		}
 
+		/// <summary>
+		/// Gets the open positions and transactions.
+		/// </summary>
 		private void generatePositions()
 		{
 			openpositions.Clear();
@@ -58,6 +62,9 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Creates a table for each transaction and displays them on the page.
+		/// </summary>
 		private void showTransactions()
 		{
 			transactions = transactions.OrderByDescending(x => x.Timestamp).ToList();
@@ -100,6 +107,9 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Creates a table for each position and displays them on the page.
+		/// </summary>
 		private void showPositions()
 		{
 			PortfolioDiv.Controls.Clear();
@@ -126,6 +136,10 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Creates the Positions header at the top of the page.
+		/// </summary>
+		/// <returns>Table</returns>
 		private Table createPositionHeader()
 		{
 			string[] pheaders = { "", "Company", "Shares", "Price / Gain / Gain %", "Fees", "Status", "Actions" };
@@ -144,6 +158,11 @@ namespace AlgoTraderSite
 			return tbl;
 		}
 
+		/// <summary>
+		/// Creates the position table.
+		/// </summary>
+		/// <param name="pm">PositionMessage</param>
+		/// <returns>Table</returns>
 		private Table createPositionTable(PositionMessage pm)
 		{
 			string fullName = string.Empty;
@@ -207,6 +226,11 @@ namespace AlgoTraderSite
 			return tbl;
 		}
 
+		/// <summary>
+		/// Creates a table for all of the Trades associated with a specific Position.
+		/// </summary>
+		/// <param name="pm">PositionMessage</param>
+		/// <returns>Table</returns>
 		private Table createTradeTable(PositionMessage pm)
 		{
 			string[] theaders = { "", "Date", "Shares", "Price / Gain / Gain %", "Fees", "Type", "" };
@@ -264,7 +288,11 @@ namespace AlgoTraderSite
 
 			return tbl;
 		}
-
+		
+		/// <summary>
+		/// Sorts the list of positions based on the selected index of the sort radioList input.
+		/// </summary>
+		/// <returns>List of PositionMessage objects</returns>
 		private List<PositionMessage> sortList()
 		{
 			switch (radioSortType.SelectedIndex)
@@ -279,6 +307,11 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Gets the time difference between the current DateTime and the input DateTime.
+		/// </summary>
+		/// <param name="timestamp">The timestamp that is being compared to the current time.</param>
+		/// <returns>A string that says the time difference.</returns>
 		private string getTimeSpan(DateTime timestamp)
 		{
 			TimeSpan timespan = (DateTime.Now - timestamp);
@@ -315,6 +348,11 @@ namespace AlgoTraderSite
 			return String.Format("{0} {1}{2} ago", time, unit, plural);
 		}
 
+		/// <summary>
+		/// Gets the appropriate CSS class name based on the input string.
+		/// </summary>
+		/// <param name="s">string</param>
+		/// <returns>string</returns>
 		private string getCssClass(string s)
 		{
 			if (s.Equals("Buy") || s.Equals("Open"))
@@ -327,6 +365,9 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Updates the page based on the selected index.
+		/// </summary>
 		private void update()
 		{
 			switch (radioLists.SelectedIndex)
@@ -344,32 +385,61 @@ namespace AlgoTraderSite
 		}
 
 		#region Controls
+		/// <summary>
+		/// Redirects to the Buy/Sell page based on the Button's "SymbolName" attribute.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnClick(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
 			Response.Redirect("BuySell.aspx?s=" + btn.Attributes["SymbolName"]);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnExpand_Click(object sender, EventArgs e)
 		{
 
 		}
 
+		/// <summary>
+		/// Updates the page if the selected index changes.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			update();
 		}
 
+		/// <summary>
+		/// Updates the page if the sort type changes.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void radioSortType_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			update();
 		}
 
+		/// <summary>
+		/// Button event that adds cash to the user's available cash.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnAddCash_Click(object sender, EventArgs e)
 		{
-			
+			double value = double.Parse(InputAddCash.Value);
+			TraderContext db = new TraderContext();
+			db.Portfolios.FirstOrDefault().Cash += value;
+			AvailableCash.Text = String.Format("{0:C}", (double.Parse(AvailableCash.Text.TrimStart('$')) + value));
+			db.SaveChanges();
+			update();
 		}
 		#endregion
-
 	}
 }

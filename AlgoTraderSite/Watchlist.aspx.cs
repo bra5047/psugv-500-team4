@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using AlgoTrader.datamodel;
+﻿using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
 using AlgoTraderSite.Portfolio.Client;
 using AlgoTraderSite.Strategy.Client;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace AlgoTraderSite
 {
@@ -21,8 +21,8 @@ namespace AlgoTraderSite
 		List<WatchList> watchlists = new List<WatchList>();
 		private static List<WatchlistPlusQuote> allitems = new List<WatchlistPlusQuote>();
 		private string portfolioName = "My Portfolio";
-		string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
-		string[] widths = { "32%", "17%", "16%", "15%", "20%" };
+		private string[] headers = { "COMPANY", "PRICE", "CHANGE", "CHANGE %", "ACTIONS" };
+		private string[] widths = { "32%", "17%", "16%", "15%", "20%" };
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
@@ -32,10 +32,13 @@ namespace AlgoTraderSite
 				generateWatchLists();
 				radioSortType.SelectedIndex = 0;
 			}
-			showWatchList();
+			showWatchList(radioLists.SelectedValue);
 		}
 
 		#region List Management Stuff
+		/// <summary>
+		/// Adds the Portfolio items and all of the WatchLists' items to the page
+		/// </summary>
 		public void listWatchLists()
 		{
 			string value = radioLists.SelectedValue;
@@ -63,7 +66,10 @@ namespace AlgoTraderSite
 			radioLists.Items[0].Text += new HtmlString(" <span class='icon-lock float-right' style='opacity:.5; line-height: 1.5em'></span>");
 		}
 
-		public void generateWatchLists() // gets all the data ready
+		/// <summary>
+		/// Adds WatchListPlusQuote items to the a list from the portfolio, watchlist, and quotes.
+		/// </summary>
+		public void generateWatchLists()
 		{
 			IWatchList wl = new WatchList();
 			PortfolioManagerClient pm = new PortfolioManagerClient();
@@ -98,9 +104,12 @@ namespace AlgoTraderSite
 			}
 		}
 
-		public void showWatchList()
+		/// <summary>
+		/// Clears the divs on the page and then displays the selected Watchlist based on the radioList's selected index/value
+		/// </summary>
+		/// <param name="listName">string</param>
+		public void showWatchList(string listName)
 		{
-			string listName = radioLists.SelectedValue;
 			WatchlistDiv.Controls.Clear();
 			emptyDiv.Controls.Clear();
 
@@ -113,6 +122,7 @@ namespace AlgoTraderSite
 				inputGroupLeft.Visible = true;
 			}
 
+			// Show the items in the Watchlist, display that it is empty
 			if (allitems.Where(x => x.ListName.Equals(listName)).Count() > 0)
 			{
 				WatchlistDiv.Controls.Add(createHeader());
@@ -128,7 +138,12 @@ namespace AlgoTraderSite
 				emptyDiv.InnerHtml = new HtmlString("<h1>This list is empty :(</h1><h2>Why not add a symbol to watch?</h2>").ToString();
 			}
 		}
-
+		
+		/// <summary>
+		/// Sorts a given list based on the selected index of the sort input on the page.
+		/// </summary>
+		/// <param name="unsorted">List of WatchListPlusQuote items</param>
+		/// <returns></returns>
 		private List<WatchlistPlusQuote> sortList(List<WatchlistPlusQuote> unsorted)
 		{
 			switch (radioSortType.SelectedIndex)
@@ -145,6 +160,10 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Creates a table with only a header row that appears above the Watchlist table.
+		/// </summary>
+		/// <returns>Table object</returns>
 		private Table createHeader()
 		{
 			Table tbl = new Table();
@@ -165,6 +184,11 @@ namespace AlgoTraderSite
 			return tbl;
 		}
 
+		/// <summary>
+		/// Creates and displays a table with a single Watchlist item on the page.
+		/// </summary>
+		/// <param name="item">WatchlistPlusQuote</param>
+		/// <returns>Table</returns>
 		private Table createWatchlistTable(WatchlistPlusQuote item)
 		{
 			Table tbl = new Table();
@@ -243,12 +267,12 @@ namespace AlgoTraderSite
 				// meh
 			}
 
-			// set widths
+			// Set widths
 			for (int i = 0; i < widths.Length - 1; i++)
 			{
 				row.Cells[i].Width = new Unit(widths[i]);
 			}
-			//css stuff
+			// Set CSS classes
 			tbl.CssClass = "main";
 			row.CssClass = "main";
 			tbl.Rows.Add(row);
@@ -258,6 +282,11 @@ namespace AlgoTraderSite
 			return tbl;
 		}
 
+		/// <summary>
+		/// Sets the text of the status message displayed on the page.
+		/// </summary>
+		/// <param name="msg">string, the message text</param>
+		/// <param name="type">bool, the type of the message (success or fail)</param>
 		protected void setStatus(string msg, bool type)
 		{
 			statusMessage.Controls.Clear();
@@ -276,20 +305,28 @@ namespace AlgoTraderSite
 			statusMessage.Controls.Add(message);
 		}
 
+		/// <summary>
+		/// Updates the page to show the selected Watchlist.
+		/// </summary>
+		/// <param name="fullUpdate">bool, Whether or not the page should do a full update or just show a different list.</param>
 		private void updateList(bool fullUpdate)
 		{
 			if (fullUpdate)
 			{
 				listWatchLists();
 				generateWatchLists();
-				showWatchList();
+				showWatchList(radioLists.SelectedValue);
 			}
 			else
 			{
-				showWatchList();
+				showWatchList(radioLists.SelectedValue);
 			}
 		}
 
+		/// <summary>
+		/// Checks if the selected Watchlist is the Portfolio.
+		/// </summary>
+		/// <returns>True if the selected index is 0, false if not.</returns>
 		private bool isPortfolio()
 		{
 			return radioLists.SelectedIndex == 0;
@@ -297,6 +334,11 @@ namespace AlgoTraderSite
 		#endregion
 
 		#region Controls
+		/// <summary>
+		/// Button event that removes an item from a Watchlist.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnRemove_Click(object sender, EventArgs e)
 		{
 			bool success = false;
@@ -323,6 +365,11 @@ namespace AlgoTraderSite
 			updateList(true);
 		}
 
+		/// <summary>
+		/// Button event that adds an item to a Watchlist.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
 			// TODO add validation for entered symbol
@@ -351,6 +398,11 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Button event that deletes a Watchlist.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnDeleteList_Click(object sender, EventArgs e)
 		{
 			bool success = false;
@@ -377,6 +429,11 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Button event that adds a new Watchlist.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnAddList_Click(object sender, EventArgs e)
 		{
 			bool success = false;
@@ -408,16 +465,31 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Updates the displayed watchlist whenever a new index is selected.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			updateList(false);
 		}
 
+		/// <summary>
+		/// Updates the displayed watchlist whenever a new sort index is selected.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void radioSortType_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			updateList(false);
 		}
 
+		/// <summary>
+		/// Redirects the page to the Graph page based on the button's Symbol attribute.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnClick_generateChart(object sender, EventArgs e)
 		{
 			Button Sender = (Button)sender;
@@ -425,6 +497,11 @@ namespace AlgoTraderSite
 			Response.Redirect("Graph?s=" + symbol);
 		}
 
+		/// <summary>
+		/// Redirects the page to the Buy/Sell page based on the button's Symbol attribute.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void btnClick_BuySell(object sender, EventArgs e)
 		{
 			Button Sender = (Button)sender;
@@ -435,7 +512,10 @@ namespace AlgoTraderSite
 	}
 
 	#region extra classes
-	class WatchlistPlusQuote // joined list for watchlist only
+	/// <summary>
+	/// Joined list for Watchlist purposes only
+	/// </summary>
+	class WatchlistPlusQuote
 	{
 		public string SymbolName { get; set; }
 		public string LongName { get; set; }

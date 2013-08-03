@@ -21,10 +21,11 @@
 					<div class="separator"></div>
 					<label class="header">Available cash:</label><br />
 					<asp:Label runat="server" ID="AvailableCash" CssClass="cash"></asp:Label>
-					<%--<div class="input-group">
-						<input runat="server" id="AddCashInput" type="number" placeholder="Add more cash" min="0" />
-						<asp:Button runat="server" ID="btnAddCash" Text="Add" OnClick="btnAddCash_Click" />
-					</div>--%>
+					<br />
+					<div class="input-group">
+						<input runat="server" id="InputAddCash" type="number" min="0" max="999999" onfocus="this.select()" onmouseup="return false" />
+						<asp:Button ID="BtnAddCash" runat="server" OnClick="btnAddCash_Click" Text="Add Cash" />
+					</div>
 				</div>
 				<div class="maincontent">
 					<div id="InputGroup" class="input-group" runat="server">
