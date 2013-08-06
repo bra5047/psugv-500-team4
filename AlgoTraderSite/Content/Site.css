@@ -239,34 +239,55 @@ footer {
 		font-size: 1.5em;
 	}
 
+.home-greeting {
+	font-size: 3em;
+	font-weight: 700;
+}
+
+.home-heading {
+	font-size: 2em;
+	font-weight: 300;
+	margin-top: 40px;
+	border-bottom: 1px solid #A8DFF4;
+}
+
+.home-summarystat {
+	font-size: 1.5em;
+}
+
 .card-wrapper {
 	float: left;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 .card {
-	margin: 20px;
+	margin: 20px 20px 20px 0;
 	padding: 20px;
-	box-shadow: 0 2px 6px 0px rgba(0,0,0,.2);
-	width: 500px;
+	box-shadow: 0 2px 6px 0px rgba(0,0,0,.25);
+	width: 300px;
 	-moz-transition: all ease .2s;
 	transition: all ease .2s;
-	background-color: #ecf8fc;
+	display: inline-block;
 }
 
-	.card:hover {
-		background-color: #a8dff4;
+	.card.gain {
+		background-color: #D3E992;
+	}
+
+	.card.loss {
+		background-color: #FF5F5F;
 	}
 
 	.card .heading {
 		font-size: 3em;
 		line-height: 1;
-		font-weight: 300;
+		font-weight: 700;
 		vertical-align: top;
 	}
 
 	.card .content {
 		font-size: 1.2em;
-		color: #7f7f7f;
 	}
 
 .alert-wrapper {

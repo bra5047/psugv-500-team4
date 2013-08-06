@@ -104,6 +104,40 @@ namespace AlgoTrader.datamodel
 					context.Quotes.Add(quote1);
 				}
 
+				Alert alert1 = new Alert();
+				alert1.AlertId = Guid.NewGuid();
+				alert1.Symbol = symbol;
+				alert1.Timestamp = DateTime.Now.AddDays(-2);
+				alert1.Type = tradeTypes.Buy;
+				alert1.Quantity = 100;
+				alert1.SentTo = "bra5047@psu.edu";
+				alert1.Price = 20.00;
+				alert1.ResponseCode = responseCodes.Pending;
+				context.Alerts.Add(alert1);
+
+				Alert alert2 = new Alert();
+				alert2.AlertId = Guid.NewGuid();
+				alert2.Symbol = symbol;
+				alert2.Timestamp = DateTime.Now;
+				alert2.Type = tradeTypes.Buy;
+				alert2.Quantity = 100;
+				alert2.SentTo = "bra5047@psu.edu";
+				alert2.Price = 20.00;
+				alert2.ResponseCode = responseCodes.Pending;
+				context.Alerts.Add(alert2);
+
+				Alert alert3 = new Alert();
+				alert3.AlertId = Guid.NewGuid();
+				alert3.Symbol = symbol;
+				alert3.Timestamp = DateTime.Now.AddHours(-1);
+				alert3.Type = tradeTypes.Buy;
+				alert3.Quantity = 100;
+				alert3.SentTo = "bra5047@psu.edu";
+				alert3.Price = 20.00;
+				alert3.ResponseCode = responseCodes.Pending;
+				context.Alerts.Add(alert3);
+				context.SaveChanges();
+
 				Position p = new Position();
 				p.status = positionStatus.Open;
 				p.Symbol = symbol;

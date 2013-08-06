@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using AlgoTraderSite.UserAgent.Client;
 using AlgoTrader.datamodel;
+using AlgoTrader.watchlist;
+using AlgoTraderSite.Portfolio.Client;
 using System.Web.UI.HtmlControls;
 
 namespace AlgoTraderSite
@@ -14,21 +16,40 @@ namespace AlgoTraderSite
 	{
 		UserAgentClient useragent;
 		private static List<AlertMessage> alerts;
+		//PortfolioManagerClient portfolio;
+		//AlgoTrader.Interfaces.IWatchListManager wlm;
+		//public int numPortfolio;
+		//public int numWatchlist;
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			//portfolio = new PortfolioManagerClient();
 			useragent = new UserAgentClient();
+			//wlm = new WatchListManager();
 			if (!IsPostBack)
 			{
 				generateAlerts();
+				//getSummary();
 			}
 			showAlerts();
 		}
 
+		/// <summary>
+		/// Gets all alerts with "Pending" status.
+		/// </summary>
 		protected void generateAlerts()
 		{
-			alerts = new List<AlertMessage>(useragent.getPendingAlerts().OrderByDescending(x => x.Timestamp));
+			var query = useragent.getPendingAlerts().GroupBy(alert=>alert.SymbolName).Select(group=>group.OrderByDescending(x=>x.Timestamp).FirstOrDefault());
+			alerts = new List<AlertMessage>();
+			foreach (AlertMessage amsg in query)
+			{
+				alerts.Add(amsg);
+			}
+			alerts = alerts.OrderByDescending(x => x.Timestamp).ToList();
 		}
 
+		/// <summary>
+		/// Shows pending alerts on the page.
+		/// </summary>
 		protected void showAlerts()
 		{
 			AlertBox.Controls.Clear();
@@ -125,12 +146,30 @@ namespace AlgoTraderSite
 			}
 		}
 
+		/// <summary>
+		/// Retrieves the information for the Summary section.
+		/// </summary>
+		protected void getSummary() {
+			//numPortfolio = portfolio.GetOpenPositions().Count();
+
+			//TraderContext db = new TraderContext();
+			//numWatchlist = db.WatchListItems.Count();
+		}
+
+		/// <summary>
+		/// Updates the page.
+		/// </summary>
 		protected void update()
 		{
 			showAlerts();
 		}
 
 		#region Controls
+		/// <summary>
+		/// Accepts or rejects the alert and updates the database and portfolio based on the response type.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void btnAccept_Click(object sender, EventArgs e)
 		{
 			Button Sender = (Button)sender;

@@ -54,6 +54,11 @@ namespace AlgoTraderSite
 
         }
 
+		/// <summary>
+		/// Executes the trade based on the selected buy/sell picker and the input value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
         protected void ExecuteTrade_Click(object sender, EventArgs e)
         {
             portfolio = new PortfolioManagerClient();
