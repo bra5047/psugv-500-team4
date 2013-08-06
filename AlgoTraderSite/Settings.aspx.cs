@@ -107,6 +107,7 @@ namespace AlgoTraderSite
 			{
 				string module = "ThreeDuckStrategy";
 
+				// Remove the old settings
 				TraderContext db = new TraderContext();
 				var query = db.SystemSettings.Where(x => x.Module.Equals(module)).Select(x => x);
 				foreach (SystemSetting setting in query)
@@ -121,12 +122,12 @@ namespace AlgoTraderSite
 					db.SystemSettings.Remove(s);
 				}
 
+				// Add the new settings
 				SystemSetting _duck1 = new SystemSetting(module, "FIRST_DUCK_SECONDS", InputFirstDuck.Value);
 				SystemSetting _duck2 = new SystemSetting(module, "SECOND_DUCK_SECONDS", InputSecondDuck.Value);
 				SystemSetting _duck3 = new SystemSetting(module, "THIRD_DUCK_SECONDS", InputThirdDuck.Value);
 				SystemSetting _movingavg = new SystemSetting(module, "MOVING_AVERAGE_WINDOW", InputAvgWindow.Value);
 				SystemSetting _username = new SystemSetting("User", "USERNAME", InputName.Value);
-
 				db.SystemSettings.Add(_duck1);
 				db.SystemSettings.Add(_duck2);
 				db.SystemSettings.Add(_duck3);
@@ -148,6 +149,7 @@ namespace AlgoTraderSite
 			{
 				string module = "ThreeDuckStrategy";
 
+				// Remove the old settings
 				TraderContext db = new TraderContext();
 				var query = db.SystemSettings.Where(x => x.Module.Equals(module)).Select(x => x);
 				foreach (SystemSetting setting in query)
@@ -162,21 +164,23 @@ namespace AlgoTraderSite
 					db.SystemSettings.Remove(s);
 				}
 
+				// Restore the default settings
 				SystemSetting _duck1 = new SystemSetting(module, "FIRST_DUCK_SECONDS", "300");
 				SystemSetting _duck2 = new SystemSetting(module, "SECOND_DUCK_SECONDS", "3600");
 				SystemSetting _duck3 = new SystemSetting(module, "THIRD_DUCK_SECONDS", "14400");
 				SystemSetting _movingavg = new SystemSetting(module, "MOVING_AVERAGE_WINDOW", "60");
-
 				db.SystemSettings.Add(_duck1);
 				db.SystemSettings.Add(_duck2);
 				db.SystemSettings.Add(_duck3);
 				db.SystemSettings.Add(_movingavg);
 				db.SaveChanges();
 
+				// Display success message
 				setStatus("Settings saved successfully.", true);
 			}
 			catch
 			{
+				// Display fail message
 				setStatus("Settings could not be saved. Please try again.", false);
 			}
 		}
