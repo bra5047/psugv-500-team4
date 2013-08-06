@@ -9,6 +9,7 @@ using log4net;
 
 namespace AlgoTrader.strategy
 {
+    // utility class used to track the quote history
     class DataPoint
     {
         public DataPoint(DateTime time, double val)
@@ -20,6 +21,7 @@ namespace AlgoTrader.strategy
         public double Value { get; set; }
     }
 
+    // this class calculates a simple moving average with a specified size and time interval
     public class SmaMetric
     {
         private static int HISTORY_DATAPOINTS = 50;
@@ -37,22 +39,31 @@ namespace AlgoTrader.strategy
         }
 
         public string SymbolName { get; set; }
+
+        // this defines how many data points are included in the average
         public int WindowSize { get; set; }
+
+        // this defines how frequently the metric will sample
         public int IntervalSeconds { get; set; }
 
+        // submits a new data point to the metric. May or may not be used depending on the specified interval.
         public void Add(DateTime time, double price)
         {
             ILog log = LogManager.GetLogger(typeof(SmaMetric));
+
+            // only use this data point if enough time has passed since the last quote
             if (_quotes.Count < 1 || (time - _quotes.Last<DataPoint>().Timestamp).TotalSeconds >= IntervalSeconds)
             {
+                // add the new point and trim the queue if we've reached our max size
                 _quotes.Enqueue(new DataPoint(time, price));
-                //log.DebugFormat("Data point added: symbol {0} interval {1} time {2} price {3} count {4} avg {5}", SymbolName, IntervalSeconds, time, price, _quotes.Count, _quotes.Average<DataPoint>(q => q.Value));
                 if (_quotes.Count > WindowSize) _quotes.Dequeue();
+                // record the new average for historical tracking
                 _datapoints.Add(time, Avg);
                 if (_datapoints.Count > HISTORY_DATAPOINTS) _datapoints.Remove(_datapoints.First().Key);
             }
             else
             {
+                // debugging removed to decrease log file size
                 //log.DebugFormat("Data point added: symbol {0} interval {1} time {2} price {3} count {4} elapsed {5}", SymbolName, IntervalSeconds, time, price, _quotes.Count, (time - _quotes.Last<DataPoint>().Timestamp).TotalSeconds);
             }
         }
@@ -72,6 +83,7 @@ namespace AlgoTrader.strategy
             }
         }
 
+        // produces a set of datapoints showing how this metric has changed over time
         public SortedList<DateTime, double> History
         {
             get
@@ -80,6 +92,8 @@ namespace AlgoTrader.strategy
             }
         }
 
+        // produces a string that can be used to identify this metric on a graph
+        // includes "SMA" and the time interval in minutes or hours
         public string Label
         {
             get

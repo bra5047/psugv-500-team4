@@ -54,13 +54,14 @@ namespace AlgoTrader.portfolio
             Quote lastPrice = db.FindLastQuoteFor(s);
             if (lastPrice == null)
             {
-                // not sure what to do here
+                // if we have no prices, the operation cannot complete
                 return;
             }
             Portfolio portfolio = db.Portfolios.FirstOrDefault();
             Position pos = portfolio.Positions.Where(x => x.Symbol == s && x.status == positionStatus.Open).FirstOrDefault();
             if (pos == null || pos.quantity < quantity)
             {
+                // the user does not own enough shares to complete the requested sell transaction
                 throw new System.ServiceModel.FaultException<InsufficientQuantityFault>(new InsufficientQuantityFault(quantity, pos.quantity));
             }
             // figure out which shares to sell to get the best price
@@ -77,7 +78,9 @@ namespace AlgoTrader.portfolio
                 if (toSell.Sum(x => x.quantity) == quantity) break;
             }
             pos.Trades.AddRange(toSell);
+            // update subtotals in the postition to reflect the new transaction
             pos.Recalculate();
+            // add the proceeds of the sale to our available cash
             portfolio.Cash += toSell.Sum(x => (x.price * x.quantity) - x.PaidCommission);
             db.SaveChanges();
             db.Dispose();
@@ -89,10 +92,10 @@ namespace AlgoTrader.portfolio
             Quote lastQuote = db.Quotes.Where(x => x.SymbolName == symbolName).OrderByDescending(y => y.timestamp).FirstOrDefault();
             if (lastQuote == null)
             {
-                // just bail for now; maybe it should wait until a quote comes in? Synchronous call into QuoteManager?
+                // if we have no prices, the operation cannot complete
                 return;
             }
-            Portfolio p = db.Portfolios.FirstOrDefault(); // assumes only one portfolio for now
+            Portfolio p = db.Portfolios.FirstOrDefault();
 
             Position pos = db.Positions.Where(x => x.PortfolioId == p.PortfolioId && x.SymbolName == symbolName).FirstOrDefault();
             Trade t = db.Trades.Create();
@@ -103,10 +106,12 @@ namespace AlgoTrader.portfolio
             }
             catch (InsufficientFunds insuf)
             {
+                // user does not have enough free cash to complete the requested transaction
                 throw new System.ServiceModel.FaultException<InsufficientFundsFault>(new InsufficientFundsFault(double.Parse(insuf.Data["TransactionAmount"].ToString()), double.Parse(insuf.Data["AvailableFunds"].ToString())));
             }
             catch (AllocationViolation alloc)
             {
+                // the requested transaction would violate one of the user's risk-management rules
                 throw new System.ServiceModel.FaultException<AllocationViolationFault>(new AllocationViolationFault());
             }
 
@@ -115,6 +120,7 @@ namespace AlgoTrader.portfolio
             db.Dispose();
         }
 
+        // builds a new Trade object to reflect the requested transaction, updates the position and portfolio
         public void ProcessBuyTrade(Trade t, string symbolName, int quantity, double price, Position pos, Portfolio port)
         {
             t.type = tradeTypes.Buy;
@@ -136,12 +142,14 @@ namespace AlgoTrader.portfolio
             return pf.Cash;
         }
 
+        // determines how much of our available cash we are willing to risk on a single transaction
         public int DefaultBuySize(double price)
         {
             double max_cost = getAvailableCash() * 0.10;
             return (int)Math.Floor(max_cost / price);
         }
 
+        // if this transaction violates any of our portfolio rules, this method will throw an exception
         public void ApplyRules(Portfolio p, Trade t)
         {
             foreach (PortfolioRule r in Rules)
