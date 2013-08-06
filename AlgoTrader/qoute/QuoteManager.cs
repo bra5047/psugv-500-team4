@@ -12,6 +12,7 @@ namespace AlgoTrader.qoute
     {
         public bool startWatching(string SymbolName)
         {
+            //Check DB to see if the Symbol is being watched already or not
             TraderContext db = new TraderContext();
             var ReturnValue = (from x in db.Symbols select x.name).ToList();
             if (ReturnValue.Count > 0)
