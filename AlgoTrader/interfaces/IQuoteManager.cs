@@ -12,7 +12,7 @@ namespace AlgoTrader.Interfaces
     {
         [OperationContract]
         bool startWatching(string SymbolName);
-        [OperationContract]
-        bool stopWatching(string SymbolName);
+        //[OperationContract]
+        //bool stopWatching(string SymbolName);
     }
 }

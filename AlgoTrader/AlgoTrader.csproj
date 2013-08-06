@@ -99,6 +99,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="qoute\QouteAsync.cs" />
+    <Compile Include="qoute\QuoteManager.cs" />
     <Compile Include="strategy\ParabolicSarMetric.cs" />
     <Compile Include="strategy\QuoteProvider.cs" />
     <Compile Include="strategy\SignalAlerter.cs" />
