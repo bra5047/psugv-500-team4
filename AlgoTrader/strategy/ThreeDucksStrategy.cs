@@ -13,6 +13,7 @@ namespace AlgoTrader.strategy
     [ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
     public class ThreeDucksStrategy : IStrategy
     {
+        // these settings can be initialized in the constructor
         private int FIRST_DUCK_SECONDS;
         private int SECOND_DUCK_SECONDS;
         private int THIRD_DUCK_SECONDS;
@@ -29,6 +30,7 @@ namespace AlgoTrader.strategy
         private SymbolProvider _symbolProvider;
         private ISignalAlerter _alerter;
 
+        // this is used to block service requests while the class is initializing from the database
         private Object _init_lock;
 
         public ThreeDucksStrategy()
@@ -81,6 +83,7 @@ namespace AlgoTrader.strategy
         public int Third_Duck_Seconds { get { return THIRD_DUCK_SECONDS; } }
         public int Moving_Average_Window { get { return AVERAGE_WINDOW; } }
 
+        // this method loads bulk quotes without triggering excessive alerts
         public void NewQuotes(List<QuoteMessage> quotes)
         {
             ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
@@ -88,7 +91,7 @@ namespace AlgoTrader.strategy
 
             lock (_init_lock)
             {
-                // this could be a big mess, so we attack it one symbol at a time
+                // we attack it one symbol at a time
                 SortedSet<string> symbols = new SortedSet<string>(quotes.Select(x => x.SymbolName));
                 log.DebugFormat("Bulk quote list contained {0} symbols", symbols.Count);
 
@@ -100,7 +103,7 @@ namespace AlgoTrader.strategy
                         log.DebugFormat("Starting to watch {0}", s);
                         startWatching(s);
                     }
-                    // pull out the ones we want and run them in order
+                    // pull out the quotes for the symbol we are processing and run them in order
                     List<QuoteMessage> qs = quotes.OrderBy(x => x.timestamp).Where(y => y.SymbolName == s).ToList<QuoteMessage>();
                     log.DebugFormat("Extracted {0} quotes for symbol {1}", qs.Count, s);
                     foreach (QuoteMessage q in qs)
@@ -114,6 +117,7 @@ namespace AlgoTrader.strategy
             log.DebugFormat("Lock released.");
         }
 
+        // this is the method used to process real-time streaming quotes
         public void NewQuote(QuoteMessage quote)
         {
             ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
@@ -125,6 +129,7 @@ namespace AlgoTrader.strategy
             }
         }
 
+        // determines if we need to raise any alerts as a result of the most recent quote
         public void CheckSignals(QuoteMessage quote)
         {
             int buy_ducks = 0;
@@ -205,6 +210,7 @@ namespace AlgoTrader.strategy
             } 
         }
 
+        // this method is called by the UI to display buy/sell recommendations
         public StrategySummary getSummary(string symbolName)
         {
             StrategySummary s = new StrategySummary();
@@ -218,6 +224,7 @@ namespace AlgoTrader.strategy
             return s;
         }
 
+        // this method is called by the UI to generate detailed graphs
         public StrategyDetail getDetailedAnalysis(string symbolName)
         {
             ILog log = LogManager.GetLogger(typeof(ThreeDucksStrategy));
