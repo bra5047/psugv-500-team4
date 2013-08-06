@@ -15,7 +15,31 @@
 				$('#container').highcharts('StockChart', {
 
 					rangeSelector: {
-						selected: 1
+						buttons: [{
+							type: 'day',
+							count: 3,
+							text: '3d'
+						}, {
+							type: 'week',
+							count: 1,
+							text: '1w'
+						}, {
+							type: 'month',
+							count: 1,
+							text: '1m'
+						}, {
+							type: 'month',
+							count: 6,
+							text: '6m'
+						}, {
+							type: 'year',
+							count: 1,
+							text: '1y'
+						}, {
+							type: 'all',
+							text: 'All'
+						}],
+						selected: 3
 					},
 
 					title: {
@@ -24,13 +48,13 @@
 
 					yAxis: {
 						title: {
-							text: 'Price'
+							text: 'Price ($)'
 						},
 						plotLines: [{
 							value: m1,
 							color: '#99cc00',
 							dashStyle: 'shortdash',
-							width: 2,
+							width: 4,
 							label: {
 								text: ''
 							}
@@ -38,7 +62,7 @@
 							value: m2,
 							color: '#ff9494',
 							dashStyle: 'shortdash',
-							width: 2,
+							width: 4,
 							label: {
 								text: ''
 							}
@@ -46,7 +70,7 @@
 							value: m3,
 							color: '#f1db7b',
 							dashStyle: 'shortdash',
-							width: 2,
+							width: 4,
 							label: {
 								text: ''
 							}

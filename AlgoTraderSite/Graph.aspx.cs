@@ -74,7 +74,7 @@ namespace AlgoTraderSite
 				DateTime qdate = q.timestamp;
 				TimeSpan ts = q.timestamp - dstart;
 				//plot.Add(new PlotPoint(ts.TotalMilliseconds, q.price));
-				data += "[" + ts.TotalMilliseconds + ", " + q.price + "],";
+				data += "[" + (ts.TotalMilliseconds - ts.Milliseconds-15000) + ", " + q.price + "],";
 			}
 			data = data.TrimEnd(',');
 			data += "]";
