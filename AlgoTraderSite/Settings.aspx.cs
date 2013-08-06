@@ -27,7 +27,7 @@ namespace AlgoTraderSite
 			}
 			else
 			{
-                
+
 			}
 			
 			update();

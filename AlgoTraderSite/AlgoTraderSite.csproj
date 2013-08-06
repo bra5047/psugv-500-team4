@@ -41,6 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlgoTrader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AlgoTrader\bin\Debug\AlgoTrader.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
@@ -518,12 +522,6 @@
     <WCFMetadataStorage Include="Service References\Portfolio.Client\" />
     <WCFMetadataStorage Include="Service References\Strategy.Client\" />
     <WCFMetadataStorage Include="Service References\UserAgent.Client\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AlgoTrader\AlgoTrader.csproj">
-      <Project>{d1a0c6e0-d6b9-4e6d-b0b3-392ebdc3c89f}</Project>
-      <Name>AlgoTrader</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

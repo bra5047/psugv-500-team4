@@ -8,7 +8,7 @@ using AlgoTrader.datamodel;
 
 namespace AlgoTrader.qoute
 {
-    class QuoteManager:IQuoteManager 
+    public class QuoteManager : IQuoteManager 
     {
         public bool startWatching(string SymbolName)
         {
