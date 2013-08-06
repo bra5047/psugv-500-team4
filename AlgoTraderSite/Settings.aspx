@@ -94,7 +94,7 @@
 					</div>
 					<div class="settings-spacer"></div>
 					<asp:Button runat="server" ID="btnSave" Text="Save Changes" CssClass="settings-save" OnClick="btnSave_Click" />
-					<asp:Button runat="server" ID="btnResetDefault" Text="Reset to Default" />
+					<asp:Button runat="server" ID="btnResetDefault" Text="Reset to Default" OnClick="btnResetDefault_Click" />
 					<div runat="server" id="statusMessage"></div>
 				</div>
 			</div>
