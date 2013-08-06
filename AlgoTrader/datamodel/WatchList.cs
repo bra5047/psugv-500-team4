@@ -35,6 +35,12 @@ namespace AlgoTrader.datamodel
 			set { Items = value; }
 		}
 
+		/// <summary>
+		/// Called by the UI to add an item to the list.
+		/// </summary>
+		/// <param name="symbol"></param>
+		/// <param name="listName"></param>
+		/// <returns></returns>
 		bool IWatchList.AddToList(ISymbol symbol, string listName)
 		{
 			string sname = symbol.name;
@@ -69,6 +75,12 @@ namespace AlgoTrader.datamodel
 			}
 		}
 
+		/// <summary>
+		/// Called by the UI to remove an item from the watchlist.
+		/// </summary>
+		/// <param name="symbol"></param>
+		/// <param name="listName"></param>
+		/// <returns></returns>
 		bool IWatchList.RemoveFromList(ISymbol symbol, string listName)
 		{
 			TraderContext db = new TraderContext();

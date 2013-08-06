@@ -44,7 +44,7 @@ namespace AlgoTrader.Interfaces
 
         public QuoteMessage()
         {
-            //whatever
+            // empty constructor
         }
 
         public QuoteMessage(double price, DateTime tstamp, string symbolName)
