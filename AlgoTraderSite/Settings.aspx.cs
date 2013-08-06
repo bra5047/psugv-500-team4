@@ -18,7 +18,7 @@ namespace AlgoTraderSite
 		public int duck2 = 3600;
 		public int duck3 = 14400;
 		public int movingavg;
-
+        
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			if (!IsPostBack)
@@ -27,7 +27,7 @@ namespace AlgoTraderSite
 			}
 			else
 			{
-
+                
 			}
 			
 			update();
