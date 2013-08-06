@@ -58,15 +58,6 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl InputEmail;
         
         /// <summary>
-        /// LblFirstDuck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LblFirstDuck;
-        
-        /// <summary>
         /// InputFirstDuck control.
         /// </summary>
         /// <remarks>
@@ -74,15 +65,6 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl InputFirstDuck;
-        
-        /// <summary>
-        /// LblSecondDuck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LblSecondDuck;
         
         /// <summary>
         /// InputSecondDuck control.
@@ -94,15 +76,6 @@ namespace AlgoTraderSite {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl InputSecondDuck;
         
         /// <summary>
-        /// LblThirdDuck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LblThirdDuck;
-        
-        /// <summary>
         /// InputThirdDuck control.
         /// </summary>
         /// <remarks>
@@ -110,15 +83,6 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl InputThirdDuck;
-        
-        /// <summary>
-        /// LblMovingAvg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LblMovingAvg;
         
         /// <summary>
         /// InputAvgWindow control.
@@ -146,5 +110,14 @@ namespace AlgoTraderSite {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnResetDefault;
+        
+        /// <summary>
+        /// statusMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl statusMessage;
     }
 }

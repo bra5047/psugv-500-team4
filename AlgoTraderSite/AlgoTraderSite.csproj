@@ -140,7 +140,6 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
-    <Content Include="debug\Alerts.aspx" />
     <Content Include="BuySell.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\fonts\algotrader.dev.svg" />
@@ -258,9 +257,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
     <Content Include="services\useragent\UserAgent.svc" />
-    <Content Include="debug\TestStrategyDetail.aspx" />
     <Content Include="Watchlist.aspx" />
-    <Content Include="debug\debug.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
@@ -351,13 +348,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="debug\Alerts.aspx.cs">
-      <DependentUpon>Alerts.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="debug\Alerts.aspx.designer.cs">
-      <DependentUpon>Alerts.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -448,26 +438,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="debug\TestStrategyDetail.aspx.cs">
-      <DependentUpon>TestStrategyDetail.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="debug\TestStrategyDetail.aspx.designer.cs">
-      <DependentUpon>TestStrategyDetail.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Watchlist.aspx.cs">
       <DependentUpon>Watchlist.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Watchlist.aspx.designer.cs">
       <DependentUpon>Watchlist.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="debug\debug.aspx.cs">
-      <DependentUpon>debug.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="debug\debug.aspx.designer.cs">
-      <DependentUpon>debug.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

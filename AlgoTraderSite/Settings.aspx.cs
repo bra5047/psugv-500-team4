@@ -12,7 +12,8 @@ namespace AlgoTraderSite
 {
 	public partial class Settings : Page
 	{
-		string userEmail;
+		string name = string.Empty;
+		string useremail = string.Empty;
 		public int duck1 = 300;
 		public int duck2 = 3600;
 		public int duck3 = 14400;
@@ -23,120 +24,122 @@ namespace AlgoTraderSite
 			if (!IsPostBack)
 			{
 				getConfig();
-				//InputFirstDuck.ServerChange += new EventHandler(InputFirstDuck_ServerChange);
-				//InputSecondDuck.ServerChange += new EventHandler(InputSecondDuck_ServerChange);
-				//InputThirdDuck.ServerChange += new EventHandler(InputThirdDuck_ServerChange);
 			}
 			else
 			{
 
 			}
-			userEmail = "someone@example.com";
+			
 			update();
 		}
 
+		/// <summary>
+		/// Updates the page if there are multiple settings tabs.
+		/// </summary>
 		protected void update()
 		{
-			//string value = radioLists.SelectedValue;
-			//contentDiv.Controls.Clear();
-			//if (value.Equals("General"))
-			//{
-			//	Label lblEmail = new Label();
-			//	lblEmail.Text = "Email: ";
-			//	lblEmail.CssClass = "setting";
-
-			//	HtmlInputGenericControl email = new HtmlInputGenericControl("email");
-			//	email.Attributes["required"] = "required";
-			//	email.Attributes["id"] = "tbEmail";
-			//	email.Attributes["style"] = "width: 300px";
-			//	email.Value = userEmail;
-
-			//	contentDiv.Controls.Add(lblEmail);
-			//	contentDiv.Controls.Add(email);
-			//}
-			//else if (value.Equals("Strategy"))
-			//{
-			//	Label lblNFreq = new Label();
-			//	lblNFreq.Text = "Notification frequency (mins): ";
-			//	lblNFreq.CssClass = "setting";
-
-			//	HtmlInputGenericControl frequency = new HtmlInputGenericControl("number");
-			//	frequency.Attributes["required"] = "required";
-			//	frequency.Attributes["min"] = "5";
-			//	frequency.Attributes["max"] = "60";
-			//	frequency.Attributes["id"] = "tbFrequency";
-			//	frequency.Value = "5";
-
-			//	Label lblRepeat = new Label();
-			//	lblRepeat.Text = "Number of reminders: ";
-			//	lblRepeat.CssClass = "setting";
-
-			//	HtmlInputGenericControl repeat = new HtmlInputGenericControl("number");
-			//	repeat.Attributes["required"] = "required";
-			//	repeat.Attributes["min"] = "1";
-			//	repeat.Attributes["max"] = "10";
-			//	repeat.Attributes["id"] = "tbRepeat";
-			//	repeat.Value = "3";
-
-			//	contentDiv.Controls.Add(lblNFreq);
-			//	contentDiv.Controls.Add(frequency);
-			//	contentDiv.Controls.Add(lblRepeat);
-			//	contentDiv.Controls.Add(repeat);
-			//}
+			
 		}
 
+		/// <summary>
+		/// Gets the system settings configuration and displays it on the page.
+		/// </summary>
 		protected void getConfig()
 		{
-			//TraderContext db = new TraderContext();
-			//duck1 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("FIRST_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
-			//duck2 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("SECOND_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
-			//duck3 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("THIRD_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
-			//movingavg = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("MOVING_AVERAGE_WINDOW")).Select(x => x.Value).FirstOrDefault());
+			TraderContext db = new TraderContext();
+			duck1 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("FIRST_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
+			duck2 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("SECOND_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
+			duck3 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("THIRD_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
+			movingavg = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("MOVING_AVERAGE_WINDOW")).Select(x => x.Value).FirstOrDefault());
+			useremail = db.SystemSettings.Where(x => x.Name.Equals("ALERTS_EMAIL_ADDRESS_TO")).Select(x => x.Value).FirstOrDefault();
+			name = db.SystemSettings.Where(x => x.Name.Equals("USERNAME")).Select(x => x.Value).FirstOrDefault();
 
-			//InputFirstDuck.Value = duck1.ToString();
-			//InputSecondDuck.Value = duck2.ToString();
-			//InputThirdDuck.Value = duck3.ToString();
-			//InputAvgWindow.Value = movingavg.ToString();
+			InputFirstDuck.Value = duck1.ToString();
+			InputSecondDuck.Value = duck2.ToString();
+			InputThirdDuck.Value = duck3.ToString();
+			InputAvgWindow.Value = movingavg.ToString();
+			InputName.Value = name;
+			InputEmail.Value = useremail;
 		}
 
-		protected string getTimeUnits(string value) 
+		/// <summary>
+		/// Sets the text of the status message displayed on the page.
+		/// </summary>
+		/// <param name="msg">string, the message text</param>
+		/// <param name="type">bool, the type of the message (success or fail)</param>
+		protected void setStatus(string msg, bool type)
 		{
-			string units = "units";
-			return units;
+			statusMessage.Controls.Clear();
+			HtmlGenericControl message = new HtmlGenericControl("span");
+
+			if (type)
+			{
+				message.Attributes.Add("class", "message-success");
+				message.InnerHtml = new HtmlString("<span class='icon-ok-sign'></span> " + msg).ToString();
+			}
+			else
+			{
+				message.Attributes.Add("class", "message-fail");
+				message.InnerHtml = new HtmlString("<span class='icon-remove-sign'></span> " + msg).ToString();
+			}
+			statusMessage.Controls.Add(message);
 		}
-
-		protected string getLabelText(string basetext, string value, string units)
-		{
-			string label = string.Empty;
-			label = String.Format("{0} {1} {2}", basetext, value, units);
-			return label;
-		}
-
-		public void InputFirstDuck_ServerChange(object sender, EventArgs e)
-		{
-			string baseText = "First Duck:";
-			string units = getTimeUnits(InputFirstDuck.Value);
-			LblFirstDuck.InnerText = getLabelText(baseText, "blah", units);
-		}
-
-		//void InputSecondDuck_ServerChange(object sender, EventArgs e)
-		//{
-		//	string baseText = "Second Duck:";
-		//	string units = getTimeUnits(InputSecondDuck.Value);
-		//	LblSecondDuck.InnerText = getLabelText(baseText, "blah blah", units);
-		//}
-
-		//void InputThirdDuck_ServerChange(object sender, EventArgs e)
-		//{
-		//	string baseText = "Third Duck:";
-		//	string units = getTimeUnits(InputThirdDuck.Value);
-		//	LblThirdDuck.InnerText = getLabelText(baseText, "blah blah blah", units);
-		//}
 
 		#region Controls
+		/// <summary>
+		/// Updates the page if the selected index is changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void radioLists_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			update();
+		}
+
+		/// <summary>
+		/// Saves the changes made to the settings.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		protected void btnSave_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				string module = "ThreeDuckStrategy";
+
+				TraderContext db = new TraderContext();
+				var query = db.SystemSettings.Where(x => x.Module.Equals(module)).Select(x => x);
+				foreach (SystemSetting setting in query)
+				{
+					db.SystemSettings.Remove(setting);
+				}
+
+				var q_username = db.SystemSettings.Where(x => x.Name.Equals("USERNAME")).Select(x=>x);
+				if (q_username.Count() > 0)
+				{
+					SystemSetting s = q_username.FirstOrDefault();
+					db.SystemSettings.Remove(s);
+				}
+
+				SystemSetting _duck1 = new SystemSetting(module, "FIRST_DUCK_SETTINGS", InputFirstDuck.Value);
+				SystemSetting _duck2 = new SystemSetting(module, "SECOND_DUCK_SETTINGS", InputSecondDuck.Value);
+				SystemSetting _duck3 = new SystemSetting(module, "THIRD_DUCK_SETTINGS", InputThirdDuck.Value);
+				SystemSetting _movingavg = new SystemSetting(module, "MOVING_AVERAGE_WINDOW", InputAvgWindow.Value);
+				SystemSetting _username = new SystemSetting("User", "USERNAME", InputName.Value);
+
+				db.SystemSettings.Add(_duck1);
+				db.SystemSettings.Add(_duck2);
+				db.SystemSettings.Add(_duck3);
+				db.SystemSettings.Add(_movingavg);
+				db.SystemSettings.Add(_username);
+				db.SaveChanges();
+
+				setStatus("Settings saved successfully.", true);
+			}
+			catch
+			{
+				setStatus("Settings could not be saved. Please try again.", false);
+			}
 		}
 		#endregion
 	}

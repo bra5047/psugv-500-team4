@@ -16,21 +16,14 @@ namespace AlgoTraderSite
 	{
 		UserAgentClient useragent;
 		private static List<AlertMessage> alerts;
-		//PortfolioManagerClient portfolio;
-		//AlgoTrader.Interfaces.IWatchListManager wlm;
-		//public int numPortfolio;
-		//public int numWatchlist;
 		public string username;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			//portfolio = new PortfolioManagerClient();
 			useragent = new UserAgentClient();
-			//wlm = new WatchListManager();
-			username = "User";
 			if (!IsPostBack)
 			{
 				generateAlerts();
-				//getSummary();
+				getUsername();
 			}
 			showAlerts();
 		}
@@ -129,9 +122,6 @@ namespace AlgoTraderSite
 					row3.Cells.Add(cellActions);
 					tbl.Rows.Add(row3);
 
-					//HtmlGenericControl alert = new HtmlGenericControl("div");
-					//alert.Attributes["class"] = "alert-message";
-					//alert.InnerText = " Price: " + am.Price + " Type: " + am.Type;
 					AlertBox.Controls.Add(tbl);
 				}
 			}
@@ -149,13 +139,18 @@ namespace AlgoTraderSite
 		}
 
 		/// <summary>
-		/// Retrieves the information for the Summary section.
+		/// Gets the username to be displayed in the greeting.
 		/// </summary>
-		protected void getSummary() {
-			//numPortfolio = portfolio.GetOpenPositions().Count();
-
-			//TraderContext db = new TraderContext();
-			//numWatchlist = db.WatchListItems.Count();
+		protected void getUsername()
+		{
+			TraderContext db = new TraderContext();
+			var query = db.SystemSettings.Where(x => x.Name.Equals("USERNAME")).Select(x => x);
+			if (query.Count() > 0)
+			{
+				username = query.First().Value;
+			} else {
+				username = "User";
+			}
 		}
 
 		/// <summary>

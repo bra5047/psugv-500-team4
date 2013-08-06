@@ -2,10 +2,51 @@
 
 <asp:Content runat="server" ID="HeadContent" ContentPlaceHolderID="HeadContent">
 	<script type="text/javascript">
-		function printValue(sliderID, textbox) {
-			var x = document.getElementById(textbox);
-			var y = document.getElementById(sliderID);
-			x.innerText = y.value;
+		window.onload = function () {
+			printValue('LblFirstDuck', '<%=duck1 %>');
+			printValue('LblSecondDuck', '<%=duck2 %>');
+			printValue('LblThirdDuck', '<%=duck3 %>');
+			printValue('LblMovingAvg', '<%=movingavg %>');
+		}
+
+		function printValue(labelid, value) {
+			var prefix = "";
+			var units = "";
+
+			if (labelid === "LblFirstDuck") {
+				prefix = "First Duck:";
+				units = "minutes";
+
+				if (value / 60 === 1) {
+					units = "minute";
+				}
+
+				value = value / 60;
+			} else if (labelid === "LblSecondDuck") {
+				prefix = "Second Duck:";
+				units = "hours";
+
+				if (value / 3600 === 1) {
+					units = "hour";
+				}
+
+				value = value / 3600;
+			} else if (labelid === "LblThirdDuck") {
+				prefix = "Third Duck:";
+
+				units = "hours";
+
+				if (value / 3600 === 1) {
+					units = "hour";
+				}
+
+				value = value / 3600;
+			} else {
+				prefix = "Moving Average Window:";
+			}
+
+			var label = document.getElementById(labelid);
+			label.innerText = prefix + " " + value + " " + units;
 		}
 	</script>
 </asp:Content>
@@ -22,13 +63,6 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 	<asp:UpdatePanel runat="server" ID="UpdatePanel1">
 		<ContentTemplate>
-			<%--<div class="onoffswitch">
-		<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-		<label class="onoffswitch-label" for="myonoffswitch">
-			<div class="onoffswitch-inner"></div>
-			<div class="onoffswitch-switch"></div>
-		</label>
-	</div>--%>
 			<div class="panel-wrapper">
 				<div class="panel-left">
 					<asp:RadioButtonList runat="server" ID="radioLists" OnSelectedIndexChanged="radioLists_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true">
@@ -39,25 +73,29 @@
 					<div id="contentDiv" runat="server">
 						<div class="settings-heading">General</div>
 						<div class="settings-label">Name:</div>
-						<input runat="server" id="InputName" type="text" placeholder="Enter your name" class="settings-input" />
+						<input runat="server" id="InputName" type="text" placeholder="Enter your name" class="settings-input" required />
 						<div style="height: 20px;"></div>
 						<div class="settings-label">Email:</div>
-						<input runat="server" id="InputEmail" type="email" placeholder="Enter your email address" class="settings-input" />
+						<input runat="server" id="InputEmail" type="email" placeholder="Enter your email address" class="settings-input" disabled="disabled" required />
 						<div class="settings-spacer"></div>
 						<div class="settings-heading">Strategy</div>
-						<div runat="server" id="LblFirstDuck" class="settings-label">First Duck: </div>
-						<input runat="server" id="InputFirstDuck" type="range" min="300" max="43200" step="300" onchange="InputFirstDuck_ServerChange" />
-						<input id="rangeValue1" type="text" size="2"/>
-						<div runat="server" id="LblSecondDuck" class="settings-label">Second Duck: </div>
-						<input runat="server" id="InputSecondDuck" type="range" min="3600" max="86400" step="3600" onchange="printValue('InputSecondDuck', 'LblSecondDuck', 'Second Duck:')" />
-						<div runat="server" id="LblThirdDuck" class="settings-label">Third Duck: </div>
-						<input runat="server" id="InputThirdDuck" type="range" min="14400" max="604800" step="14400" onchange="printValue('InputThirdDuck', 'LblThirdDuck', 'Third Duck:')" />
-						<div runat="server" id="LblMovingAvg" class="settings-label">Moving Average Window: </div>
-						<input runat="server" id="InputAvgWindow" type="range" min="10" max="60" step="10" />
+
+						<div id="LblFirstDuck" class="settings-label-nowidth">First Duck: </div>
+						<input runat="server" id="InputFirstDuck" type="range" min="300" max="43200" step="300" onchange="printValue('LblFirstDuck', this.value)" />
+
+						<div id="LblSecondDuck" class="settings-label-nowidth">Second Duck: </div>
+						<input runat="server" id="InputSecondDuck" type="range" min="3600" max="86400" step="3600" onchange="printValue('LblSecondDuck', this.value)" />
+
+						<div id="LblThirdDuck" class="settings-label-nowidth">Third Duck: </div>
+						<input runat="server" id="InputThirdDuck" type="range" min="14400" max="604800" step="14400" onchange="printValue('LblThirdDuck', this.value)" />
+
+						<div id="LblMovingAvg" class="settings-label-nowidth">Moving Average Window: </div>
+						<input runat="server" id="InputAvgWindow" type="range" min="10" max="60" step="10" onchange="printValue('LblMovingAvg', this.value)"  />
 					</div>
 					<div class="settings-spacer"></div>
-					<asp:Button runat="server" ID="btnSave" Text="Save Changes" CssClass="settings-save" />
+					<asp:Button runat="server" ID="btnSave" Text="Save Changes" CssClass="settings-save" OnClick="btnSave_Click" />
 					<asp:Button runat="server" ID="btnResetDefault" Text="Reset to Default" />
+					<div runat="server" id="statusMessage"></div>
 				</div>
 			</div>
 		</ContentTemplate>

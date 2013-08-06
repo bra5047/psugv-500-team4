@@ -265,6 +265,10 @@ input.settings-input {
 	display: inline-block;
 }
 
+.settings-label-nowidth {
+	font-size: 1.5em;
+}
+
 input[type="submit"].settings-save {
 	background-color: #99CC00;
 	-moz-transition: all ease .2s;
