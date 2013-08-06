@@ -244,11 +244,41 @@ footer {
 	font-weight: 700;
 }
 
-.home-heading {
+.settings-heading {
 	font-size: 2em;
 	font-weight: 300;
-	margin-top: 40px;
+	margin-bottom: 20px;
 	border-bottom: 1px solid #A8DFF4;
+}
+
+input.settings-input {
+	width: 400px;
+}
+
+.settings-spacer {
+	height: 60px;
+}
+
+.settings-label {
+	font-size: 1.5em;
+	width: 250px;
+	display: inline-block;
+}
+
+input[type="submit"].settings-save {
+	background-color: #99CC00;
+	-moz-transition: all ease .2s;
+	transition: all ease .2s;
+}
+
+	input[type="submit"].settings-save:hover {
+		background-color: #D3E992;
+	}
+
+input[type="range"] {
+	display: block;
+	width: 55vw;
+	margin-bottom: 30px;
 }
 
 .home-summarystat {

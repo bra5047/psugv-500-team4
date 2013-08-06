@@ -20,11 +20,13 @@ namespace AlgoTraderSite
 		//AlgoTrader.Interfaces.IWatchListManager wlm;
 		//public int numPortfolio;
 		//public int numWatchlist;
+		public string username;
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			//portfolio = new PortfolioManagerClient();
 			useragent = new UserAgentClient();
 			//wlm = new WatchListManager();
+			username = "User";
 			if (!IsPostBack)
 			{
 				generateAlerts();

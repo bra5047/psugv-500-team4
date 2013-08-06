@@ -14,7 +14,7 @@
 		<ContentTemplate>
 			
 			<div class="card-wrapper">
-				<div runat="server" id="greeting" class="home-greeting">Welcome back, username!</div>
+				<div runat="server" id="greeting" class="home-greeting">Welcome back, <%=username %>.</div>
 				<%--<div class="home-heading">Summary</div>
 				<div class="home-summarystat"><strong>Portfolio Items:</strong> <%=numPortfolio %></div>
 				<div class="home-summarystat"><strong>Watchlist Items:</strong> <%=numWatchlist %></div>
