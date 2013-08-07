@@ -6,6 +6,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbTestingApp", "DbTestingApp\DbTestingApp.csproj", "{F0717FF9-3FB0-4EF5-98DC-CA10E7B7D298}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoTraderSite", "AlgoTraderSite\AlgoTraderSite.csproj", "{D8BD3B1E-D5CD-4D2A-B82D-5ED16EBD22E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D1A0C6E0-D6B9-4E6D-B0B3-392EBDC3C89F} = {D1A0C6E0-D6B9-4E6D-B0B3-392EBDC3C89F}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7FE52231-1768-4D7C-A262-4605C59ABCE2}"
 	ProjectSection(SolutionItems) = preProject
