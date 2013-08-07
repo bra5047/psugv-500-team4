@@ -47,9 +47,9 @@ namespace AlgoTraderSite
 		protected void getConfig()
 		{
 			TraderContext db = new TraderContext();
-			duck1 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("FIRST_DUCK_SETTINGS")).Select(x => x.Value).FirstOrDefault());
-            duck2 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("SECOND_DUCK_SETTINGS")).Select(x => x.Value).FirstOrDefault());
-            duck3 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("THIRD_DUCK_SETTINGS")).Select(x => x.Value).FirstOrDefault());
+			duck1 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("FIRST_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
+            duck2 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("SECOND_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
+            duck3 = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("THIRD_DUCK_SECONDS")).Select(x => x.Value).FirstOrDefault());
 			movingavg = int.Parse(db.SystemSettings.Where(x => x.Name.Equals("MOVING_AVERAGE_WINDOW")).Select(x => x.Value).FirstOrDefault());
 			useremail = db.SystemSettings.Where(x => x.Name.Equals("ALERTS_EMAIL_ADDRESS_TO")).Select(x => x.Value).FirstOrDefault();
 			name = db.SystemSettings.Where(x => x.Name.Equals("USERNAME")).Select(x => x.Value).FirstOrDefault();
