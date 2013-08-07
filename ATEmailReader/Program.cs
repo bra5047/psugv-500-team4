@@ -73,6 +73,7 @@ namespace ATEmailReader
                             else
                             {
                                 map.MarkMessageUnseenByUID(uid);
+                                write.WriteLine("Mail DLL ERROR");
                             }
                         }
                         catch (Exception ex)

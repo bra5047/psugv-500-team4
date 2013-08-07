@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AlgoTrader.StockService;
+using System.Xml;
 using AlgoTrader.Interfaces;
 using AlgoTrader.datamodel;
 
@@ -12,10 +14,19 @@ namespace AlgoTrader.qoute
     {
         public bool startWatching(string SymbolName)
         {
-            //Check DB to see if the Symbol is being watched already or not
-            TraderContext db = new TraderContext();
-            var ReturnValue = (from x in db.Symbols select x.name).ToList();
-            if (ReturnValue.Count > 0)
+            StockQuote SQ = new StockQuote();
+            XmlDocument Doc = new XmlDocument();
+            string Check;
+            XmlNode XmlCheck;
+
+            string QouteUpdate = SQ.GetQuote(SymbolName);
+            Doc.Load(QouteUpdate);
+
+            //Check the stock to see if it has ever had an opening price
+            XmlCheck = Doc.DocumentElement.SelectSingleNode("//Stock/Open");
+            Check = XmlCheck.InnerText;
+
+            if (Check == "N/A")
             {
                 return false;
             }
@@ -23,6 +34,7 @@ namespace AlgoTrader.qoute
             {
                 return true;
             }
+
         }
     }
 }
