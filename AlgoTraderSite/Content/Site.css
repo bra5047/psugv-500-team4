@@ -88,7 +88,6 @@ h5 a:link, h5 a:visited, h5 a:active {
 }
 
 .subtext {
-	font-weight: 300;
 	color: #6D6D6D;
 }
 
@@ -854,7 +853,7 @@ th {
 	text-align: left;
 	border: none 0px;
 	text-transform: uppercase;
-	color: #a3a3a3;
+	color: #6D6D6D;
 	font-weight: 300;
 	padding-left: 10px;
 }
