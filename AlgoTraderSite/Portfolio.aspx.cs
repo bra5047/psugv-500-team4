@@ -18,7 +18,7 @@ namespace AlgoTraderSite
 		private PortfolioManagerClient portfolio = new PortfolioManagerClient();
 		private static List<PositionMessage> openpositions = new List<PositionMessage>();
 		private static List<PositionMessage> allpositions = new List<PositionMessage>();
-		private static List<TradeMessage> transactions = new List<TradeMessage>();
+		private static List<Trade> transactions = new List<Trade>();
 		private string[] widths = { "40px", "", "10%", "25%", "10%", "10%", "10%" };
 		private int columns = 7;
 		private int tcolumns = 7;
@@ -53,12 +53,11 @@ namespace AlgoTraderSite
 				allpositions.Add(msg);
 			}
 
-			foreach (PositionMessage p in allpositions)
+			// get the transactions
+			var transquery = db.Trades.Select(x => x);
+			foreach (Trade t in transquery)
 			{
-				foreach (TradeMessage t in p.Trades)
-				{
-					transactions.Add(t);
-				}
+				transactions.Add(t);
 			}
 		}
 
@@ -67,7 +66,7 @@ namespace AlgoTraderSite
 		/// </summary>
 		private void showTransactions()
 		{
-			transactions = transactions.OrderByDescending(x => x.Timestamp).ToList();
+			transactions = transactions.OrderByDescending(x => x.timestamp).ToList();
 			string[] transheaders = { "Date", "Company", "Shares", "Price", "Fees", "Type" };
 			string[] transwidths = { "20%", "16%", "16%", "16%", "16%", "16%" };
 			int transcolumns = 6;
@@ -85,7 +84,7 @@ namespace AlgoTraderSite
 			htbl.Rows.Add(hr);
 			PortfolioDiv.Controls.Add(htbl);
 
-			foreach (TradeMessage t in transactions)
+			foreach (Trade t in transactions)
 			{
 				Table tbl = new Table();
 				TableRow tr = new TableRow();
@@ -95,12 +94,12 @@ namespace AlgoTraderSite
 					cell.Width = new Unit(transwidths[i]);
 					tr.Cells.Add(cell);
 				}
-				tr.Cells[0].Text = t.Timestamp.ToString();
+				tr.Cells[0].Text = t.timestamp.ToString();
 				tr.Cells[1].Text = t.SymbolName;
 				tr.Cells[2].Text = t.InitialQuantity.ToString();
-				tr.Cells[3].Text = String.Format("{0:C}", t.Price);
+				tr.Cells[3].Text = String.Format("{0:C}", t.price);
 				tr.Cells[4].Text = String.Format("{0:C}", t.PaidCommission);
-				tr.Cells[5].Text = t.Type.ToString();
+				tr.Cells[5].Text = t.type.ToString();
 				tbl.Rows.Add(tr);
 				tbl.CssClass = "main";
 				PortfolioDiv.Controls.Add(tbl);
