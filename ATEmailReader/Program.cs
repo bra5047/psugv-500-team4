@@ -38,32 +38,41 @@ namespace ATEmailReader
 
 
                             string title = mail.Subject;
-                            string message = mail.Text;
 
-                         //get the stock symbol
-                            string[] Symbolsplit = title.Split(new char[0]);
-                            string symbol = Symbolsplit[1].ToString();
-
-                            //get the amount to sell or buy
-                            string AmountExtract = Regex.Match(title, @"\d+").Value;
-                            int quantity = Int32.Parse(AmountExtract);
-
-                            //convert the message and title to lowercase so the if statement will have no errors
-                            message = message.ToLower();
-                            title = title.ToLower();
-
-                            PortfolioManager Manage = new PortfolioManager();
-                            if (message.Contains("yes") && title.Contains("sell"))
+                            if (!title.Contains("Please purchase"))
                             {
-                                Manage.sell(symbol, quantity);
-                            }
-                            else if (message.Contains("yes") && title.Contains("buy"))
-                            {
-                                Manage.buy(symbol, quantity);
+
+                                string message = mail.Text;
+
+                                //get the stock symbol
+                                string[] Symbolsplit = title.Split(new char[0]);
+                                string symbol = Symbolsplit[1].ToString();
+
+                                //get the amount to sell or buy
+                                string AmountExtract = Regex.Match(title, @"\d+").Value;
+                                int quantity = Int32.Parse(AmountExtract);
+
+                                //convert the message and title to lowercase so the if statement will have no errors
+                                message = message.ToLower();
+                                title = title.ToLower();
+
+                                PortfolioManager Manage = new PortfolioManager();
+                                if (message.Contains("yes") && title.Contains("sell"))
+                                {
+                                    Manage.sell(symbol, quantity);
+                                }
+                                else if (message.Contains("yes") && title.Contains("buy"))
+                                {
+                                    Manage.buy(symbol, quantity);
+                                }
+                                else
+                                {
+                                    //adding just incase we find a need for it
+                                }
                             }
                             else
                             {
-                                //adding just incase we find a need for it
+                                map.MarkMessageUnseenByUID(uid);
                             }
                         }
                         catch (Exception ex)
