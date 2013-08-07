@@ -247,7 +247,7 @@ namespace AlgoTraderSite
 
 			TraderContext db = new TraderContext();
 			double latestQuote = db.Quotes.Where(x => x.SymbolName.Equals(pm.SymbolName)).OrderByDescending(x => x.timestamp).Select(x => x.price).FirstOrDefault();
-			foreach (TradeMessage t in pm.Trades.OrderByDescending(x => x.Timestamp).Where(x => x.Quantity > 0))
+			foreach (TradeMessage t in pm.Trades.OrderByDescending(x => x.Timestamp).Where((x) => x.Quantity > 0 && x.Type==Portfolio.Client.tradeTypes.Buy))
 			{
 				double gain = 0;
 				double gainPercent = 0;
