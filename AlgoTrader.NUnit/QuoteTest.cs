@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
+using AlgoTrader.qoute;
 
 namespace AlgoTrader.NUnit
 {
@@ -21,6 +22,14 @@ namespace AlgoTrader.NUnit
 			q.timestamp = new DateTime(2013, 1, 1);
 			Assert.AreEqual(q.timestamp, new DateTime(2013, 1, 1));
 		}
+
+        [Test]
+        public void GuoteManagerCheckFail()
+        {
+            IQuoteManager q = new QuoteManager();
+            Assert.IsFalse(q.startWatching("asdf"));
+            Assert.IsTrue(q.startWatching("GOOG"));
+        }
 
 		[Test]
 		public void QuoteProperties()

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlgoTrader">
+      <HintPath>..\AlgoTrader\bin\Debug\AlgoTrader.dll</HintPath>
+    </Reference>
     <Reference Include="Effort">
       <HintPath>..\..\..\..\..\lib.net\effort\.NET 4.5\Entity Framework 4-5\Effort.dll</HintPath>
     </Reference>
@@ -70,12 +73,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AlgoTrader\AlgoTrader.csproj">
-      <Project>{d1a0c6e0-d6b9-4e6d-b0b3-392ebdc3c89f}</Project>
-      <Name>AlgoTrader</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
