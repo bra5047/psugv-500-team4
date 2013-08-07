@@ -374,18 +374,14 @@ namespace AlgoTraderSite
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
 			bool success = false;
-			bool QMgrSuccess = false;
 			IQuoteManager qm = new QuoteManager();
 			string symbol = tbAddToWatchList.Text.Trim().ToUpper();
 			string listName = radioLists.SelectedValue;
 
 			if (symbol.Length > 0)
 			{
-				// Check if it's a valid symbol
-				QMgrSuccess = qm.startWatching(symbol);
-
-				// If it is, add it to the list
-				if (QMgrSuccess)
+				// If it is valid, add it to the list
+				if (qm.startWatching(symbol))
 				{
 					IWatchList wl = new WatchList();
 					success = wl.AddToList(new Symbol(symbol), listName);

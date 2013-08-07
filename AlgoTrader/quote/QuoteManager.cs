@@ -20,7 +20,7 @@ namespace AlgoTrader.qoute
             XmlNode XmlCheck;
 
             string QouteUpdate = SQ.GetQuote(SymbolName);
-            Doc.Load(QouteUpdate);
+            Doc.LoadXml(QouteUpdate);
 
             //Check the stock to see if it has ever had an opening price
             XmlCheck = Doc.DocumentElement.SelectSingleNode("//Stock/Open");
