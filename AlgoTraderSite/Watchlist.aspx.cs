@@ -1,6 +1,7 @@
 ﻿using AlgoTrader.datamodel;
 using AlgoTrader.Interfaces;
 using AlgoTrader.watchlist;
+using AlgoTrader.qoute;
 using AlgoTraderSite.Portfolio.Client;
 using AlgoTraderSite.Strategy.Client;
 using System;
@@ -372,25 +373,37 @@ namespace AlgoTraderSite
 		/// <param name="e"></param>
 		protected void btnAddToWatchList_Click(object sender, EventArgs e)
 		{
-			// TODO add validation for entered symbol
 			bool success = false;
+			bool QMgrSuccess = false;
+			IQuoteManager qm = new QuoteManager();
 			string symbol = tbAddToWatchList.Text.Trim().ToUpper();
 			string listName = radioLists.SelectedValue;
 
 			if (symbol.Length > 0)
 			{
-				IWatchList wl = new WatchList();
-				success = wl.AddToList(new Symbol(symbol), listName);
-				if (success)
+				// Check if it's a valid symbol
+				QMgrSuccess = qm.startWatching(symbol);
+
+				// If it is, add it to the list
+				if (QMgrSuccess)
 				{
-					setStatus(String.Format("{0} added to list \"{1}.\"", symbol, listName), true);
+					IWatchList wl = new WatchList();
+					success = wl.AddToList(new Symbol(symbol), listName);
+					if (success)
+					{
+						setStatus(String.Format("{0} added to list \"{1}.\"", symbol, listName), true);
+					}
+					else
+					{
+						setStatus(String.Format("{0} could not be added to \"{1}.\"", symbol, listName), false);
+					}
+					strategy.startWatching(symbol);
+					updateList(true);
 				}
-				else
+				else // If it's not, display invalid symbol message.
 				{
-					setStatus(String.Format("{0} could not be added to \"{1}.\"", symbol, listName), false);
+					setStatus("Invalid symbol.", false);
 				}
-				strategy.startWatching(symbol);
-				updateList(true);
 			}
 			else
 			{
